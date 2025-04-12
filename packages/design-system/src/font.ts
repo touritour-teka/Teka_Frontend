@@ -8,35 +8,26 @@ const fontGenerator = (
 ) => css`
   font-family: 'Pretendard Variable';
   font-weight: ${weight};
-  font-size: ${size}rem;
+  font-size: ${size}px;
   line-height: ${lineHeight}%;
-  letter-spacing: ${letterSpacing}px;
+  letter-spacing: ${letterSpacing}%;
 `;
 
 const font = {
-  D1: fontGenerator(700, 4.5, 130, -1.5),
-  D2: fontGenerator(700, 3.75, 130, -0.5),
-  D3: fontGenerator(700, 3, 130, 0),
+  medi18: fontGenerator(500, 18, 100, 0),
+  semibold18: fontGenerator(600, 18, 100, 0),
 
-  H1: fontGenerator(700, 2.25, 140, 0.25),
-  H2: fontGenerator(700, 1.75, 140, 0),
-  H3: fontGenerator(600, 1.5, 140, 0.15),
-  H4: fontGenerator(600, 1.25, 140, 0.15),
-  H5: fontGenerator(600, 1.125, 140, 0.15),
-  H6: fontGenerator(500, 1.125, 140, 0.15),
+  semibold16: fontGenerator(600, 16, 140, 1),
 
-  p1: fontGenerator(400, 1.125, 160, -0.15),
-  p2: fontGenerator(400, 1, 160, -0.15),
-  p3: fontGenerator(400, 0.875, 160, -0.1),
+  medi14: fontGenerator(500, 14, 100, 1),
+  regular14: fontGenerator(400, 14, 100, 1),
+  regular14chat: fontGenerator(400, 14, 140, -1),
+  semibold14chat: fontGenerator(600, 14, 100, 1),
+  regular14chat_underlined: fontGenerator(400, 14, 160, 1),
 
-  context: fontGenerator(500, 1, 130, 0),
-  caption: fontGenerator(400, 0.75, 140, 0),
-  code: fontGenerator(400, 1, 130, 0),
-  form: fontGenerator(400, 1, 180, 0),
-
-  btn1: fontGenerator(600, 1.125, 130, 0),
-  btn2: fontGenerator(500, 1, 130, 0),
-  btn3: fontGenerator(500, 0.875, 130, 0),
+  medi12: fontGenerator(500, 12, 100, 1),
+  regular12: fontGenerator(400, 12, 140, 1),
+  regular12chat: fontGenerator(400, 12, 100, -1),
 };
 
 export default font;
