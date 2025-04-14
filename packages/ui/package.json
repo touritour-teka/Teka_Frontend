@@ -1,0 +1,29 @@
+{
+  "name": "@teka/ui",
+  "version": "0.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "lint": "eslint \"**/*.ts*\""
+  },
+  "dependencies": {
+    "@teka/design-system": "workspace:*",
+    "@teka/utils": "workspace:^"
+  },
+  "peerDependencies": {
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "devDependencies": {
+    "@teka/eslint-config": "workspace:*",
+    "@teka/eslint-config-ts": "workspace:*",
+    "@teka/tsconfig": "workspace:*",
+    "@types/react": "^19.1.0",
+    "@types/react-dom": "^19.1.0",
+    "@types/styled-components": "^5.1.26",
+    "babel-plugin-styled-components": "^2.1.4",
+    "styled-components": "^6.0.3",
+    "styled-reset": "^4.4.7",
+    "typescript": "^5.1.3"
+  }
+}
