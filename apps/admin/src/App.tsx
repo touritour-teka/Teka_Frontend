@@ -1,24 +1,15 @@
-import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { Text, Column, Row } from '@teka/ui';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div>어드민</div>
+      <Text fontType="regular12">dkssud</Text>
+      <Column justifyContent='center' alignItems='center'>
+        <Row>안농</Row>
+        <Row>안농</Row>
+      </Column>
     </div>
   );
 }

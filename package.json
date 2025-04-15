@@ -7,11 +7,9 @@
     "configs/*"
   ],
   "scripts": {
-    "build": "turbo run build",
-    "dev": "turbo run dev",
-    "lint": "turbo run lint",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "check-types": "turbo run check-types"
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test"
   },
   "devDependencies": {
     "eslint": "^7.32.0",
@@ -24,6 +22,16 @@
     "node": ">=18"
   },
   "dependencies": {
-    "eslint": "^9.23.0"
+    "@craco/craco": "^7.1.0",
+    "eslint": "^9.24.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env",
+      "@babel/preset-react",
+      "@babel/preset-typescript"
+    ]
   }
 }
