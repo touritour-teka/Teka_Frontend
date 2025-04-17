@@ -1,5 +1,5 @@
 import './App.css';
-import { Text, Column, Row, Input, DatePickeInput } from '@teka/ui';
+import { Text, Column, Row, Input, DatePickerInput } from '@teka/ui';
 
 function App() {
   return (
@@ -10,7 +10,7 @@ function App() {
         <Row>안농</Row>
         <Row>안농</Row>
         <Input label="비밀번호" placeholder="비밀번호르 링별" isError={false} type='password'></Input>
-        <DatePickeInput placeholder="비밀번호르 링별"></DatePickeInput>
+        <DatePickerInput placeholder="비밀번호르 링별"></DatePickerInput>
       </Column>
     </div>
   );

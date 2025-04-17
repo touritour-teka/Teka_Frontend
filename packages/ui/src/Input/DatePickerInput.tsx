@@ -8,7 +8,7 @@ import { flex } from '@teka/utils';
 import React from 'react';
 import { formatDateRange } from '@teka/utils';
 
-const DateRangePicker = ({ width = 309, placeholder = '날짜를 선택하세요' }) => {
+const DatePickerInput = ({ width = 309, placeholder = '날짜를 선택하세요' }) => {
   const [dateRange, setDateRange] = useState([null, null]);
   const [startDate, endDate] = dateRange;
 
@@ -19,7 +19,7 @@ const DateRangePicker = ({ width = 309, placeholder = '날짜를 선택하세요
       : '';
 
   return (
-    <StyledDateRangePicker style={{ width }}>
+    <StyledDatePickerInput style={{ width }}>
       <DatePicker
         selectsRange={true}
         startDate={startDate}
@@ -36,13 +36,13 @@ const DateRangePicker = ({ width = 309, placeholder = '날짜를 선택하세요
       <IconWrapper>
         <IconCalender width={24} height={24} />
       </IconWrapper>
-    </StyledDateRangePicker>
+    </StyledDatePickerInput>
   );
 };
 
-export default DateRangePicker;
+export default DatePickerInput;
 
-const StyledDateRangePicker = styled.div`
+const StyledDatePickerInput = styled.div`
   ${flex({ alignItems: 'center' })}
   position: relative;
   padding: 14px 16px;
