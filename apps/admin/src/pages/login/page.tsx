@@ -3,8 +3,16 @@ import { flex } from '@teka/utils';
 import Button from '@/components/Button';
 import { Column, Input } from '@teka/ui';
 import OutlineButton from '@/components/OutlineButton';
+import { useNavigate } from 'react-router-dom';
+import { ROUTES } from '@/constants/constant';
 
 const LoginPage = () => {
+  const navigate = useNavigate();
+
+  const handleMoveSignup = () => {
+    navigate(ROUTES.SIGNUP);
+  };
+
   return (
     <StyledLoginPage>
       <LoginPageBox>
@@ -16,7 +24,7 @@ const LoginPage = () => {
           </Column>
           <Column gap={12} width="100%">
             <Button onClick={() => {}}>로그인</Button>
-            <OutlineButton onClick={() => {}}>회원가입</OutlineButton>
+            <OutlineButton onClick={handleMoveSignup}>회원가입</OutlineButton>
           </Column>
         </Column>
       </LoginPageBox>
