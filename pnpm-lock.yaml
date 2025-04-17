@@ -51,6 +51,9 @@ importers:
       '@teka/ui':
         specifier: workspace:*
         version: link:../../packages/ui
+      '@teka/utils':
+        specifier: workspace*
+        version: link:../../packages/utils
       '@testing-library/dom':
         specifier: ^10.4.0
         version: 10.4.0
