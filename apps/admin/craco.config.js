@@ -24,6 +24,10 @@ module.exports = {
           },
         ],
       });
+      webpackConfig.resolve.alias = {
+        ...(webpackConfig.resolve.alias || {}),
+        '@': path.resolve(__dirname, 'src'),
+      };
       return webpackConfig;
     },
   },

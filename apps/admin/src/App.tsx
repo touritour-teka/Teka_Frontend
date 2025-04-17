@@ -1,18 +1,17 @@
-import './App.css';
-import { Text, Column, Row, Input, DatePickerInput } from '@teka/ui';
+import { Route, BrowserRouter as Router, Routes } from 'react-router-dom';
+import LoginPage from './pages/login/page';
+import SignupPage from './pages/signup/page';
+import ManagePage from './pages/manage/page';
 
 function App() {
   return (
-    <div className="App">
-      <div>어드민</div>
-      <Text fontType="regular12">dkssud</Text>
-      <Column justifyContent="center" alignItems="center">
-        <Row>안농</Row>
-        <Row>안농</Row>
-        <Input label="비밀번호" placeholder="비밀번호르 링별" isError={false} type='password'></Input>
-        <DatePickerInput placeholder="비밀번호르 링별"></DatePickerInput>
-      </Column>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<LoginPage />} />
+        <Route path="/signup" element={<SignupPage />} />
+        <Route path="/manage" element={<ManagePage />} />
+      </Routes>
+    </Router>
   );
 }
 

@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components';
 import type { InputProps } from './Input.type';
 
 const Input = ({
-  width = 343,
+  width,
   label,
   placeholder,
   type = 'text',
@@ -37,15 +37,16 @@ const Input = ({
 export default Input;
 
 const StyledInput = styled.input<{ $isError: boolean }>`
+  display: flex;
   ${font.regular14}
   color: ${color.gray800};
-  height: 12px;
-  width: 312px;
+  height: 48px;
+  width: 100%;
+  max-width: 400px;
   padding: 17px 16px;
   background-color: ${color.white2};
   border: 1px solid ${color.gray400};
   border-radius: 12px;
-  outline: none;
 
   &::placeholder {
     color: ${color.gray200};
