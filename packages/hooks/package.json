@@ -15,7 +15,7 @@
   "devDependencies": {
     "@teka/eslint-config": "workspace:*",
     "@teka/tsconfig": "workspace:*",
-    "@types/react": "18.3.1",
+    "@types/react": "18.2.0",
     "typescript": "5.5.4"
   }
 }

@@ -8,18 +8,23 @@
   },
   "dependencies": {
     "@teka/design-system": "workspace:*",
-    "@teka/utils": "workspace:^"
+    "@teka/icon": "workspace:*",
+    "@teka/utils": "workspace:*",
+    "DatePicker": "^2.0.0",
+    "date-fns": "^4.1.0",
+    "date-fns-tz": "^3.2.0",
+    "react-datepicker": "^8.3.0"
   },
   "peerDependencies": {
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react": "^18.2.0",
+    "react-dom": "18.2.0"
   },
   "devDependencies": {
     "@teka/eslint-config": "workspace:*",
     "@teka/eslint-config-ts": "workspace:*",
     "@teka/tsconfig": "workspace:*",
-    "@types/react": "^19.1.0",
-    "@types/react-dom": "^19.1.0",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
     "@types/styled-components": "^5.1.26",
     "babel-plugin-styled-components": "^2.1.4",
     "styled-components": "^6.0.3",
