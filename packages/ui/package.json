@@ -23,6 +23,7 @@
     "@teka/eslint-config": "workspace:*",
     "@teka/eslint-config-ts": "workspace:*",
     "@teka/tsconfig": "workspace:*",
+    "@teka/hooks": "workspace:*",
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0",
     "@types/styled-components": "^5.1.26",
