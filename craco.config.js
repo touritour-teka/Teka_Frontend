@@ -23,9 +23,7 @@ module.exports = {
         test: /\.js$/,
         enforce: 'pre',
         use: ['source-map-loader'],
-        exclude: [
-          /node_modules\/react-datepicker/, 
-        ],
+        exclude: [/node_modules\/react-datepicker/],
       });
 
       return webpackConfig;
