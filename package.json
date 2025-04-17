@@ -12,6 +12,8 @@
     "test": "craco test"
   },
   "devDependencies": {
+    "@types/react": "18.2.0",
+    "@types/react-dom": "18.2.0",
     "eslint": "^7.32.0",
     "prettier": "^2.8.8",
     "turbo": "^2.3.3",
@@ -24,8 +26,8 @@
   "dependencies": {
     "@craco/craco": "^7.1.0",
     "eslint": "^9.24.0",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "babel": {
     "presets": [

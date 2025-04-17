@@ -1,7 +1,6 @@
 import React from 'react';
 import { color, font } from '@teka/design-system';
 import styled, { css } from 'styled-components';
-import ConditionalMessage from './ConditionalMessage';
 import type { InputProps } from './Input.type';
 
 const Input = ({
@@ -12,8 +11,6 @@ const Input = ({
   name,
   value,
   onChange,
-  errorMessage,
-  message,
   readOnly,
   textAlign,
   isError = false,
@@ -33,11 +30,6 @@ const Input = ({
           $isError={isError}
         />
       </div>
-      <ConditionalMessage
-        isError={isError}
-        errorMessage={errorMessage}
-        message={message}
-      />
     </div>
   );
 };
@@ -50,7 +42,7 @@ const StyledInput = styled.input<{ $isError: boolean }>`
   height: 12px;
   width: 312px;
   padding: 17px 16px;
-  background-color: ${color.white};
+  background-color: ${color.white2};
   border: 1px solid ${color.gray400};
   border-radius: 12px;
   outline: none;
