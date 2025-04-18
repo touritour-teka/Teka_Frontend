@@ -1,11 +1,11 @@
+import React from 'react';
 import { useState } from 'react';
 import { color } from '@teka/design-system';
 import styled from 'styled-components';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { IconCalender } from '@teka/icon';
+import { IconCalendar } from '@teka/icon';
 import { flex } from '@teka/utils';
-import React from 'react';
 import { formatDateRange } from '@teka/utils';
 
 const DatePickerInput = ({ width = 309, placeholder = '날짜를 선택하세요' }) => {
@@ -34,7 +34,7 @@ const DatePickerInput = ({ width = 309, placeholder = '날짜를 선택하세요
         }
       />
       <IconWrapper>
-        <IconCalender width={24} height={24} />
+        <IconCalendar width={24} height={24} />
       </IconWrapper>
     </StyledDatePickerInput>
   );
