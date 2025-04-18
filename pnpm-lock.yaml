@@ -45,6 +45,9 @@ importers:
       '@teka/design-system':
         specifier: workspace:*
         version: link:../../packages/design-system
+      '@teka/hooks':
+        specifier: workspace*
+        version: link:../../packages/hooks
       '@teka/icon':
         specifier: workspace:*
         version: link:../../packages/icon
@@ -409,6 +412,9 @@ importers:
       '@teka/eslint-config-ts':
         specifier: workspace:*
         version: link:../../configs/eslint-config-ts
+      '@teka/hooks':
+        specifier: workspace:*
+        version: link:../hooks
       '@teka/tsconfig':
         specifier: workspace:*
         version: link:../../configs/tsconfig

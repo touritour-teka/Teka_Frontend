@@ -2,6 +2,7 @@ import React from 'react';
 import { color, font } from '@teka/design-system';
 import styled, { css } from 'styled-components';
 import type { InputProps } from './Input.type';
+import ConditionalMessage from './ConditionalMessage';
 
 const Input = ({
   width,
@@ -14,6 +15,8 @@ const Input = ({
   readOnly,
   textAlign,
   isError = false,
+  errorMessage,
+  message,
 }: InputProps) => {
   return (
     <div style={{ width }}>
@@ -30,6 +33,11 @@ const Input = ({
           $isError={isError}
         />
       </div>
+      <ConditionalMessage
+        isError={isError}
+        errorMessage={errorMessage}
+        message={message}
+      />
     </div>
   );
 };
