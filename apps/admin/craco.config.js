@@ -10,6 +10,7 @@ module.exports = {
           path.resolve(__dirname, '../../packages/design-system'),
           path.resolve(__dirname, '../../packages/utils'),
           path.resolve(__dirname, '../../packages/icon'),
+          path.resolve(__dirname, '../../packages/hooks'),
         ],
         use: [
           {
