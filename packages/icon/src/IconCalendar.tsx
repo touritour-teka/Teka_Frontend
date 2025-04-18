@@ -1,6 +1,6 @@
 import React from 'react';
 
-const IconCalender: React.FC<React.SVGProps<SVGSVGElement>> = (props) => {
+const IconCalendar: React.FC<React.SVGProps<SVGSVGElement>> = (props) => {
   return (
     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
       <mask
@@ -23,4 +23,4 @@ const IconCalender: React.FC<React.SVGProps<SVGSVGElement>> = (props) => {
   );
 };
 
-export default IconCalender;
+export default IconCalendar;

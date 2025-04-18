@@ -3,9 +3,14 @@ const path = require('path');
 module.exports = {
   webpack: {
     configure: (webpackConfig) => {
+      const iconPath = path.resolve(__dirname, '../../packages/icon');
+
       webpackConfig.module.rules.push({
         test: /\.[jt]sx?$/,
-        include: path.resolve(__dirname, 'packages'),
+        include: [
+          path.resolve(__dirname, 'src'), 
+          iconPath,
+        ],
         exclude: /node_modules/,
         use: [
           {

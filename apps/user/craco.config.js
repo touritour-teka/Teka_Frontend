@@ -9,6 +9,7 @@ module.exports = {
           path.resolve(__dirname, '../../packages/ui'),
           path.resolve(__dirname, '../../packages/design-system'),
           path.resolve(__dirname, '../../packages/utils'),
+          path.resolve(__dirname, '../../packages/icon'),
         ],
         use: [
           {
@@ -23,6 +24,10 @@ module.exports = {
           },
         ],
       });
+      webpackConfig.resolve.alias = {
+        ...(webpackConfig.resolve.alias || {}),
+        '@': path.resolve(__dirname, 'src'),
+      };
       return webpackConfig;
     },
   },
