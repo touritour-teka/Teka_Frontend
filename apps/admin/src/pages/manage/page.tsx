@@ -1,14 +1,22 @@
 import RoomList from '@/components/manage/RoomList';
 import RoundedButton from '@/components/RoundedButton';
+import { ROUTES } from '@/constants/constant';
 import { flex } from '@teka/utils';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
 const ManagePage = () => {
+  const navigate = useNavigate();
+
+  const handleMoveRoomCreate = () => {
+    navigate(ROUTES.CREATE);
+  };
+
   return (
     <StyledManagePage>
       <ManagePageBox>
         <ButtonWrapper>
-          <RoundedButton width={89} onClick={() => {}}>
+          <RoundedButton width={89} onClick={handleMoveRoomCreate}>
             방 개설
           </RoundedButton>
         </ButtonWrapper>
