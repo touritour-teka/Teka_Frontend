@@ -37,7 +37,7 @@ export default MessageInput;
 const ReactMessageInput = styled.div`
   ${flex({ alignItems: 'center', justifyContent: 'space-between' })};
   width: 100%;
-  padding: 12px;
+  padding: 12px 12px 34px 12px;
   background-color: #fff;
   border-top: 1px solid #ddd;
   gap: 6px;
