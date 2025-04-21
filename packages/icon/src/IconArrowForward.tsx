@@ -2,13 +2,7 @@ import React from 'react';
 
 const IconArrowForward: React.FC<React.SVGProps<SVGSVGElement>> = (props) => {
   return (
-    <svg
-      width="18"
-      height="19"
-      viewBox="0 0 18 19"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+    <svg viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
       <mask
         id="mask0_748_2490"
         maskUnits="userSpaceOnUse"

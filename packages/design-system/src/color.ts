@@ -13,6 +13,9 @@ const color = {
   gray100: '#CACACB',
   gray50: '#EEEEEE',
 
+  wireframe: '#CBCBCB',
+  wireframe2: '#949494',
+
   blue900: '#1E88E5',
   blue800: '#009FFD',
   blue100: '#E9F5FF',

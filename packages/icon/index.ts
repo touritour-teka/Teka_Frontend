@@ -1,4 +1,10 @@
 export { default as IconCalendar } from './src/IconCalendar';
 export { default as IconArrowForward } from './src/IconArrowForward';
+export { default as IconBackward } from './src/IconArrowBackward';
 export { default as IconInvisibleEye } from './src/IconInvisibleEye';
 export { default as IconVisibleEye } from './src/IconVisibleEye';
+export { default as IconSetting } from './src/IconSetting';
+export { default as IconTranslate } from './src/IconTranslate';
+export { default as IconLocationMark } from './src/IconLocationMark';
+export { default as IconSend } from './src/IconSend';
+export { default as IconFile } from './src/IconFile';
