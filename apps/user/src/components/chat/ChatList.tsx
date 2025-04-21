@@ -22,7 +22,7 @@ const ChatList = () => {
       />
       <OtherPersonMessage
         name="Nicholas"
-        content="안녕하세요 저는 왕이상입니다."
+        content="안녕하세요 저는 왕이상입니다. 안녕하세요 저는 왕이상입니다.안녕하세요 저는 왕이상입니다.안녕하세요 저는 왕이상입니다.안녕하세요 저는 왕이상입니다.안녕하세요 저는 왕이상입니다.안녕하세요 저는 왕이상입니다.안녕하세요 저는 왕이상입니다.안녕하세요 저는 왕이상입니다."
         translatedContent="你好 我是奕翔"
         timestamp="오후 12:40"
         prevTimestamp="오후 6:00"
