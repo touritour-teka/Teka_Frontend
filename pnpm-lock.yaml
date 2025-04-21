@@ -42,6 +42,15 @@ importers:
       '@craco/craco':
         specifier: ^7.1.0
         version: 7.1.0(@types/node@16.18.126)(postcss@8.5.3)(react-scripts@5.0.1)(typescript@4.9.5)
+      '@suspensive/react-query':
+        specifier: ^2.18.12
+        version: 2.18.12(@tanstack/react-query@5.74.4)(react@18.2.0)
+      '@tanstack/react-query':
+        specifier: ^5.74.4
+        version: 5.74.4(react@18.2.0)
+      '@tanstack/react-query-devtools':
+        specifier: ^5.74.4
+        version: 5.74.4(@tanstack/react-query@5.74.4)(react@18.2.0)
       '@teka/design-system':
         specifier: workspace:*
         version: link:../../packages/design-system
@@ -78,6 +87,9 @@ importers:
       '@types/styled-components':
         specifier: ^5.1.26
         version: 5.1.34
+      axios:
+        specifier: ^1.8.4
+        version: 1.8.4
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -1871,6 +1883,21 @@ packages:
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
     dev: false
 
+  /@colors/colors@1.5.0:
+    resolution: {integrity: sha512-ooWCrlZP11i8GImSjTHYHLkvFDP48nS4+204nGb1RiX/WXYHmJA2III9/e2DWVabCESdW7hBAEzHRqUn9OUVvQ==}
+    engines: {node: '>=0.1.90'}
+    requiresBuild: true
+    dev: false
+    optional: true
+
+  /@commander-js/extra-typings@12.1.0(commander@12.1.0):
+    resolution: {integrity: sha512-wf/lwQvWAA0goIghcb91dQYpkLBcyhOhQNqG/VgWhnKzgt+UOMvra7EX/2fv70arm5RW+PUHoQHHDa6/p77Eqg==}
+    peerDependencies:
+      commander: ~12.1.0
+    dependencies:
+      commander: 12.1.0
+    dev: false
+
   /@craco/craco@7.1.0(@types/node@16.18.126)(postcss@8.5.3)(react-scripts@5.0.1)(typescript@4.9.5):
     resolution: {integrity: sha512-oRAcPIKYrfPXp9rSzlsDNeOaVtDiKhoyqSXUoqiK24jCkHr4T8m/a2f74yXIzCbIheoUWDOIfWZyRgFgT+cpqA==}
     engines: {node: '>=6'}
@@ -2747,6 +2774,59 @@ packages:
       string.prototype.matchall: 4.0.12
     dev: false
 
+  /@suspensive/react-query-4@2.18.12(@tanstack/react-query@5.74.4)(react@18.2.0):
+    resolution: {integrity: sha512-HZcFLpnNtGl+PMrAtq1C9s9HyhvNoVQg2X6hKvFU7Z4CoNAbAI06cRfWHdVmUHIK4CgTSlbKfzlW0Bw7WffIqA==}
+    peerDependencies:
+      '@suspensive/react': ^2.18.12
+      '@tanstack/react-query': ^4
+      react: ^18 || ^19
+    peerDependenciesMeta:
+      '@suspensive/react':
+        optional: true
+      '@tanstack/react-query':
+        optional: true
+    dependencies:
+      '@tanstack/react-query': 5.74.4(react@18.2.0)
+      react: 18.2.0
+    dev: false
+
+  /@suspensive/react-query-5@2.18.12(@tanstack/react-query@5.74.4)(react@18.2.0):
+    resolution: {integrity: sha512-IADiLCcf9GEYwDkmJEBEWPj8e4NBfH94PXPACgAWEgsP8eXy1tSLRxls2crn8ibgm6kGSuodUGFA7WpwWkTPvw==}
+    peerDependencies:
+      '@suspensive/react': ^2.18.12
+      '@tanstack/react-query': ^5
+      react: ^18 || ^19
+    peerDependenciesMeta:
+      '@suspensive/react':
+        optional: true
+      '@tanstack/react-query':
+        optional: true
+    dependencies:
+      '@tanstack/react-query': 5.74.4(react@18.2.0)
+      react: 18.2.0
+    dev: false
+
+  /@suspensive/react-query@2.18.12(@tanstack/react-query@5.74.4)(react@18.2.0):
+    resolution: {integrity: sha512-vx7MCShSdyh3heUsTFxo4TU4+7Xfk56T1Z3gUT2wtpftO5p4j5tEBi82L7/6Efmk6/Apcf2o8Ddr9ysder2WBw==}
+    hasBin: true
+    requiresBuild: true
+    peerDependencies:
+      '@suspensive/react': ^2.18.12
+      '@tanstack/react-query': ^4 || ^5
+      react: ^18 || ^19
+    peerDependenciesMeta:
+      '@suspensive/react':
+        optional: true
+    dependencies:
+      '@commander-js/extra-typings': 12.1.0(commander@12.1.0)
+      '@suspensive/react-query-4': 2.18.12(@tanstack/react-query@5.74.4)(react@18.2.0)
+      '@suspensive/react-query-5': 2.18.12(@tanstack/react-query@5.74.4)(react@18.2.0)
+      '@tanstack/react-query': 5.74.4(react@18.2.0)
+      cli-table3: 0.6.5
+      commander: 12.1.0
+      react: 18.2.0
+    dev: false
+
   /@svgr/babel-plugin-add-jsx-attribute@5.4.0:
     resolution: {integrity: sha512-ZFf2gs/8/6B8PnSofI0inYXr2SDNTDScPXhN7k5EqD4aZ3gi6u+rbmZHVB8IM3wDyx8ntKACZbtXSm7oZGRqVg==}
     engines: {node: '>=10'}
@@ -2854,6 +2934,34 @@ packages:
       loader-utils: 2.0.4
     transitivePeerDependencies:
       - supports-color
+    dev: false
+
+  /@tanstack/query-core@5.74.4:
+    resolution: {integrity: sha512-YuG0A0+3i9b2Gfo9fkmNnkUWh5+5cFhWBN0pJAHkHilTx6A0nv8kepkk4T4GRt4e5ahbtFj2eTtkiPcVU1xO4A==}
+    dev: false
+
+  /@tanstack/query-devtools@5.73.3:
+    resolution: {integrity: sha512-hBQyYwsOuO7QOprK75NzfrWs/EQYjgFA0yykmcvsV62q0t6Ua97CU3sYgjHx0ZvxkXSOMkY24VRJ5uv9f5Ik4w==}
+    dev: false
+
+  /@tanstack/react-query-devtools@5.74.4(@tanstack/react-query@5.74.4)(react@18.2.0):
+    resolution: {integrity: sha512-PGCAcytQMmeagoeGG45ccBhrC1x0/5OlNjsM1FAb9OfsQZIhPzjwjhGcwmMu6TbT4RIHgvjxLwC5NHgkUwJQzw==}
+    peerDependencies:
+      '@tanstack/react-query': ^5.74.4
+      react: ^18 || ^19
+    dependencies:
+      '@tanstack/query-devtools': 5.73.3
+      '@tanstack/react-query': 5.74.4(react@18.2.0)
+      react: 18.2.0
+    dev: false
+
+  /@tanstack/react-query@5.74.4(react@18.2.0):
+    resolution: {integrity: sha512-mAbxw60d4ffQ4qmRYfkO1xzRBPUEf/72Dgo3qqea0J66nIKuDTLEqQt0ku++SDFlMGMnB6uKDnEG1xD/TDse4Q==}
+    peerDependencies:
+      react: ^18 || ^19
+    dependencies:
+      '@tanstack/query-core': 5.74.4
+      react: 18.2.0
     dev: false
 
   /@testing-library/dom@10.4.0:
@@ -4115,6 +4223,16 @@ packages:
     engines: {node: '>=4'}
     dev: false
 
+  /axios@1.8.4:
+    resolution: {integrity: sha512-eBSYY4Y68NNlHbHBMdeDmKNtDgXWhQsJcGqzO3iLUM0GraQFSS9cVgPX5I9b3lbdFKyYoAEGAZF1DwhTaljNAw==}
+    dependencies:
+      follow-redirects: 1.15.9
+      form-data: 4.0.2
+      proxy-from-env: 1.1.0
+    transitivePeerDependencies:
+      - debug
+    dev: false
+
   /axobject-query@4.1.0:
     resolution: {integrity: sha512-qIj0G9wZbMGNLjLmg1PT6v2mE9AH2zlnADJD/2tC6E00hgmhUOfEB6greHPAfLRSufHqROIUTkw6E+M3lH0PTQ==}
     engines: {node: '>= 0.4'}
@@ -4576,6 +4694,15 @@ packages:
       source-map: 0.6.1
     dev: false
 
+  /cli-table3@0.6.5:
+    resolution: {integrity: sha512-+W/5efTR7y5HRD7gACw9yQjqMVvEMLBHmboM/kPWam+H+Hmyrgjh6YncVKK122YZkXrLudzTuAukUw9FnMf7IQ==}
+    engines: {node: 10.* || >= 12.*}
+    dependencies:
+      string-width: 4.2.3
+    optionalDependencies:
+      '@colors/colors': 1.5.0
+    dev: false
+
   /cliui@7.0.4:
     resolution: {integrity: sha512-OcRE68cOsVMXp1Yvonl/fzkQOyjLSu/8bhPDfQt0e0/Eb283TKP20Fs2MqoPsr9SwA595rRCA+QMzYc9nBP+JQ==}
     dependencies:
@@ -4648,6 +4775,11 @@ packages:
     engines: {node: '>= 0.8'}
     dependencies:
       delayed-stream: 1.0.0
+    dev: false
+
+  /commander@12.1.0:
+    resolution: {integrity: sha512-Vw8qHK3bZM9y/P10u3Vib8o/DdkvA2OtPtZvD871QKjy74Wj1WSKFILMPRPSdUSx5RFK1arlJzEtA4PkFgnbuA==}
+    engines: {node: '>=18'}
     dev: false
 
   /commander@2.20.3:
@@ -6902,6 +7034,16 @@ packages:
 
   /form-data@3.0.3:
     resolution: {integrity: sha512-q5YBMeWy6E2Un0nMGWMgI65MAKtaylxfNJGJxpGh45YDciZB4epbWpaAfImil6CPAPTYB4sh0URQNDRIZG5F2w==}
+    engines: {node: '>= 6'}
+    dependencies:
+      asynckit: 0.4.0
+      combined-stream: 1.0.8
+      es-set-tostringtag: 2.1.0
+      mime-types: 2.1.35
+    dev: false
+
+  /form-data@4.0.2:
+    resolution: {integrity: sha512-hGfm/slu0ZabnNt4oaRZ6uREyfCj6P4fT/n6A1rGV+Z0VdGXjfOhVUpkn6qVQONHGIFwmveGXyDs75+nr6FM8w==}
     engines: {node: '>= 6'}
     dependencies:
       asynckit: 0.4.0
@@ -10138,6 +10280,10 @@ packages:
     dependencies:
       forwarded: 0.2.0
       ipaddr.js: 1.9.1
+    dev: false
+
+  /proxy-from-env@1.1.0:
+    resolution: {integrity: sha512-D+zkORCbA9f1tdWRK0RaCR3GPv50cMxcrz4X8k5LTSUD1Dkw47mKJEZQNunItRTkWwgtaUSo1RVFRIG9ZXiFYg==}
     dev: false
 
   /psl@1.15.0:
