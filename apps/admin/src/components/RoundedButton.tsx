@@ -10,9 +10,9 @@ interface RoundedButtonProps {
   onClick: () => void;
 }
 
-const RoundedButton = ({ children, width }: RoundedButtonProps) => {
+const RoundedButton = ({ children, width, onClick }: RoundedButtonProps) => {
   return (
-    <StyledRoundedButton style={{ width }}>
+    <StyledRoundedButton style={{ width }} onClick={onClick}>
       <IconAdd width={16} height={16} />
       {children}
     </StyledRoundedButton>

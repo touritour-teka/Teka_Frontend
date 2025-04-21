@@ -5,3 +5,4 @@ export { default as Input } from './src/Input/Input';
 export { default as DatePickerInput } from './src/Input/DatePickerInput';
 export { default as PreviewInput } from './src/Input/PreviewInput';
 export { default as ButtonInput } from './src/Input/ButtonInput';
+export { default as StepperInput } from './src/Input/StepperInput';

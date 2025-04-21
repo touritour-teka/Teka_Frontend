@@ -21,45 +21,39 @@ const RoomListItem = ({ title, period, night, personnel, status }: RoomListItemP
         <CheckBox checked={false} onChange={() => {}} />
       </Wrapper>
       <Wrapper width="87px">
-        <Text fontType="medi12" color={color.gray500}>
+        <Text fontType="regular12" color={color.gray900}>
           {title}
         </Text>
       </Wrapper>
       <Wrapper width="122px">
         <Column alignItems="flex-start">
-          <Text fontType="medi12" color={color.gray500}>
+          <Text fontType="regular12" color={color.gray900}>
             {period}
           </Text>
-          <Text fontType="medi12" color={color.gray500}>
+          <Text fontType="regular12" color={color.gray900}>
             {night}
           </Text>
         </Column>
       </Wrapper>
       <Wrapper width="44px">
-        <Text fontType="medi12" color={color.gray500}>
+        <Text fontType="regular12" color={color.gray900}>
           {personnel}명
         </Text>
       </Wrapper>
       <Wrapper>
-        <Text fontType="medi12" color={color.gray500}>
-          {status === 'opening' ? (
-            <StatusBox
-              background={color.blue100}
-              border={color.blue800}
-              color={color.blue800}
-            >
-              운영 중
-            </StatusBox>
-          ) : (
-            <StatusBox
-              background={color.red100}
-              border={color.red900}
-              color={color.red900}
-            >
-              클로즈
-            </StatusBox>
-          )}
-        </Text>
+        {status === 'opening' ? (
+          <StatusBox
+            background={color.blue100}
+            border={color.blue800}
+            color={color.blue800}
+          >
+            운영 중
+          </StatusBox>
+        ) : (
+          <StatusBox background={color.red100} border={color.red900} color={color.red900}>
+            클로즈
+          </StatusBox>
+        )}
       </Wrapper>
     </StyledRoomListItem>
   );

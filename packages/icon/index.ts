@@ -3,4 +3,7 @@ export { default as IconArrowForward } from './src/IconArrowForward';
 export { default as IconInvisibleEye } from './src/IconInvisibleEye';
 export { default as IconVisibleEye } from './src/IconVisibleEye';
 export { default as IconAdd } from './src/IconAdd';
-export { default as IconCheck} from './src/IconCheck';
+export { default as IconCheck } from './src/IconCheck';
+export { default as IconArrow } from './src/IconArrow';
+export { default as IconMinus } from './src/IconMinus';
+export { default as IconPlus } from './src/IconPlus';
