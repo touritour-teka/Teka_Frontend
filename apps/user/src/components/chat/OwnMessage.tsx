@@ -43,10 +43,6 @@ const OwnMessage: React.FC<OwnMessageProps> = ({
     }
   }, [prevTimestamp]);
 
-  useEffect(() => {
-    console.log(content, hasGoogleMapsUrl, query, iframeSrc);
-  }, [content])
-
   const handleClickPaste = () => {
     if (address) {
       navigator.clipboard.writeText(address).then(() => {

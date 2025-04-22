@@ -3,13 +3,28 @@ import { Text } from '@teka/ui';
 import { IconBackward, IconSetting } from '@teka/icon';
 import { flex } from '@teka/utils';
 import styled from 'styled-components';
+import { useNavigate } from 'react-router-dom';
 
-const Header = () => {
+interface HeaderProps {
+  title?: string;
+  hasSetting?: boolean;
+}
+const Header = ({ title, hasSetting }: HeaderProps) => {
+  const navigate = useNavigate();
+
+  const handleClickSetting = () => {
+    navigate('/setting');
+  };
+
   return (
     <StyledHeader>
       <IconBackward width={24} height={24} />
-      <Text fontType="semibold18">강원 님외 7명</Text>
-      <IconSetting width={24} height={24} />
+      <Text fontType="semibold18">{title}</Text>
+      {hasSetting && (
+        <div onClick={handleClickSetting}>
+          <IconSetting width={24} height={24} />
+        </div>
+      )}
     </StyledHeader>
   );
 };

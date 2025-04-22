@@ -1,6 +1,6 @@
 export { default as IconCalendar } from './src/IconCalendar';
 export { default as IconArrowForward } from './src/IconArrowForward';
-export { default as IconBackward } from './src/IconArrowBackward';
+export { default as IconArrowBackward } from './src/IconArrowBackward';
 export { default as IconInvisibleEye } from './src/IconInvisibleEye';
 export { default as IconVisibleEye } from './src/IconVisibleEye';
 export { default as IconSetting } from './src/IconSetting';
@@ -15,6 +15,6 @@ export { default as IconCheck } from './src/IconCheck';
 export { default as IconArrow } from './src/IconArrow';
 export { default as IconMinus } from './src/IconMinus';
 export { default as IconPlus } from './src/IconPlus';
+export { default as IconBackward } from './src/IconBackward';
 export { default as IconSignUpCheckFalse } from './src/IconSignUpCheckFalse';
 export { default as IconSignUpCheckTrue } from './src/IconSignUpCheckTrue';
-
