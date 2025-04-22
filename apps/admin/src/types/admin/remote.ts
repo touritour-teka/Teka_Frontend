@@ -3,4 +3,6 @@ export interface PostSignupReq {
   password: string;
 }
 
-export type GetValidateReq = Omit<PostSignupReq, 'password'>;
+export interface GetValidateReq {
+  username: string;
+}
