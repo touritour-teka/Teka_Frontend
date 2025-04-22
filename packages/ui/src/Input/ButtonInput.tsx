@@ -59,11 +59,11 @@ const StyledButtonInput = styled.div`
   gap: 7px;
 `;
 
-const Button = styled.button<{ disabled: boolean }>`
+const Button = styled.button`
   ${flex({ alignItems: 'center', justifyContent: 'center' })}
   ${font.medi14};
   color: ${color.white2};
-  background-color: ${({ disabled }) => (disabled ? color.gray400 : color.blue800)};
+  background-color: ${color.blue800};
   border-radius: 12px;
   height: 48px;
   padding: 0 16px;
