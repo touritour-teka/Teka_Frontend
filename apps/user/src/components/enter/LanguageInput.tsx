@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { color, font } from '@teka/design-system';
 import { IconArrowForward } from '@teka/icon';
 import { flex } from '@teka/utils';
-import LanguageModal from '@/components/LanguageModal';
+import LanguageModal from '@/components/enter/LanguageModal';
 
 interface LanguageInputProps {
   width?: CSSProperties['width'];

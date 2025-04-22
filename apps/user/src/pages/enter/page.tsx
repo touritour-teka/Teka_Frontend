@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { flex } from '@teka/utils';
-import Button from '@/components/Button';
-import LanguageInput from '@/components/LanguageInput';
+import Button from '@/components/enter/Button';
+import LanguageInput from '@/components/enter/LanguageInput';
 import { Column, Input } from '@teka/ui';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/constants/constant';
