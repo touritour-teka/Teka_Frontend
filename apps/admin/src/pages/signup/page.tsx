@@ -4,6 +4,7 @@ import { flex } from '@teka/utils';
 import styled from 'styled-components';
 import { useInput, useSingupAction, useVerificationAction } from './singup.hooks';
 import { color } from '@teka/design-system';
+import Validate from '@/components/common/Validate/Validate';
 
 const SignupPage = () => {
   const { signup, handleSignupChange } = useInput();
@@ -42,13 +43,16 @@ const SignupPage = () => {
                 </Text>
               )}
             </Column>
-            <PreviewInput
-              label="비밀번호"
-              placeholder="비밀번호를 입력해주세요"
-              width="100%"
-              name="password"
-              onChange={handleSignupChange}
-            />
+            <Column gap={8} width="100%" alignItems="flex-start">
+              <PreviewInput
+                label="비밀번호"
+                placeholder="비밀번호를 입력해주세요"
+                width="100%"
+                name="password"
+                onChange={handleSignupChange}
+              />
+              {Validate(signup.password)}
+            </Column>
             <PreviewInput
               width="100%"
               label="비밀번호 재입력"
@@ -59,7 +63,12 @@ const SignupPage = () => {
               errorMessage="비밀번호가 일치하지 않습니다."
             />
           </Column>
-          <Button onClick={handleSignup} variant={isFormValid && isPasswordMatching && isSuccess ? 'primary' : 'disabled'}>
+          <Button
+            onClick={handleSignup}
+            variant={
+              isFormValid && isPasswordMatching && isSuccess ? 'primary' : 'disabled'
+            }
+          >
             가입 완료
           </Button>
         </Column>

@@ -15,4 +15,6 @@ export { default as IconCheck } from './src/IconCheck';
 export { default as IconArrow } from './src/IconArrow';
 export { default as IconMinus } from './src/IconMinus';
 export { default as IconPlus } from './src/IconPlus';
+export { default as IconSignUpCheckFalse } from './src/IconSignUpCheckFalse';
+export { default as IconSignUpCheckTrue } from './src/IconSignUpCheckTrue';
 
