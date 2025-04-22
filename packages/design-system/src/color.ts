@@ -21,6 +21,7 @@ const color = {
   blue100: '#E9F5FF',
 
   green900: '#5FFF4D',
+  red100: '#FFE8EC',
   red900: '#FF4D6D',
 };
 

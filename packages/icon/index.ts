@@ -10,3 +10,9 @@ export { default as IconSend } from './src/IconSend';
 export { default as IconFile } from './src/IconFile';
 export { default as IconImage } from './src/IconImage';
 export { default as IconCamera } from './src/IconCamera';
+export { default as IconAdd } from './src/IconAdd';
+export { default as IconCheck } from './src/IconCheck';
+export { default as IconArrow } from './src/IconArrow';
+export { default as IconMinus } from './src/IconMinus';
+export { default as IconPlus } from './src/IconPlus';
+
