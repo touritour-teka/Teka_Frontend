@@ -8,3 +8,5 @@ export { default as IconTranslate } from './src/IconTranslate';
 export { default as IconLocationMark } from './src/IconLocationMark';
 export { default as IconSend } from './src/IconSend';
 export { default as IconFile } from './src/IconFile';
+export { default as IconImage } from './src/IconImage';
+export { default as IconCamera } from './src/IconCamera';
