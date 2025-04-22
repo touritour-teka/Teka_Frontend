@@ -4,13 +4,11 @@ module.exports = {
   webpack: {
     configure: (webpackConfig) => {
       const iconPath = path.resolve(__dirname, '../../packages/icon');
+      const hooksPath = path.resolve(__dirname, '../../packages/hooks');
 
       webpackConfig.module.rules.push({
         test: /\.[jt]sx?$/,
-        include: [
-          path.resolve(__dirname, 'src'), 
-          iconPath,
-        ],
+        include: [path.resolve(__dirname, 'src'), iconPath, hooksPath],
         exclude: /node_modules/,
         use: [
           {

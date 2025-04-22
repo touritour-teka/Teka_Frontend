@@ -1,14 +1,8 @@
-import React from "react";
+import React from 'react';
 
 const IconVisibleEye: React.FC<React.SVGProps<SVGSVGElement>> = (props) => {
   return (
-    <svg
-      width="22"
-      height="22"
-      viewBox="0 0 22 22"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
+    <svg viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
       <mask
         id="mask0_752_3566"
         style={{ maskType: 'alpha' }}
