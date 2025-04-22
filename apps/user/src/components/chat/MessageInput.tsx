@@ -1,7 +1,7 @@
 import { color } from '@teka/design-system';
 import { IconCamera, IconFile, IconImage, IconLocationMark, IconSend } from '@teka/icon';
 import { flex } from '@teka/utils';
-import { Column, Text } from '@teka/ui';
+import { Text } from '@teka/ui';
 import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import getGoogleMapsLink from '@/apis/maps/getGoogleMapsLink';

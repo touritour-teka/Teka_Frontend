@@ -8,7 +8,7 @@ import { color } from '@teka/design-system';
 const ChatPage = () => {
   return (
     <StyledChatPage>
-      <Header />
+      <Header title="강원 외 8명" hasSetting={true} />
       <ChatList />
       <MessageInput />
     </StyledChatPage>

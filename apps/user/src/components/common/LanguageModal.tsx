@@ -8,7 +8,7 @@ const LanguageModal = ({
   selectedLanguage,
 }: {
   onSelect: (lang: string) => void;
-    onClose: () => void;
+  onClose: () => void;
   selectedLanguage: string;
 }) => {
   return (
