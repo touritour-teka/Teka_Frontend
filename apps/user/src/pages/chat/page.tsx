@@ -1,6 +1,6 @@
 import { flex } from '@teka/utils';
 import styled from 'styled-components';
-import Header from '@/components/chat/Header';
+import Header from '@/components/common/Header';
 import ChatList from '@/components/chat/ChatList';
 import MessageInput from '@/components/chat/MessageInput';
 import { color } from '@teka/design-system';

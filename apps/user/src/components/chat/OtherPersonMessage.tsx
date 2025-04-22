@@ -47,9 +47,14 @@ const OtherPersonMessage: React.FC<OtherPersonMessageProps> = ({
           </MessageContainer>
           <Column>
             {!isTranslate ? (
-              <IconWrapper onClick={handleClickTranslateButton}>
-                <IconTranslate width={24} height={24} />
-              </IconWrapper>
+              <>
+                <IconWrapper onClick={handleClickTranslateButton}>
+                  <IconTranslate width={24} height={24} />
+                </IconWrapper>
+                <Text fontType="regular12chat" color={color.wireframe2}>
+                  {timestamp}
+                </Text>
+              </>
             ) : (
               <Text fontType="regular12chat" color={color.wireframe2}>
                 {timestamp}

@@ -17,8 +17,15 @@ const ChatList = () => {
       <DateDivider date={formattedDate} />
       <OwnMessage
         name="강원"
-        content="저 여기 잇어요 https://maps.app.goo.gl/SDrqKdjzkVuogo9F9"
+        content="안녕하세요 저는 박강원이에요"
         timestamp="오후 12:40"
+        prevTimestamp="오후 6:00"
+      />
+      <OwnMessage
+        name="강원"
+        content="https://www.google.com/maps?q=35.18880935515994,128.9030980020072"
+        timestamp="오후 12:40"
+        prevTimestamp="오후 12:40"
       />
       <OtherPersonMessage
         name="Nicholas"

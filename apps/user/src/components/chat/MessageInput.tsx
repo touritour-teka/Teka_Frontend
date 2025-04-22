@@ -1,88 +1,125 @@
-import { IconFile, IconLocationMark, IconSend } from '@teka/icon';
-import { Row } from '@teka/ui';
+import { color } from '@teka/design-system';
+import { IconCamera, IconFile, IconImage, IconLocationMark, IconSend } from '@teka/icon';
 import { flex } from '@teka/utils';
-import React, { useRef } from 'react';
+import { Column, Text } from '@teka/ui';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
+import getGoogleMapsLink from '@/apis/maps/getGoogleMapsLink';
 
 const MessageInput: React.FC = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [showOptionsPanel, setShowOptionsPanel] = useState(false);
 
   const handleFileOpen = () => {
-    fileInputRef.current?.click();
+    setShowOptionsPanel(!showOptionsPanel);
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (file) {
-      console.log('선택된 파일:', file);
+  };
+
+  const handleSendLocation = () => {
+    if (!navigator.geolocation) {
+      alert('위치 정보를 지원하지 않는 브라우저입니다.');
+      return;
     }
+
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        const mapsLink = getGoogleMapsLink(latitude, longitude);
+        console.log(mapsLink);
+      },
+      (error) => {
+        console.error(error);
+        alert('위치 정보를 가져올 수 없습니다.');
+      }
+    );
+  };
+
+  const handleTakePhoto = () => {
+    console.log('카메라 촬영');
+  };
+
+  const handleSelectPhoto = () => {
+    fileInputRef.current?.click();
   };
 
   return (
-    <ReactMessageInput>
-      <IconLocationMark width={36} height={36} />
-      <InputContainer>
-        <TextInput placeholder="메시지 입력..." />
-        <div onClick={handleFileOpen}>
-          <IconFile width={28} height={28} onClick={handleFileOpen} />
+    <>
+      {showOptionsPanel && (
+        <OptionsPanel>
+          <OptionItem onClick={handleTakePhoto}>
+            <IconCamera width={46} height={46} />
+            <Text fontType="regular12">촬영</Text>
+          </OptionItem>
+          <OptionItem onClick={handleSelectPhoto}>
+            <IconImage width={46} height={46} />
+            <Text fontType="regular12">사진 첨부</Text>
+          </OptionItem>
+        </OptionsPanel>
+      )}
+      <StyledMessageInput>
+        <div onClick={handleSendLocation}>
+          <IconLocationMark width={36} height={36} />
         </div>
-      </InputContainer>
-      <IconSend width={36} height={36} />
-    </ReactMessageInput>
+        <InputContainer>
+          <TextInput placeholder="메시지 입력..." />
+          <div onClick={handleFileOpen}>
+            <IconFile width={28} height={28} />
+          </div>
+          <input
+            type="file"
+            ref={fileInputRef}
+            style={{ display: 'none' }}
+            onChange={handleFileChange}
+          />
+        </InputContainer>
+        <IconSend width={36} height={36} />
+      </StyledMessageInput>
+    </>
   );
 };
 
 export default MessageInput;
 
-const ReactMessageInput = styled.div`
+const StyledMessageInput = styled.div`
   ${flex({ alignItems: 'center', justifyContent: 'space-between' })};
+  background: ${color.white2};
   width: 100%;
   padding: 12px 12px 34px 12px;
-  background-color: #fff;
-  border-top: 1px solid #ddd;
   gap: 6px;
 `;
 
 const InputContainer = styled.div`
   ${flex({ alignItems: 'center' })};
+  background: ${color.gray50};
   width: 100%;
-  background-color: #f0f0f0;
   border-radius: 20px;
   padding: 2px 8px;
 `;
 
 const TextInput = styled.input`
+  background: ${color.gray50};
   flex: 1;
   border: none;
   outline: none;
   margin: 0 8px;
-  background-color: #f0f0f0;
 `;
 
-const SendButton = styled.button`
-  background-color: #3b82f6;
-  color: white;
-  border: none;
-  width: 36px;
-  height: 36px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-`;
-
-const BadgeCounter = styled.div`
-  background-color: #e74c3c;
-  color: white;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
+const OptionsPanel = styled.div`
+  ${flex({ justifyContent: 'flex-start' })};
   position: absolute;
-  bottom: 6px;
-  left: 30px;
+  background: ${color.white2};
+  padding: 16px 17px;
+  bottom: 80px;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  gap: 20px;
+`;
+
+const OptionItem = styled.div`
+  ${flex({ flexDirection: 'column', alignItems: 'center' })};
+  gap: 4px;
 `;
