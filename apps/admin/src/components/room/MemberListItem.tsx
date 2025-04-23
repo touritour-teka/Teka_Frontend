@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import CheckBox from '../CheckBox';
 import { flex } from '@teka/utils';
 
-interface RoomListItem {
+interface RoomListItemProps {
   phoneValue: string;
   phoneChange: () => void;
   phonePlaceholder: string;
@@ -19,7 +19,7 @@ const RoomListItem = ({
   mailValue,
   mailChange,
   mailPlaceholder,
-}: RoomListItem) => {
+}: RoomListItemProps) => {
   return (
     <StyledRoomListItem>
       <Wrapper width="31px">
