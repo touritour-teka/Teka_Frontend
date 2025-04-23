@@ -21,7 +21,7 @@ const CheckBox = ({ checked, onChange, label, disabled = false, id }: CheckBoxPr
       onChange={(e) => onChange(e.target.checked)}
     />
     <StyledCheckbox $checked={checked} $disabled={disabled}>
-      {checked && <IconCheck width={14} height={14} color={color.white2} />}
+      {checked && <IconCheck width={12} height={12} color={color.white2} />}
     </StyledCheckbox>
     {label && <TextLabel>{label}</TextLabel>}
   </LabelWrapper>
