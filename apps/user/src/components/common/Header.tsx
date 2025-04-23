@@ -1,6 +1,6 @@
 import { color } from '@teka/design-system';
 import { Text } from '@teka/ui';
-import { IconBackward, IconSetting } from '@teka/icon';
+import { IconArrowBackward, IconSetting } from '@teka/icon';
 import { flex } from '@teka/utils';
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
@@ -18,12 +18,14 @@ const Header = ({ title, hasSetting }: HeaderProps) => {
 
   return (
     <StyledHeader>
-      <IconBackward width={24} height={24} />
+      <IconArrowBackward width={24} height={24} />
       <Text fontType="semibold18">{title}</Text>
-      {hasSetting && (
+      {hasSetting ? (
         <div onClick={handleClickSetting}>
           <IconSetting width={24} height={24} />
         </div>
+      ) : (
+        <div style={{ width: '24px', height: '24px' }} />
       )}
     </StyledHeader>
   );
