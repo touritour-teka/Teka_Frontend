@@ -2,46 +2,55 @@ import { color } from '@teka/design-system';
 import styled from 'styled-components';
 import CheckBox from '../CheckBox';
 import { flex } from '@teka/utils';
-import { Column, Text } from '@teka/ui';
+import { Text } from '@teka/ui';
 import StatusBox from './StatusBox';
-import { Status } from '@/types/manage/client';
+import { Status } from '@/types/room/client';
+import { formatDate } from '@/utils/formatDate';
 
 interface RoomListItemProps {
-  title: string;
-  period: string;
-  night: string;
-  personnel: number;
+  id: string;
+  name: string;
+  startDate: string;
+  endDate: string;
+  maxParticipants: number;
   status: Status;
+  checked: boolean;
+  onChange: () => void;
 }
 
-const RoomListItem = ({ title, period, night, personnel, status }: RoomListItemProps) => {
+const RoomListItem = ({
+  id,
+  name,
+  startDate,
+  endDate,
+  maxParticipants,
+  checked,
+  status,
+  onChange,
+}: RoomListItemProps) => {
   return (
     <StyledRoomListItem>
       <Wrapper width="31px">
-        <CheckBox checked={false} onChange={() => {}} />
+        <CheckBox id={id} checked={checked} onChange={onChange} />
       </Wrapper>
       <Wrapper width="87px">
         <Text fontType="regular12" color={color.gray900}>
-          {title}
+          {name}
         </Text>
       </Wrapper>
       <Wrapper width="122px">
-        <Column alignItems="flex-start">
-          <Text fontType="regular12" color={color.gray900}>
-            {period}
-          </Text>
-          <Text fontType="regular12" color={color.gray900}>
-            {night}
-          </Text>
-        </Column>
+        <Text fontType="regular12" color={color.gray900}>
+          {formatDate(startDate)}~<br />
+          {formatDate(endDate)}
+        </Text>
       </Wrapper>
       <Wrapper width="44px">
         <Text fontType="regular12" color={color.gray900}>
-          {personnel}명
+          {maxParticipants}명
         </Text>
       </Wrapper>
       <Wrapper>
-        {status === 'opening' ? (
+        {status === 'OPEN' ? (
           <StatusBox
             background={color.blue100}
             border={color.blue800}
