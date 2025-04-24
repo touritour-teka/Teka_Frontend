@@ -53,5 +53,5 @@ export const usePostChatRoomMutation = (roomData: postRoomReq) => {
     onError: handleError,
   });
 
-  return { postChatRoom, ...restMutation };
+  return { postChatRoomMutate, ...restMutation };
 };
