@@ -13,6 +13,13 @@ export interface RoomList {
   status: Status;
 }
 
+export interface Room {
+  name: string;
+  startDate: string;
+  endDate: string;
+  maxParticipants: number;
+}
+
 export interface RoomDetail {
   chatRoomId: number;
   name: string;
