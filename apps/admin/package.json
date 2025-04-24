@@ -16,6 +16,7 @@
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^13.5.0",
+    "@toss/use-overlay": "^1.4.2",
     "@types/jest": "^27.5.2",
     "@types/node": "^16.18.126",
     "@types/styled-components": "^5.1.26",
