@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import { patchChatRoomClose, patchChatRoomOpen } from './api';
+import { deleteChatRoom, patchChatRoomClose, patchChatRoomOpen } from './api';
 import useApiError from '@/hooks/useApiError';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/constants/constant';
@@ -32,4 +32,19 @@ export const usePatchRoomCloseMutation = (chatRoomId: number) => {
   });
 
   return { chatRoomCloseMutate, ...restMutation };
+};
+
+export const useDeleteChatRoomMutation = (chatRoomId: number) => {
+  const { handleError } = useApiError();
+  const navigate = useNavigate();
+
+  const { mutate: deleteChatRoomMutate, ...restMutation } = useMutation({
+    mutationFn: () => deleteChatRoom(chatRoomId),
+    onSuccess: () => {
+      navigate(ROUTES.MANAGE);
+    },
+    onError: handleError,
+  });
+
+  return { deleteChatRoom, ...restMutation };
 };
