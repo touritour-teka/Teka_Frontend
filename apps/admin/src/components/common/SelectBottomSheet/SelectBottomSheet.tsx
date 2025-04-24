@@ -54,7 +54,7 @@ const SelectBottomSheet = ({
   }, [isOpen]);
 
   return (
-    <BlurBackground $isOpen={isOpen} onClick={handleOnClose}>
+    <BlurBackground $isOpen={isOpen}>
       <StyledSelectBottomSheet>
         <Column gap={20}>
           <Column gap={20}>
