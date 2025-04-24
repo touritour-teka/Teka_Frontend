@@ -6,8 +6,6 @@ import {
   postChatRoom,
 } from './api';
 import useApiError from '@/hooks/useApiError';
-import { useNavigate } from 'react-router-dom';
-import { ROUTES } from '@/constants/constant';
 import { postRoomReq } from '@/types/room/remote';
 
 export const usePatchRoomOpenMutation = (chatRoomId: number) => {
