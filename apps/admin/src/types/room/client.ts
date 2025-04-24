@@ -38,3 +38,14 @@ export interface UserList {
   language: Language;
   type: UserType;
 }
+
+export interface User {
+  phoneNumber: string;
+  email: string;
+  type: UserType;
+}
+
+export interface ChangeType {
+  userId: number;
+  type: UserType;
+}
