@@ -6,13 +6,10 @@ import { ROUTES } from '@/constants/constant';
 
 export const usePatchRoomOpenMutation = (chatRoomId: number) => {
   const { handleError } = useApiError();
-  const navigate = useNavigate();
 
   const { mutate: chatRoomOpenMutate, ...restMutation } = useMutation({
     mutationFn: () => patchChatRoomOpen(chatRoomId),
-    onSuccess: () => {
-      navigate(ROUTES.MANAGE);
-    },
+    onSuccess: () => {},
     onError: handleError,
   });
 
@@ -21,13 +18,10 @@ export const usePatchRoomOpenMutation = (chatRoomId: number) => {
 
 export const usePatchRoomCloseMutation = (chatRoomId: number) => {
   const { handleError } = useApiError();
-  const navigate = useNavigate();
 
   const { mutate: chatRoomCloseMutate, ...restMutation } = useMutation({
     mutationFn: () => patchChatRoomClose(chatRoomId),
-    onSuccess: () => {
-      navigate(ROUTES.MANAGE);
-    },
+    onSuccess: () => {},
     onError: handleError,
   });
 
