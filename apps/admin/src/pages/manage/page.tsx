@@ -10,6 +10,7 @@ import { useOverlay } from '@toss/use-overlay';
 import DeleteModal from '@/components/manage/DeleteModal';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/constants/constant';
+import SelectBottomSheet from '@/components/common/SelectBottomSheet/SelectBottomSheet';
 
 const rooms: Array<{
   chatRoomId: number;
@@ -36,7 +37,7 @@ const rooms: Array<{
     status: 'CLOSED',
   },
   {
-    chatRoomId: 3,
+    chatRoomId: 4,
     name: '회의실 C',
     startDate: '2025-04-10',
     endDate: '2025-04-12',
@@ -86,6 +87,21 @@ const ManagePage = () => {
     ));
   };
 
+  const selectedId = Number(itemChecked[0]);
+  const selectedRoom = rooms.find((r) => r.chatRoomId === selectedId);
+  const selectedStatus = selectedRoom?.status ?? 'OPEN';
+
+  const openChangeRoomStatus = () => {
+    overlay.open(({ isOpen, close }) => (
+      <SelectBottomSheet
+        isOpen={isOpen}
+        onClose={close}
+        selectedId={selectedId}
+        status={selectedStatus}
+      />
+    ));
+  };
+
   return (
     <StyledManagePage>
       <ManagePageBox>
@@ -104,19 +120,9 @@ const ManagePage = () => {
                   console.log('shre');
                 }}
               />
-              <IconStatus
-                width={24}
-                height={24}
-                style={{
-                  marginRight: '8px',
-                  marginLeft: '8px',
-                  marginBottom: '8px',
-                  marginTop: '8px',
-                }}
-                onClick={() => {
-                  console.log('status');
-                }}
-              />
+              <IconButton onClick={openChangeRoomStatus}>
+                <IconStatus width={24} height={24} />
+              </IconButton>
               <IconMemberMove
                 width={24}
                 height={24}
