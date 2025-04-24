@@ -19,6 +19,7 @@ const DeleteModal = ({
   selectedIds,
 }: DeleteModalProps) => {
   const { deleteChatRoomMutate } = useDeleteChatRoomMutation();
+
   const handleOnClose = () => {
     onClose();
   };
