@@ -12,8 +12,6 @@ const RoomCreatePage = () => {
     useInput();
   const { handleCreateRoom } = useCreateRoomAction(roomData);
 
-  console.log(roomData);
-
   return (
     <StyledRoomCreatePage>
       <RoomCreatePageContent>
