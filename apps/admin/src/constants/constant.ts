@@ -3,6 +3,7 @@ export const ROUTES = {
   SIGNUP: '/signup',
   MANAGE: '/manage',
   CREATE: '/room/create',
+  ROOM: '/room',
 } as const;
 
 export const TOKEN = {
@@ -12,4 +13,6 @@ export const TOKEN = {
 
 export const KEY = {
   VALIDATE: 'useValidateKey',
-}
+  CHAT_LIST: 'useChatListKey',
+  CHAT_DETAIL: 'useChatDetailKey',
+};
