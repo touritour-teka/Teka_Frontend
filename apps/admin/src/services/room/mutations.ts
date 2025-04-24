@@ -34,17 +34,14 @@ export const usePatchRoomCloseMutation = (chatRoomId: number) => {
   return { chatRoomCloseMutate, ...restMutation };
 };
 
-export const useDeleteChatRoomMutation = (chatRoomId: number) => {
+export const useDeleteChatRoomMutation = () => {
   const { handleError } = useApiError();
-  const navigate = useNavigate();
 
   const { mutate: deleteChatRoomMutate, ...restMutation } = useMutation({
-    mutationFn: () => deleteChatRoom(chatRoomId),
-    onSuccess: () => {
-      navigate(ROUTES.MANAGE);
-    },
+    mutationFn: (chatRoomId: number) => deleteChatRoom(chatRoomId),
+    onSuccess: () => {},
     onError: handleError,
   });
 
-  return { deleteChatRoom, ...restMutation };
+  return { deleteChatRoomMutate, ...restMutation };
 };
