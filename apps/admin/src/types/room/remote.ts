@@ -7,3 +7,10 @@ export interface RoomListRes {
 export interface getRoomDetailRes {
   data: RoomDetail;
 }
+
+export interface postRoomReq {
+  name: string;
+  startDate: string;
+  endDate: string;
+  maxParticipants: number;
+}
