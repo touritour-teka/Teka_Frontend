@@ -1,7 +1,7 @@
 import authorization from '@/apis/authorization/authorization';
 import { teka } from '@/apis/instance/instance';
 import { RoomDetail, Status } from '@/types/room/client';
-import { RoomListRes } from '@/types/room/remote';
+import { postRoomReq, RoomListRes } from '@/types/room/remote';
 
 export const getChatRoom = async (status: Status) => {
   const { data } = await teka.get<RoomListRes>('/chatrooms', {
@@ -39,6 +39,12 @@ export const patchChatRoomClose = async (chatRoomId: number) => {
 
 export const deleteChatRoom = async (chatRoomId: number) => {
   const { data } = await teka.delete(`/chatrooms/${chatRoomId}`, authorization());
+
+  return data;
+};
+
+export const postChatRoom = async (roomData: postRoomReq) => {
+  const { data } = await teka.post('/chatrooms', roomData, authorization());
 
   return data;
 };
