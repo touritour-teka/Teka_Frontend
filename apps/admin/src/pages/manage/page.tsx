@@ -3,11 +3,13 @@ import styled from 'styled-components';
 import { flex } from '@teka/utils';
 import RoundedButton from '@/components/RoundedButton';
 import RoomList from '@/components/manage/RoomList';
-import { useChatListQuery } from '@/services/room/queries';
 import { Status } from '@/types/room/client';
 import { Row } from '@teka/ui';
 import { IconMemberMove, IconShare, IconStatus, IconTrash } from '@teka/icon';
-import { useCTAButton } from './manage.hooks';
+import { useOverlay } from '@toss/use-overlay';
+import DeleteModal from '@/components/manage/DeleteModal';
+import { useNavigate } from 'react-router-dom';
+import { ROUTES } from '@/constants/constant';
 
 const rooms: Array<{
   chatRoomId: number;
@@ -46,7 +48,12 @@ const rooms: Array<{
 const ManagePage = () => {
   // const { data: rooms = [] } = useChatListQuery();
   const [itemChecked, setItemChecked] = useState<string[]>([]);
-  const { handleMoveRoomCreate } = useCTAButton();
+  const overlay = useOverlay();
+  const navigate = useNavigate();
+
+  const handleMoveRoomCreate = () => {
+    navigate(ROUTES.CREATE);
+  };
 
   const headerChecked = useMemo(
     () => rooms.length > 0 && itemChecked.length === rooms.length,
@@ -66,6 +73,18 @@ const ManagePage = () => {
       setItemChecked(rooms.map((r) => r.chatRoomId.toString()));
     }
   }, [headerChecked, rooms]);
+
+  const openDeleteChatRoomModal = () => {
+    overlay.open(({ isOpen, close }) => (
+      <DeleteModal
+        isOpen={isOpen}
+        onClose={close}
+        onConfirm={close}
+        count={itemChecked.length}
+        selectedIds={itemChecked.map((id) => Number(id))}
+      />
+    ));
+  };
 
   return (
     <StyledManagePage>
@@ -111,24 +130,14 @@ const ManagePage = () => {
                   console.log('shre');
                 }}
               />
-              <IconTrash
-                width={24}
-                height={24}
-                style={{ marginLeft: '8px', marginBottom: '8px', marginTop: '8px' }}
-                onClick={() => {
-                  console.log('shre');
-                }}
-              />
+              <IconButton onClick={openDeleteChatRoomModal}>
+                <IconTrash width={24} height={24} />
+              </IconButton>
             </Row>
           ) : (
-            <IconTrash
-              width={24}
-              height={24}
-              style={{ marginLeft: '8px', marginBottom: '8px', marginTop: '8px' }}
-              onClick={() => {
-                console.log('shre');
-              }}
-            />
+            <IconButton onClick={openDeleteChatRoomModal}>
+              <IconTrash width={24} height={24} />
+            </IconButton>
           )}
         </ButtonWrapper>
         <RoomList
@@ -162,4 +171,12 @@ const ManagePageBox = styled.div`
 const ButtonWrapper = styled.div`
   ${flex({ justifyContent: 'flex-end' })}
   padding-right: 16px;
+`;
+
+const IconButton = styled.button`
+  background: none;
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+  display: inline-flex;
 `;
