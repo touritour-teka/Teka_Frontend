@@ -5,14 +5,14 @@ import { ROUTES } from '@/constants/constant';
 import { Column, DatePickerInput, Input, StepperInput } from '@teka/ui';
 import { flex } from '@teka/utils';
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useCreateRoomAction, useInput } from './create.hooks';
 
 const RoomCreatePage = () => {
-  const [peopleCount, setPeopleCount] = useState(1);
+  const { handleRoomChange, handleRoomNumberChange, handleRoomDateChange, roomData } =
+    useInput();
+  const { handleCreateRoom } = useCreateRoomAction(roomData);
 
-  const handlePeopleCountChange = (newCount: number) => {
-    setPeopleCount(newCount);
-  };
+  console.log(roomData);
 
   return (
     <StyledRoomCreatePage>
@@ -24,26 +24,28 @@ const RoomCreatePage = () => {
               label="방 제목"
               placeholder="방 제목을 입력해주세요"
               width="100%"
-              onChange={() => {}}
+              name="name"
+              onChange={handleRoomChange}
             />
             <DatePickerInput
               label="기간"
               width="100%"
               placeholder="기간을 입력해주세요"
+              onDateChange={handleRoomDateChange}
             />
             <StepperInput
               label="인원 수"
-              onChange={handlePeopleCountChange}
+              onChange={handleRoomNumberChange}
               width="100%"
-              name="people"
-              value={peopleCount}
+              name="maxParticipants"
+              value={roomData.maxParticipants}
             />
           </Column>
         </Content>
         <Column gap={71}>
           <MemberList />
           <Wrapper>
-            <Button onClick={() => {}}>방 개설</Button>
+            <Button onClick={handleCreateRoom}>방 개설</Button>
           </Wrapper>
         </Column>
       </RoomCreatePageContent>
