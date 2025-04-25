@@ -6,11 +6,19 @@ import { Column } from '@teka/ui';
 import MemberListItem from './MemberListItem';
 import { useState } from 'react';
 
-const MemberList = () => {
+interface MemberListProps {
+  maxItem: number;
+}
+
+const MemberList = ({ maxItem }: MemberListProps) => {
   const [members, setMembers] = useState<any[]>([]);
 
   const handleAddMember = () => {
-    setMembers([...members, { id: members.length + 1 }]);
+    if (members.length >= maxItem) {
+      alert(`최대 ${maxItem}명까지만 추가 가능합니다.`);
+      return;
+    }
+    setMembers((prev) => [...prev, { id: prev.length + 1 }]);
   };
 
   return (

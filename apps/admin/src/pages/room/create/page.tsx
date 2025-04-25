@@ -41,7 +41,7 @@ const RoomCreatePage = () => {
           </Column>
         </Content>
         <Column gap={71}>
-          <MemberList />
+          <MemberList maxItem={roomData.maxParticipants} />
           <Wrapper>
             <Button onClick={handleCreateRoom}>방 개설</Button>
           </Wrapper>
