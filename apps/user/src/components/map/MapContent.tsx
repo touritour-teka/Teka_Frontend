@@ -15,6 +15,9 @@ const GlobalMapStyles = createGlobalStyle`
     padding: 10px 12px !important;
     box-shadow: 0px 40px 11px 0px rgba(135, 135, 135, 0.00), 0px 14px 9px 0px rgba(135, 135, 135, 0.05), 0px 6px 6px 0px rgba(135, 135, 135, 0.09), 0px 2px 3px 0px rgba(135, 135, 135, 0.10) !important;
   }
+  .gm-style-iw-d {
+    overflow: auto !important;
+  }
 `;
 
 interface Coordinates {
@@ -90,31 +93,37 @@ const MapContent: React.FC = () => {
       rowContainer.style.display = 'flex';
       rowContainer.style.alignItems = 'center';
       rowContainer.style.justifyContent = 'space-between';
-      rowContainer.style.gap = '12px';
+      rowContainer.style.gap = '18px';
 
-      const iconContainer = document.createElement('div');
-      const root = createRoot(iconContainer);
-      root.render(<IconArrowForward width={24} height={24} color={color.gray900} />);
-      iconContainer.style.marginRight = '8px';
+      const textContainer = document.createElement('div');
+      textContainer.style.display = 'flex';
+      textContainer.style.flexDirection = 'column';
 
       const labelDiv = document.createElement('div');
       labelDiv.innerText = '이 위치 보내기';
+      labelDiv.style.fontSize = '14px';
+      labelDiv.style.fontWeight = '500';
 
       const addressDiv = document.createElement('div');
-      addressDiv.style.marginTop = '8px';
-      addressDiv.style.fontFamily = 'Pretendard';
+      addressDiv.style.marginTop = '4px';
       addressDiv.style.fontSize = '12px';
-      addressDiv.style.fontStyle = 'normal';
       addressDiv.style.fontWeight = '400';
       addressDiv.style.lineHeight = '140%';
       addressDiv.style.letterSpacing = '0.12px';
       addressDiv.innerText = markerAddress;
 
-      newContent.appendChild(labelDiv);
+      textContainer.appendChild(labelDiv);
+      textContainer.appendChild(addressDiv);
+
+      const iconContainer = document.createElement('div');
+      const root = createRoot(iconContainer);
+      root.render(<IconArrowForward width={24} height={24} color={color.gray900} />);
+      iconContainer.style.marginLeft = 'auto';
+
+      rowContainer.appendChild(textContainer);
+      rowContainer.appendChild(iconContainer);
 
       newContent.appendChild(rowContainer);
-      rowContainer.appendChild(addressDiv);
-      rowContainer.appendChild(iconContainer);
 
       overlayRef.current.setContent(newContent);
     }
@@ -252,7 +261,7 @@ const MapContent: React.FC = () => {
       <StyledMapContent>
         <MapContainer ref={mapRef} />
         <LocationButton onClick={handleLocationButtonClick}>
-          <IconLocation width={47} height={37} />
+          <IconLocation width={47} height={37} color={color.gray900} />
         </LocationButton>
       </StyledMapContent>
     </>
