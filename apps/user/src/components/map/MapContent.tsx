@@ -2,7 +2,6 @@ import { color } from '@teka/design-system';
 import { IconArrowForward, IconLocation } from '@teka/icon';
 import { flex } from '@teka/utils';
 import { useState, useEffect, useRef } from 'react';
-import { createPortal } from 'react-dom';
 import { createRoot } from 'react-dom/client';
 import styled from 'styled-components';
 import { createGlobalStyle } from 'styled-components';
@@ -25,49 +24,12 @@ interface Coordinates {
   lng: number;
 }
 
-const CustomOverlay: React.FC<{
-  map: google.maps.Map;
-  position: google.maps.LatLngLiteral;
-  children: React.ReactNode;
-}> = ({ map, position, children }) => {
-  const overlayRef = useRef<google.maps.OverlayView | null>(null);
-  const container = useRef(document.createElement('div'));
-  container.current.style.transform = 'translate(-50%, -100%)';
+interface MapContentProps {
+  lat: number;
+  lng: number;
+}
 
-  useEffect(() => {
-    const Overlay = class extends google.maps.OverlayView {
-      onAdd() {
-        const panes = this.getPanes();
-        if (panes) panes.overlayMouseTarget.appendChild(container.current);
-      }
-
-      draw() {
-        const projection = this.getProjection();
-        if (!projection) return;
-        const point = projection.fromLatLngToDivPixel(new google.maps.LatLng(position));
-        if (point && container.current.style) {
-          container.current.style.left = `${point.x}px`;
-          container.current.style.top = `${point.y}px`;
-        }
-      }
-
-      onRemove() {
-        container.current.remove();
-      }
-    };
-
-    overlayRef.current = new Overlay();
-    overlayRef.current.setMap(map);
-
-    return () => {
-      overlayRef.current?.setMap(null);
-    };
-  }, [map, position]);
-
-  return createPortal(children, container.current);
-};
-
-const MapContent: React.FC = () => {
+const MapContent = ({ lat, lng }: MapContentProps) => {
   const [markerPosition, setMarkerPosition] = useState<Coordinates | null>(null);
   const [markerAddress, setMarkerAddress] = useState<string>('');
   const mapRef = useRef<HTMLDivElement>(null);
@@ -75,6 +37,7 @@ const MapContent: React.FC = () => {
   const overlayRef = useRef<google.maps.InfoWindow | null>(null);
   const [map, setMap] = useState<google.maps.Map | null>(null);
   const [userLocation, setUserLocation] = useState<Coordinates | null>(null);
+  const [initialPosition, setInitialPosition] = useState<Coordinates | null>(null);
   const GOOGLE_MAPS_API_KEY = process.env.REACT_APP_API_KEY;
 
   useEffect(() => {
@@ -130,7 +93,7 @@ const MapContent: React.FC = () => {
   }, [markerAddress]);
 
   useEffect(() => {
-    const fallbackLocation: Coordinates = { lat: 37.5665, lng: 126.978 };
+    const fallbackLocation: Coordinates = { lat, lng };
 
     const initializeMap = (location: Coordinates): void => {
       if (!mapRef.current) return;
@@ -186,19 +149,9 @@ const MapContent: React.FC = () => {
       script.defer = true;
       script.onload = () => {
         if (navigator.geolocation) {
-          navigator.geolocation.getCurrentPosition(
-            (position) => {
-              const userPos = {
-                lat: position.coords.latitude,
-                lng: position.coords.longitude,
-              };
-              setUserLocation(userPos);
-              initializeMap(userPos);
-            },
-            () => {
-              initializeMap(fallbackLocation);
-            }
-          );
+          navigator.geolocation.getCurrentPosition(() => {
+            initializeMap(fallbackLocation);
+          });
         } else {
           initializeMap(fallbackLocation);
         }
@@ -209,19 +162,9 @@ const MapContent: React.FC = () => {
     if (!window.google) {
       loadMapScript();
     } else {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const userPos = {
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          };
-          setUserLocation(userPos);
-          initializeMap(userPos);
-        },
-        () => {
-          initializeMap(fallbackLocation);
-        }
-      );
+      navigator.geolocation.getCurrentPosition(() => {
+        initializeMap(fallbackLocation);
+      });
     }
   }, []);
 

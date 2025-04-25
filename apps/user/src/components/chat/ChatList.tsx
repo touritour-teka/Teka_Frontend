@@ -23,7 +23,7 @@ const ChatList = () => {
       />
       <OwnMessage
         name="강원"
-        content="https://www.google.com/maps?q=35.18880935515994,128.9030980020072"
+        content="https://www.google.com/maps?q=37.5665,126.978"
         timestamp="오후 12:40"
         prevTimestamp="오후 12:40"
       />
