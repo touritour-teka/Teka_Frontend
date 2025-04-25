@@ -1,35 +1,26 @@
-import React, { useState } from 'react';
+import React, { CSSProperties, useState } from 'react';
 import { color, font } from '@teka/design-system';
 import styled from 'styled-components';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { IconCalendar } from '@teka/icon';
 import { flex } from '@teka/utils';
-import { formatDateRange } from '@teka/utils';
-import ConditionalMessage from './ConditionalMessage';
-import { InputProps } from './Input.type';
+
+interface DatePickerInputProps {
+  width?: CSSProperties['width'];
+  label?: string;
+  placeholder?: string;
+  onDateChange?: (start: Date | null, end: Date | null) => void;
+}
 
 const DatePickerInput = ({
   width,
   label,
   placeholder,
-  type = 'text',
-  name,
-  onChange,
-  readOnly,
-  textAlign,
-  isError = false,
-  errorMessage,
-  message,
-}: InputProps) => {
-  const [dateRange, setDateRange] = useState([null, null]);
+  onDateChange,
+}: DatePickerInputProps) => {
+  const [dateRange, setDateRange] = useState<[Date | null, Date | null]>([null, null]);
   const [startDate, endDate] = dateRange;
-
-  const dateInfo = formatDateRange(startDate, endDate);
-  const displayText =
-    startDate && endDate
-      ? `${dateInfo.startDateStr} - ${dateInfo.endDateStr} (${dateInfo.diffDays}일)`
-      : '';
 
   return (
     <div style={{ width }}>
@@ -37,24 +28,27 @@ const DatePickerInput = ({
       <div style={{ position: 'relative' }}>
         <StyledDatePickerInput>
           <DatePicker
-            selectsRange={true}
+            selectsRange
             startDate={startDate}
             endDate={endDate}
-            onChange={(update: any) => {
+            onChange={(update: [Date | null, Date | null]) => {
               setDateRange(update);
+              onDateChange?.(update[0], update[1]);
             }}
             dateFormat="yyyy.MM.dd"
             placeholderText={placeholder}
             customInput={
               <Input
-                value={displayText || ''}
+                value={
+                  startDate && endDate
+                    ? `${startDate.toISOString().split('T')[0]}-${
+                        endDate.toISOString().split('T')[0]
+                      }`
+                    : ''
+                }
                 placeholder={placeholder}
-                type={type}
-                name={name}
-                readOnly={readOnly}
-                onChange={onChange}
+                readOnly
                 onClick={(e) => e.preventDefault()}
-                style={{ textAlign }}
               />
             }
           />
@@ -63,11 +57,6 @@ const DatePickerInput = ({
           </IconWrapper>
         </StyledDatePickerInput>
       </div>
-      <ConditionalMessage
-        isError={isError}
-        errorMessage={errorMessage}
-        message={message}
-      />
     </div>
   );
 };
