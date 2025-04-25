@@ -1,8 +1,21 @@
-import { IconLocation } from '@teka/icon';
+import { color } from '@teka/design-system';
+import { IconArrowForward, IconLocation } from '@teka/icon';
 import { flex } from '@teka/utils';
 import { useState, useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import styled from 'styled-components';
+import { createGlobalStyle } from 'styled-components';
+
+const GlobalMapStyles = createGlobalStyle`
+  .gm-style-iw-chr {
+    display: none !important;
+  }
+  .gm-style .gm-style-iw-c {
+    padding: 10px 12px !important;
+    box-shadow: 0px 40px 11px 0px rgba(135, 135, 135, 0.00), 0px 14px 9px 0px rgba(135, 135, 135, 0.05), 0px 6px 6px 0px rgba(135, 135, 135, 0.09), 0px 2px 3px 0px rgba(135, 135, 135, 0.10) !important;
+  }
+`;
 
 interface Coordinates {
   lat: number;
@@ -64,18 +77,44 @@ const MapContent: React.FC = () => {
   useEffect(() => {
     if (overlayRef.current) {
       const newContent = document.createElement('div');
-      newContent.style.padding = '10px 12px';
-      newContent.style.fontSize = '16px';
-      newContent.style.fontWeight = 'bold';
+      newContent.style.fontSize = '14px';
+      newContent.style.fontWeight = '500';
+      newContent.style.letterSpacing = '0.14px';
+      newContent.style.height = '100%';
+      newContent.style.fontFamily = 'Pretendard';
       newContent.style.cursor = 'pointer';
+      newContent.style.display = 'flex';
+      newContent.style.flexDirection = 'column';
+
+      const rowContainer = document.createElement('div');
+      rowContainer.style.display = 'flex';
+      rowContainer.style.alignItems = 'center';
+      rowContainer.style.justifyContent = 'space-between';
+      rowContainer.style.gap = '12px';
+
+      const iconContainer = document.createElement('div');
+      const root = createRoot(iconContainer);
+      root.render(<IconArrowForward width={24} height={24} color={color.gray900} />);
+      iconContainer.style.marginRight = '8px';
+
+      const labelDiv = document.createElement('div');
+      labelDiv.innerText = '이 위치 보내기';
 
       const addressDiv = document.createElement('div');
       addressDiv.style.marginTop = '8px';
-      addressDiv.style.fontSize = '14px';
+      addressDiv.style.fontFamily = 'Pretendard';
+      addressDiv.style.fontSize = '12px';
+      addressDiv.style.fontStyle = 'normal';
+      addressDiv.style.fontWeight = '400';
+      addressDiv.style.lineHeight = '140%';
+      addressDiv.style.letterSpacing = '0.12px';
       addressDiv.innerText = markerAddress;
 
-      newContent.innerText = '이 위치 보내기';
-      newContent.appendChild(addressDiv);
+      newContent.appendChild(labelDiv);
+
+      newContent.appendChild(rowContainer);
+      rowContainer.appendChild(addressDiv);
+      rowContainer.appendChild(iconContainer);
 
       overlayRef.current.setContent(newContent);
     }
@@ -123,10 +162,10 @@ const MapContent: React.FC = () => {
       window.google.maps.event.addListener(infoWindow, 'domready', () => {
         const popup = document.querySelector('.gm-style-iw')?.parentElement;
         popup?.addEventListener('click', () => {
-          const pos = marker.getPosition();
-          if (pos) {
-            alert(`이 위치를 보냅니다: ${pos.lat().toFixed(6)}, ${pos.lng().toFixed(6)}`);
-          }
+          const encodedAddress = encodeURIComponent(markerAddress);
+          const googleMapUrl = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`;
+          alert(`이 위치를 보냅니다: ${markerAddress}\n\n${googleMapUrl}`);
+          console.log(`이 위치를 보냅니다: ${googleMapUrl}`);
         });
       });
     };
@@ -177,13 +216,14 @@ const MapContent: React.FC = () => {
     }
   }, []);
 
-  const geocodeLatLng = (latlng: Coordinates) => {
+  const geocodeLatLng = (latlng: Coordinates, callback?: () => void) => {
     const geocoder = new window.google.maps.Geocoder();
     const latlngObj = new window.google.maps.LatLng(latlng.lat, latlng.lng);
 
     geocoder.geocode({ location: latlngObj }, (results, status) => {
       if (status === 'OK' && results && results[0]) {
         setMarkerAddress(results[0].formatted_address);
+        if (callback) callback();
       }
     });
   };
@@ -207,12 +247,15 @@ const MapContent: React.FC = () => {
   };
 
   return (
-    <StyledMapContent>
-      <MapContainer ref={mapRef} />
-      <LocationButton onClick={handleLocationButtonClick}>
-        <IconLocation width={47} height={37} />
-      </LocationButton>
-    </StyledMapContent>
+    <>
+      <GlobalMapStyles />
+      <StyledMapContent>
+        <MapContainer ref={mapRef} />
+        <LocationButton onClick={handleLocationButtonClick}>
+          <IconLocation width={47} height={37} />
+        </LocationButton>
+      </StyledMapContent>
+    </>
   );
 };
 
