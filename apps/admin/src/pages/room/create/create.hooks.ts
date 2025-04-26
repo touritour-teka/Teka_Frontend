@@ -1,6 +1,9 @@
-import { usePostChatRoomMutation } from '@/services/room/mutations';
+import {
+  useCreateRoomWithMembers,
+  usePostChatRoomMutation,
+} from '@/services/room/mutations';
 import { Room } from '@/types/room/client';
-import { postRoomReq } from '@/types/room/remote';
+import { postRoomReq, postUserReq } from '@/types/room/remote';
 import { ChangeEventHandler, useState } from 'react';
 
 const formatLocalDate = (date: Date | null): string =>
@@ -38,12 +41,15 @@ export const useInput = () => {
   return { roomData, handleRoomChange, handleRoomNumberChange, handleRoomDateChange };
 };
 
-export const useCreateRoomAction = (roomData: postRoomReq) => {
-  const { postChatRoomMutate } = usePostChatRoomMutation(roomData);
+export const useCreateRoomAction = (roomData: postRoomReq, userData: postUserReq) => {
+  const { createRoomWithMembers, isLoading, isError, roomId } = useCreateRoomWithMembers(
+    roomData,
+    userData
+  );
 
   const handleCreateRoom = () => {
-    postChatRoomMutate();
+    createRoomWithMembers();
   };
 
-  return { handleCreateRoom };
+  return { handleCreateRoom, isLoading, isError, roomId };
 };
