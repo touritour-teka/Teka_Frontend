@@ -102,6 +102,10 @@ const ManagePage = () => {
     ));
   };
 
+  const handleMoveRoomDetail = () => {
+    navigate(`${ROUTES.ROOM}/${selectedId}`)
+  }
+
   return (
     <StyledManagePage>
       <ManagePageBox>
@@ -123,19 +127,9 @@ const ManagePage = () => {
               <IconButton onClick={openChangeRoomStatus}>
                 <IconStatus width={24} height={24} />
               </IconButton>
-              <IconMemberMove
-                width={24}
-                height={24}
-                style={{
-                  marginRight: '4px',
-                  marginLeft: '10px',
-                  marginBottom: '8px',
-                  marginTop: '7px',
-                }}
-                onClick={() => {
-                  console.log('shre');
-                }}
-              />
+              <IconButton onClick={handleMoveRoomDetail}>
+                <IconMemberMove width={24} height={24} />
+              </IconButton>
               <IconButton onClick={openDeleteChatRoomModal}>
                 <IconTrash width={24} height={24} />
               </IconButton>
