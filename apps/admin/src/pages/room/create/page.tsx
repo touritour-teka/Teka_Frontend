@@ -1,3 +1,4 @@
+import React, { useState, useMemo, useCallback } from 'react';
 import Button from '@/components/Button';
 import Header from '@/components/common/Header';
 import MemberList from '@/components/room/MemeberList';
@@ -6,11 +7,34 @@ import { Column, DatePickerInput, Input, StepperInput } from '@teka/ui';
 import { flex } from '@teka/utils';
 import styled from 'styled-components';
 import { useCreateRoomAction, useInput } from './create.hooks';
+import { LocalMember } from '@/types/room/client';
 
 const RoomCreatePage = () => {
-  const { handleRoomChange, handleRoomNumberChange, handleRoomDateChange, roomData } =
+  const { roomData, handleRoomChange, handleRoomNumberChange, handleRoomDateChange } =
     useInput();
   const { handleCreateRoom } = useCreateRoomAction(roomData);
+
+  const [itemChecked, setItemChecked] = useState<string[]>([]);
+  const [members, setMembers] = useState<LocalMember[]>([]);
+
+  const headerChecked = useMemo(
+    () => itemChecked.length > 0 && itemChecked.length === members.length,
+    [itemChecked, members.length]
+  );
+
+  const handleHeaderChange = useCallback(() => {
+    if (headerChecked) {
+      setItemChecked([]);
+    } else {
+      setItemChecked(members.map((member) => member.uid));
+    }
+  }, [headerChecked, members]);
+
+  const handleItemChange = useCallback((id: string) => {
+    setItemChecked((prev) =>
+      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
+    );
+  }, []);
 
   return (
     <StyledRoomCreatePage>
@@ -41,7 +65,15 @@ const RoomCreatePage = () => {
           </Column>
         </Content>
         <Column gap={71}>
-          <MemberList maxItem={roomData.maxParticipants} />
+          <MemberList
+            maxItem={roomData.maxParticipants}
+            headerChecked={headerChecked}
+            itemChecked={itemChecked}
+            headerChange={handleHeaderChange}
+            itemChange={handleItemChange}
+            members={members}
+            onMembersChange={setMembers}
+          />
           <Wrapper>
             <Button onClick={handleCreateRoom}>방 개설</Button>
           </Wrapper>
