@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useCallback } from 'react';
+import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import Button from '@/components/Button';
 import Header from '@/components/common/Header';
 import MemberList from '@/components/room/MemeberList';
@@ -7,15 +7,42 @@ import { Column, DatePickerInput, Input, StepperInput } from '@teka/ui';
 import { flex } from '@teka/utils';
 import styled from 'styled-components';
 import { useCreateRoomAction, useInput } from './create.hooks';
-import { LocalMember } from '@/types/room/client';
+import { LocalMember, User } from '@/types/room/client';
+import { postUserReq } from '@/types/room/remote';
+import CreateLoadingModal from '@/components/room/CreateLoadingModal';
+import { useOverlay } from '@toss/use-overlay';
+import DeleteModal from '@/components/room/DeleteModal';
 
 const RoomCreatePage = () => {
-  const { roomData, handleRoomChange, handleRoomNumberChange, handleRoomDateChange } =
-    useInput();
-  const { handleCreateRoom } = useCreateRoomAction(roomData);
-
   const [itemChecked, setItemChecked] = useState<string[]>([]);
   const [members, setMembers] = useState<LocalMember[]>([]);
+
+  const membersToAdd: User[] = members.map(({ phoneNumber, email, type }) => ({
+    phoneNumber,
+    email,
+    type,
+  }));
+
+  const userDataPayload: postUserReq = {
+    data: membersToAdd,
+  };
+
+  const overlay = useOverlay();
+
+  const { roomData, handleRoomChange, handleRoomNumberChange, handleRoomDateChange } =
+    useInput();
+  const { handleCreateRoom, isLoading, isError, roomId } = useCreateRoomAction(
+    roomData,
+    userDataPayload
+  );
+
+  useEffect(() => {
+    if (isError) {
+      overlay.open(({ isOpen, close }) => (
+        <DeleteModal isOpen={isOpen} onClose={close} onConfirm={close} id={roomId} />
+      ));
+    }
+  }, [isError]);
 
   const headerChecked = useMemo(
     () => itemChecked.length > 0 && itemChecked.length === members.length,
@@ -79,6 +106,7 @@ const RoomCreatePage = () => {
           </Wrapper>
         </Column>
       </RoomCreatePageContent>
+      <CreateLoadingModal isOpen={isLoading} />
     </StyledRoomCreatePage>
   );
 };
