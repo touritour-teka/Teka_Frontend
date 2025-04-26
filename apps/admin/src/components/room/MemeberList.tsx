@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import RoundedButton from '../RoundedButton';
 import { flex } from '@teka/utils';
@@ -48,8 +48,6 @@ const MemberList = ({
   const changeType = (uid: string, newType: 'USER' | 'OBSERVER') => {
     onMembersChange(members.map((m) => (m.uid === uid ? { ...m, type: newType } : m)));
   };
-
-  console.log(members);
 
   return (
     <StyledMemberList hasChecked={itemChecked.length > 0}>
