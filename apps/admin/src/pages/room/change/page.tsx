@@ -22,7 +22,12 @@ const RoomChangePage = () => {
   const rawUsers = localStorage.getItem('selectedMembers') || '[]';
   const usersToAdd = JSON.parse(rawUsers) as User[];
   const targetRoomId = Number(checked);
-  console.log(checked);
+
+  const usersToAddPayload = usersToAdd.map((u) => ({
+    email: u.email,
+    phoneNumber: u.phoneNumber,
+    type: u.type,
+  }));
 
   const { data: rooms = [] } = useChatListQuery('OPEN');
   const { deleteUserMutate, isPending: delLoading } = useDeleteUserMutation(
@@ -30,7 +35,7 @@ const RoomChangePage = () => {
     deleteIds
   );
   const { postUserMutate, isPending: addLoading } = usePostUserMutation(targetRoomId, {
-    data: usersToAdd,
+    data: usersToAddPayload,
   });
 
   const handleItemChange = (id: string) => {
@@ -66,7 +71,7 @@ const RoomChangePage = () => {
         </Content>
         <ButtonWrapper>
           <Button
-            onClick={handleMove}
+            onClick={postUserMutate}
             variant={delLoading || addLoading ? 'disabled' : 'primary'}
           >
             선택한 방으로 이동
