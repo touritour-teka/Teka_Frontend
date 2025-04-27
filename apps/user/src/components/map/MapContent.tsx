@@ -37,7 +37,6 @@ const MapContent = ({ lat, lng }: MapContentProps) => {
   const overlayRef = useRef<google.maps.InfoWindow | null>(null);
   const [map, setMap] = useState<google.maps.Map | null>(null);
   const [userLocation, setUserLocation] = useState<Coordinates | null>(null);
-  const [initialPosition, setInitialPosition] = useState<Coordinates | null>(null);
   const GOOGLE_MAPS_API_KEY = process.env.REACT_APP_API_KEY;
 
   useEffect(() => {
@@ -134,8 +133,13 @@ const MapContent = ({ lat, lng }: MapContentProps) => {
       window.google.maps.event.addListener(infoWindow, 'domready', () => {
         const popup = document.querySelector('.gm-style-iw')?.parentElement;
         popup?.addEventListener('click', () => {
-          const encodedAddress = encodeURIComponent(markerAddress);
-          const googleMapUrl = `https://www.google.com/maps/search/?api=1&query=${encodedAddress}`;
+          const pos = markerRef.current?.getPosition();
+          if (!pos) return;
+
+          const lat = pos.lat();
+          const lng = pos.lng();
+          const googleMapUrl = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
+
           alert(`이 위치를 보냅니다: ${markerAddress}\n\n${googleMapUrl}`);
           console.log(`이 위치를 보냅니다: ${googleMapUrl}`);
         });
@@ -194,6 +198,8 @@ const MapContent = ({ lat, lng }: MapContentProps) => {
         map.setCenter(userPos);
         markerRef.current!.setPosition(userPos);
         overlayRef.current?.open(map, markerRef.current!);
+
+        geocodeLatLng(userPos);
       });
     }
   };

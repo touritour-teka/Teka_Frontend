@@ -72,7 +72,7 @@ const OwnMessage: React.FC<OwnMessageProps> = ({
                   src={iframeSrc}
                   width="250"
                   height="190"
-                  style={{ border: 0 }}
+                  style={{ border: 0, pointerEvents: 'none' }}
                   allowFullScreen
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
