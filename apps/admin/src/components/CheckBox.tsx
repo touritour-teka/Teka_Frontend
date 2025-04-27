@@ -1,5 +1,5 @@
 import React, { InputHTMLAttributes } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { color } from '@teka/design-system';
 import { IconCheck } from '@teka/icon';
 
@@ -8,6 +8,7 @@ const CheckBox = ({
   value,
   onChange,
   checked = false,
+  disabled,
 }: InputHTMLAttributes<HTMLInputElement>) => (
   <LabelWrapper>
     <HiddenCheckbox
@@ -17,8 +18,8 @@ const CheckBox = ({
       onChange={onChange}
       value={value}
     />
-    <StyledCheckbox $checked={checked}>
-      {checked && <IconCheck width={12} height={12} color={color.white2} />}
+    <StyledCheckbox $checked={checked} $disabled={disabled}>
+      {checked && !disabled && <IconCheck width={12} height={12} color={color.white2} />}
     </StyledCheckbox>
   </LabelWrapper>
 );
@@ -43,14 +44,18 @@ const HiddenCheckbox = styled.input`
   width: 1px;
 `;
 
-const StyledCheckbox = styled.div<{ $checked: boolean }>`
+const StyledCheckbox = styled.div<{ $checked: boolean; $disabled?: boolean }>`
   width: 16px;
   height: 16px;
-  background: ${({ $checked }) => ($checked ? color.blue800 : 'none')};
-  border: 1px solid ${({ $checked }) => ($checked ? color.blue800 : color.gray400)};
   border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 150ms;
+
+  background: ${({ $disabled, $checked }) =>
+    $disabled ? color.gray100 : $checked ? color.blue800 : 'none'};
+  border: 1px solid
+    ${({ $disabled, $checked }) =>
+      $disabled ? color.gray200 : $checked ? color.blue800 : color.gray400};
 `;
