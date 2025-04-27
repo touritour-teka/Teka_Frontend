@@ -4,6 +4,7 @@ export const ROUTES = {
   MANAGE: '/manage',
   CREATE: '/room/create',
   ROOM: '/room',
+  CHANGE_ROOM: '/room/change',
 } as const;
 
 export const TOKEN = {
