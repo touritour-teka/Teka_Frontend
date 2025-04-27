@@ -2,18 +2,27 @@ import { useState, useEffect, useRef } from 'react';
 import { loadGoogleMapScript } from '@/apis/maps/loadGoogleMapScript';
 import { createRoot } from 'react-dom/client';
 import OverlayContent from '@/components/map/MapContent/OverlayContent';
-import { geocodeLatLng } from '@/utils/functions/geocodeLatLng';
 
 interface Coordinates {
   lat: number;
   lng: number;
 }
-
 export const useInitializeMap = ({ lat, lng }: { lat: number; lng: number }) => {
   const mapRef = useRef<HTMLDivElement>(null);
   const markerRef = useRef<google.maps.Marker | null>(null);
   const overlayRef = useRef<google.maps.InfoWindow | null>(null);
   const [map, setMap] = useState<google.maps.Map | null>(null);
+  const [address, setAddress] = useState<string>('위치를 불러오는 중...');
+
+  const updateAddress = (coords: Coordinates) => {
+    const geocoder = new window.google.maps.Geocoder();
+    geocoder.geocode({ location: coords }, (results, status) => {
+      if (status === 'OK' && results && results[0]) {
+        const newAddress = results[0].formatted_address;
+        setAddress(newAddress);
+      }
+    });
+  };
 
   const initializeMap = (center: Coordinates) => {
     if (!mapRef.current || !window.google) return;
@@ -39,7 +48,7 @@ export const useInitializeMap = ({ lat, lng }: { lat: number; lng: number }) => 
         lng: event.latLng?.lng() ?? center.lng,
       };
       marker.setPosition(newCoords);
-      geocodeLatLng(newCoords);
+      updateAddress(newCoords);
     });
 
     marker.addListener('click', () => {
@@ -50,11 +59,9 @@ export const useInitializeMap = ({ lat, lng }: { lat: number; lng: number }) => 
     overlayRef.current = infoWindow;
     setMap(mapInstance);
 
-    if (infoWindow) {
-      const container = document.createElement('div');
-      createRoot(container).render(<OverlayContent address="위치를 불러오는 중..." />);
-      infoWindow.setContent(container);
-    }
+    const container = document.createElement('div');
+    infoWindow.setContent(container);
+    createRoot(container).render(<OverlayContent address={address} />);
   };
 
   const handleLocationButtonClick = () => {
@@ -69,7 +76,7 @@ export const useInitializeMap = ({ lat, lng }: { lat: number; lng: number }) => 
         map.setCenter(userPos);
         markerRef.current?.setPosition(userPos);
         overlayRef.current?.open(map, markerRef.current);
-        geocodeLatLng(userPos);
+        updateAddress(userPos);
       });
     }
   };
@@ -83,6 +90,14 @@ export const useInitializeMap = ({ lat, lng }: { lat: number; lng: number }) => 
       initializeMap(fallbackLocation);
     }
   }, [lat, lng]);
+
+  useEffect(() => {
+    if (overlayRef.current) {
+      const container = document.createElement('div');
+      createRoot(container).render(<OverlayContent address={address} />);
+      overlayRef.current.setContent(container);
+    }
+  }, [address]);
 
   return { mapRef, handleLocationButtonClick };
 };

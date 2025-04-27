@@ -5,7 +5,6 @@ import { createGlobalStyle } from 'styled-components';
 import styled from 'styled-components';
 import MapContainer from './MapContainer';
 import LocationButton from './LocationButton';
-import OverlayContent from './OverlayContent';
 import { useInitializeMap } from '@/hooks/maps/useInitializeMap';
 
 const GlobalMapStyles = createGlobalStyle`
@@ -18,9 +17,10 @@ const GlobalMapStyles = createGlobalStyle`
                 0px 14px 9px 0px rgba(135, 135, 135, 0.05), 
                 0px 6px 6px 0px rgba(135, 135, 135, 0.09), 
                 0px 2px 3px 0px rgba(135, 135, 135, 0.10) !important;
+    max-width: fit-content !important;
   }
   .gm-style-iw-d {
-    overflow: auto !important;
+    padding: none;
   }
 `;
 
