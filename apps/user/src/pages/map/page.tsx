@@ -1,5 +1,5 @@
 import Header from '@/components/common/Header';
-import MapContent from '@/components/map/MapContent';
+import MapContent from '@/components/map/MapContent/MapContent';
 import { color } from '@teka/design-system';
 import { flex } from '@teka/utils';
 import { useSearchParams } from 'react-router-dom';
