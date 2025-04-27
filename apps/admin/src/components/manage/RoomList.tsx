@@ -17,6 +17,7 @@ interface RoomListProps {
   itemChecked: string[];
   headerChange: () => void;
   itemChange: (id: string) => void;
+  disabledItems?: string[];
 }
 
 const RoomList = ({
@@ -25,12 +26,14 @@ const RoomList = ({
   headerChecked,
   headerChange,
   itemChange,
+  disabledItems,
 }: RoomListProps) => {
   return (
     <StyledRoomList>
       <ListHeader id="all" checked={headerChecked} onChange={headerChange} />
       {rooms.map((room) => {
         const id = room.chatRoomId.toString();
+        const isDisabled = disabledItems?.includes(id) ?? false;
         return (
           <RoomListItem
             key={id}
@@ -42,6 +45,7 @@ const RoomList = ({
             status={room.status}
             checked={itemChecked.includes(id)}
             onChange={() => itemChange(id)}
+            disabled={isDisabled}
           />
         );
       })}

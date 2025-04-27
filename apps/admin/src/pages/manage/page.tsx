@@ -11,43 +11,10 @@ import DeleteModal from '@/components/manage/DeleteModal';
 import { useNavigate } from 'react-router-dom';
 import { ROUTES } from '@/constants/constant';
 import SelectBottomSheet from '@/components/common/SelectBottomSheet/SelectBottomSheet';
-
-const rooms: Array<{
-  chatRoomId: number;
-  name: string;
-  startDate: string;
-  endDate: string;
-  maxParticipants: number;
-  status: Status;
-}> = [
-  {
-    chatRoomId: 1,
-    name: '회의실 A',
-    startDate: '2025-04-01',
-    endDate: '2025-04-02',
-    maxParticipants: 4,
-    status: 'OPEN',
-  },
-  {
-    chatRoomId: 2,
-    name: '회의실 B',
-    startDate: '2025-04-05',
-    endDate: '2025-04-06',
-    maxParticipants: 2,
-    status: 'CLOSED',
-  },
-  {
-    chatRoomId: 4,
-    name: '회의실 C',
-    startDate: '2025-04-10',
-    endDate: '2025-04-12',
-    maxParticipants: 6,
-    status: 'OPEN',
-  },
-];
+import { useChatListQuery } from '@/services/room/queries';
 
 const ManagePage = () => {
-  // const { data: rooms = [] } = useChatListQuery();
+  const { data: rooms = [] } = useChatListQuery(null);
   const [itemChecked, setItemChecked] = useState<string[]>([]);
   const overlay = useOverlay();
   const navigate = useNavigate();
@@ -102,6 +69,10 @@ const ManagePage = () => {
     ));
   };
 
+  const handleMoveRoomDetail = () => {
+    navigate(`${ROUTES.ROOM}/${selectedId}`);
+  };
+
   return (
     <StyledManagePage>
       <ManagePageBox>
@@ -123,19 +94,9 @@ const ManagePage = () => {
               <IconButton onClick={openChangeRoomStatus}>
                 <IconStatus width={24} height={24} />
               </IconButton>
-              <IconMemberMove
-                width={24}
-                height={24}
-                style={{
-                  marginRight: '4px',
-                  marginLeft: '10px',
-                  marginBottom: '8px',
-                  marginTop: '7px',
-                }}
-                onClick={() => {
-                  console.log('shre');
-                }}
-              />
+              <IconButton onClick={handleMoveRoomDetail}>
+                <IconMemberMove width={24} height={24} />
+              </IconButton>
               <IconButton onClick={openDeleteChatRoomModal}>
                 <IconTrash width={24} height={24} />
               </IconButton>
