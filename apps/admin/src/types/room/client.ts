@@ -49,3 +49,10 @@ export interface ChangeType {
   userId: number;
   type: UserType;
 }
+
+export interface LocalMember {
+  uid: string;
+  phoneNumber: string;
+  email: string;
+  type: UserType;
+}
