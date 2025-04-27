@@ -16,6 +16,7 @@ interface RoomListItemProps {
   status: Status;
   checked: boolean;
   onChange: () => void;
+  disabled: boolean;
 }
 
 const RoomListItem = ({
@@ -27,11 +28,12 @@ const RoomListItem = ({
   checked,
   status,
   onChange,
+  disabled,
 }: RoomListItemProps) => {
   return (
     <StyledRoomListItem>
       <Wrapper width="31px">
-        <CheckBox id={id} checked={checked} onChange={onChange} />
+        <CheckBox id={id} checked={checked} onChange={onChange} disabled={disabled} />
       </Wrapper>
       <Wrapper width="87px">
         <Text fontType="regular12" color={color.gray900}>
