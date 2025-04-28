@@ -47,6 +47,8 @@ export const useInitializeMap = ({ lat, lng }: { lat: number; lng: number }) => 
     infoWindow.setContent(container);
     createRoot(container).render(<OverlayContent address={address} />);
 
+    updateAddress(center);
+
     marker.addListener('dragend', (event: google.maps.MapMouseEvent) => {
       const newCoords = {
         lat: event.latLng?.lat() ?? center.lat,
@@ -98,7 +100,6 @@ export const useInitializeMap = ({ lat, lng }: { lat: number; lng: number }) => 
       createRoot(container).render(<OverlayContent address={address} />);
       overlayRef.current.setContent(container);
       overlayRef.current.open(map, markerRef.current);
-      console.log('useeffect', address);
     }
   }, [address, map]);
 
