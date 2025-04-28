@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { flex } from '@teka/utils';
 import RoundedButton from '@/components/RoundedButton';

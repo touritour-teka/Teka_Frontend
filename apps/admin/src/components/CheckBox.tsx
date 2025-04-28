@@ -1,5 +1,5 @@
 import React, { InputHTMLAttributes } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import { color } from '@teka/design-system';
 import { IconCheck } from '@teka/icon';
 
