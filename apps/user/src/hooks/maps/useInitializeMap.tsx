@@ -7,6 +7,7 @@ interface Coordinates {
   lat: number;
   lng: number;
 }
+
 export const useInitializeMap = ({ lat, lng }: { lat: number; lng: number }) => {
   const mapRef = useRef<HTMLDivElement>(null);
   const markerRef = useRef<google.maps.Marker | null>(null);
@@ -39,8 +40,12 @@ export const useInitializeMap = ({ lat, lng }: { lat: number; lng: number }) => 
     });
 
     const infoWindow = new window.google.maps.InfoWindow({
-      content: '',
+      content: '위치를 불러오는 중...',
     });
+
+    const container = document.createElement('div');
+    infoWindow.setContent(container);
+    createRoot(container).render(<OverlayContent address={address} />);
 
     marker.addListener('dragend', (event: google.maps.MapMouseEvent) => {
       const newCoords = {
@@ -58,10 +63,6 @@ export const useInitializeMap = ({ lat, lng }: { lat: number; lng: number }) => 
     markerRef.current = marker;
     overlayRef.current = infoWindow;
     setMap(mapInstance);
-
-    const container = document.createElement('div');
-    infoWindow.setContent(container);
-    createRoot(container).render(<OverlayContent address={address} />);
   };
 
   const handleLocationButtonClick = () => {
@@ -96,8 +97,19 @@ export const useInitializeMap = ({ lat, lng }: { lat: number; lng: number }) => 
       const container = document.createElement('div');
       createRoot(container).render(<OverlayContent address={address} />);
       overlayRef.current.setContent(container);
+      overlayRef.current.open(map, markerRef.current);
+      console.log('useeffect', address);
     }
-  }, [address]);
+  }, [address, map]);
+
+  useEffect(() => {
+    if (map && markerRef.current && overlayRef.current) {
+      const container = document.createElement('div');
+      createRoot(container).render(<OverlayContent address={address} />);
+      overlayRef.current.setContent(container);
+      overlayRef.current.open(map, markerRef.current);
+    }
+  }, [map, address]);
 
   return { mapRef, handleLocationButtonClick };
 };

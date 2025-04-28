@@ -1,6 +1,5 @@
 import { IconLocation } from '@teka/icon';
 import { color } from '@teka/design-system';
-import { flex } from '@teka/utils';
 import { createGlobalStyle } from 'styled-components';
 import styled from 'styled-components';
 import MapContainer from './MapContainer';

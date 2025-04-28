@@ -23,7 +23,7 @@ const EnterPage = () => {
             <LanguageInput width="100%" />
           </Column>
           <Column width="100%">
-            <Button onClick={() => {}}>채팅방 입장</Button>
+            <Button onClick={handleMoveSignup}>채팅방 입장</Button>
           </Column>
         </Column>
       </LoginPageBox>

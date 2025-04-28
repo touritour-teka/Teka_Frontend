@@ -10,7 +10,7 @@ const IconLocation: React.FC<React.SVGProps<SVGSVGElement>> = (props) => {
         height="46"
         rx="23"
         fill="#FDFFFF"
-        fill-opacity="0.85"
+        fillOpacity="0.85"
       />
       <rect x="0.5" y="1.31836" width="46" height="46" rx="23" stroke="#F5F5F5" />
       <mask
