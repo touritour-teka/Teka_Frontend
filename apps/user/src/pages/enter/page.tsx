@@ -17,10 +17,11 @@ const EnterPage = () => {
     <StyledLoginPage>
       <LoginPageBox>
         <img src="/logo.svg" alt="logo" />
-        <Column gap={40} width="100%" alignItems="stretch">
+        <Column gap={56} width="100%" alignItems="stretch">
           <Column gap={24} width="100%">
-            <Input label="아이디" placeholder="아이디를 입력해주세요" width="100%" />
-            <LanguageInput width="100%" />
+            <Input label="전화번호" placeholder="전화번호를 입력해주세요" width="100%" />
+            <Input label="닉네임" placeholder="닉네임을 입력해주세요" width="100%" />
+            <LanguageInput label="사용언어" width="100%" />
           </Column>
           <Column width="100%">
             <Button onClick={handleMoveSignup}>채팅방 입장</Button>
@@ -44,5 +45,5 @@ const LoginPageBox = styled.div`
   width: 100%;
   max-width: 400px;
   gap: 42px;
-  padding: 72px 16px 315px;
+  padding: 131px 16px 315px;
 `;
