@@ -3,60 +3,28 @@ import styled from 'styled-components';
 import { flex } from '@teka/utils';
 import RoundedButton from '@/components/RoundedButton';
 import RoomList from '@/components/manage/RoomList';
-import { Status } from '@/types/room/client';
 import { Row } from '@teka/ui';
 import { IconMemberMove, IconShare, IconStatus, IconTrash } from '@teka/icon';
 import { useOverlay } from '@toss/use-overlay';
 import DeleteModal from '@/components/manage/DeleteModal';
-import { useNavigate } from 'react-router-dom';
-import { ROUTES } from '@/constants/constant';
 import SelectBottomSheet from '@/components/common/SelectBottomSheet/SelectBottomSheet';
 import { useChatListQuery } from '@/services/room/queries';
+import { useCheckedChange, useCTAButton } from './manage.hooks';
 
 const ManagePage = () => {
-  const { data: rooms = [] } = useChatListQuery(null);
-  const [itemChecked, setItemChecked] = useState<string[]>([]);
   const overlay = useOverlay();
-  const navigate = useNavigate();
+  
+  const { data: rooms = [] } = useChatListQuery(null);
 
-  const handleMoveRoomCreate = () => {
-    navigate(ROUTES.CREATE);
-  };
-
-  const headerChecked = useMemo(
-    () => rooms.length > 0 && itemChecked.length === rooms.length,
-    [rooms, itemChecked]
-  );
-
-  const handleItemChange = useCallback((id: string) => {
-    setItemChecked((prev) =>
-      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
-    );
-  }, []);
-
-  const handleHeaderChange = useCallback(() => {
-    if (headerChecked) {
-      setItemChecked([]);
-    } else {
-      setItemChecked(rooms.map((r) => r.chatRoomId.toString()));
-    }
-  }, [headerChecked, rooms]);
-
-  const openDeleteChatRoomModal = () => {
-    overlay.open(({ isOpen, close }) => (
-      <DeleteModal
-        isOpen={isOpen}
-        onClose={close}
-        onConfirm={close}
-        count={itemChecked.length}
-        selectedIds={itemChecked.map((id) => Number(id))}
-      />
-    ));
-  };
-
-  const selectedId = Number(itemChecked[0]);
   const selectedRoom = rooms.find((r) => r.chatRoomId === selectedId);
   const selectedStatus = selectedRoom?.status ?? 'OPEN';
+
+  const { handleItemChange, handleHeaderChange, itemChecked, headerChecked } =
+    useCheckedChange(rooms);
+
+  const selectedId = Number(itemChecked[0]);
+
+  const { handleMoveRoomDetail, handleMoveRoomCreate } = useCTAButton(selectedId);
 
   const openChangeRoomStatus = () => {
     overlay.open(({ isOpen, close }) => (
@@ -69,8 +37,16 @@ const ManagePage = () => {
     ));
   };
 
-  const handleMoveRoomDetail = () => {
-    navigate(`${ROUTES.ROOM}/${selectedId}`);
+  const openDeleteChatRoomModal = () => {
+    overlay.open(({ isOpen, close }) => (
+      <DeleteModal
+        isOpen={isOpen}
+        onClose={close}
+        onConfirm={close}
+        count={itemChecked.length}
+        selectedIds={itemChecked.map((id) => Number(id))}
+      />
+    ));
   };
 
   return (
