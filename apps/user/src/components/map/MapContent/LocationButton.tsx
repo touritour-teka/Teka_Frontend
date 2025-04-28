@@ -3,7 +3,7 @@ import { flex } from '@teka/utils';
 import { ButtonHTMLAttributes, ReactNode } from 'react';
 
 interface LocationButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  children: ReactNode;
+  children: JSX.Element;
 }
 
 const LocationButton = ({ children, ...props }: LocationButtonProps) => {
