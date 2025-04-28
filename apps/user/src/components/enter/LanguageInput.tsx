@@ -7,9 +7,10 @@ import LanguageModal from '@/components/common/LanguageModal';
 
 interface LanguageInputProps {
   width?: CSSProperties['width'];
+  label?: string;
 }
 
-const LanguageInput = ({ width }: LanguageInputProps) => {
+const LanguageInput = ({ width, label }: LanguageInputProps) => {
   const [isModalOpen, setModalOpen] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState('한국어');
 
@@ -22,6 +23,7 @@ const LanguageInput = ({ width }: LanguageInputProps) => {
 
   return (
     <div style={{ width }}>
+      {label && <Label>{label}</Label>}
       <StyledLanguageInput onClick={toggleModal}>
         <Input
           value={selectedLanguage}
@@ -80,4 +82,11 @@ const IconWrapper = styled.div`
   display: flex;
   align-items: center;
   pointer-events: none;
+`;
+
+const Label = styled.p`
+  ${font.medi14}
+  color: ${color.gray500};
+  margin-bottom: 8px;
+  text-align: left;
 `;
