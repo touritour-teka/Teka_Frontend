@@ -10,6 +10,7 @@ import {
 import { useEffect, useState } from 'react';
 import { useAddressFromLatLng } from '@/hooks/maps/useAddressFromLatLng';
 import getMapEmbedUrl from '@/apis/maps/getMapEmbedUrl';
+import { useNavigate } from 'react-router-dom';
 
 interface OwnMessageProps {
   name: string;
@@ -25,6 +26,7 @@ const OwnMessage: React.FC<OwnMessageProps> = ({
   prevTimestamp,
 }) => {
   const GOOGLE_MAPS_API_KEY = process.env.REACT_APP_API_KEY;
+  const navigate = useNavigate();
 
   const [isFirstMessage, setIsFirstMessage] = useState(true);
 
@@ -36,6 +38,12 @@ const OwnMessage: React.FC<OwnMessageProps> = ({
 
   const coords = extractLatLngFromMapsUrl(content);
   const address = useAddressFromLatLng(coords?.lat, coords?.lng, GOOGLE_MAPS_API_KEY);
+
+  const handleGoToMap = () => {
+    if (coords?.lat && coords?.lng) {
+      navigate(`/map?lat=${coords.lat}&lng=${coords.lng}`);
+    }
+  };
 
   useEffect(() => {
     if (prevTimestamp === timestamp) {
@@ -58,18 +66,18 @@ const OwnMessage: React.FC<OwnMessageProps> = ({
         <Timestamp>{timestamp}</Timestamp>
         <MessageBubble>
           {iframeSrc ? (
-            <MapPreviewContainer>
-              <a href={content}>
+            <MapPreviewContainer onClick={handleGoToMap}>
+              <div>
                 <iframe
                   src={iframeSrc}
                   width="250"
                   height="190"
-                  style={{ border: 0 }}
+                  style={{ border: 0, pointerEvents: 'none' }}
                   allowFullScreen
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
                 />
-              </a>
+              </div>
               <Text fontType="semibold14chat">📍저는 현재 여기에 있어요!</Text>
               {address && (
                 <AddressContainer onClick={handleClickPaste}>
