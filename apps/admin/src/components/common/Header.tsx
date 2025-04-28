@@ -8,14 +8,20 @@ import { useNavigate } from 'react-router-dom';
 interface HeaderProps {
   title: string;
   routes: string;
+  onBack?: () => void;
 }
 
-const Header = ({ title, routes }: HeaderProps) => {
+const Header = ({ title, routes, onBack }: HeaderProps) => {
   const navigate = useNavigate();
+
+  const handleMoveBack = () => {
+    navigate(routes);
+    onBack?.();
+  };
 
   return (
     <StyledHeader>
-      <BackButton onClick={() => navigate(routes)}>
+      <BackButton onClick={handleMoveBack}>
         <IconArrow width={24} height={24} color={color.gray900} />
       </BackButton>
       <TitleWrapper>

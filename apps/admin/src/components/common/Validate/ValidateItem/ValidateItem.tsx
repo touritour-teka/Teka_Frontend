@@ -2,12 +2,12 @@ import { color } from '@teka/design-system';
 import { IconSignUpCheckFalse, IconSignUpCheckTrue } from '@teka/icon';
 import { Row, Text } from '@teka/ui';
 
-interface ValidateItem {
+interface ValidateItemProps {
   condition: boolean;
   text: string;
 }
 
-const ValidateItem = ({ condition, text }: ValidateItem) => {
+const ValidateItem = ({ condition, text }: ValidateItemProps) => {
   return (
     <Row alignItems="center">
       {condition ? <IconSignUpCheckTrue /> : <IconSignUpCheckFalse />}

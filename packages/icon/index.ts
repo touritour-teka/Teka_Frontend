@@ -19,3 +19,7 @@ export { default as IconBackward } from './src/IconBackward';
 export { default as IconSignUpCheckFalse } from './src/IconSignUpCheckFalse';
 export { default as IconSignUpCheckTrue } from './src/IconSignUpCheckTrue';
 export { default as IconLocation } from './src/IconLocation';
+export { default as IconMemberMove } from './src/IconMemberMove';
+export { default as IconShare } from './src/IconShare';
+export { default as IconStatus } from './src/IconStatus';
+export { default as IconTrash } from './src/IconTrash';

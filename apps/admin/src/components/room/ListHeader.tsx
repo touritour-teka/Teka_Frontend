@@ -4,11 +4,17 @@ import CheckBox from '../CheckBox';
 import { Text } from '@teka/ui';
 import { flex } from '@teka/utils';
 
-const ListHeader = () => {
+interface ListHeaderProps {
+  checked: boolean;
+  onChange: () => void;
+  id: string;
+}
+
+const ListHeader = ({ checked, onChange, id }: ListHeaderProps) => {
   return (
     <StyledListHeader>
       <Wrapper marginRight="15px">
-        <CheckBox checked={false} onChange={() => {}} />
+        <CheckBox checked={checked} onChange={onChange} id={id} />
       </Wrapper>
       <Wrapper marginRight="64px">
         <Text fontType="medi12" color={color.gray500}>

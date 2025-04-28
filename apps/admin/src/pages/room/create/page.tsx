@@ -1,3 +1,4 @@
+import React, { useState, useMemo, useCallback, useEffect } from 'react';
 import Button from '@/components/Button';
 import Header from '@/components/common/Header';
 import MemberList from '@/components/room/MemeberList';
@@ -5,14 +6,62 @@ import { ROUTES } from '@/constants/constant';
 import { Column, DatePickerInput, Input, StepperInput } from '@teka/ui';
 import { flex } from '@teka/utils';
 import styled from 'styled-components';
-import { useState } from 'react';
+import { useCreateRoomAction, useInput } from './create.hooks';
+import { LocalMember, User } from '@/types/room/client';
+import { postUserReq } from '@/types/room/remote';
+import CreateLoadingModal from '@/components/room/CreateLoadingModal';
+import { useOverlay } from '@toss/use-overlay';
+import DeleteModal from '@/components/room/DeleteModal';
 
 const RoomCreatePage = () => {
-  const [peopleCount, setPeopleCount] = useState(1);
+  const [itemChecked, setItemChecked] = useState<string[]>([]);
+  const [members, setMembers] = useState<LocalMember[]>([]);
 
-  const handlePeopleCountChange = (newCount: number) => {
-    setPeopleCount(newCount);
+  const membersToAdd: User[] = members.map(({ phoneNumber, email, type }) => ({
+    phoneNumber,
+    email,
+    type,
+  }));
+
+  const userDataPayload: postUserReq = {
+    data: membersToAdd,
   };
+
+  const overlay = useOverlay();
+
+  const { roomData, handleRoomChange, handleRoomNumberChange, handleRoomDateChange } =
+    useInput();
+  const { handleCreateRoom, isLoading, isError, roomId } = useCreateRoomAction(
+    roomData,
+    userDataPayload
+  );
+
+  useEffect(() => {
+    if (isError) {
+      overlay.open(({ isOpen, close }) => (
+        <DeleteModal isOpen={isOpen} onClose={close} onConfirm={close} id={roomId} />
+      ));
+    }
+  }, [isError]);
+
+  const headerChecked = useMemo(
+    () => itemChecked.length > 0 && itemChecked.length === members.length,
+    [itemChecked, members.length]
+  );
+
+  const handleHeaderChange = useCallback(() => {
+    if (headerChecked) {
+      setItemChecked([]);
+    } else {
+      setItemChecked(members.map((member) => member.uid));
+    }
+  }, [headerChecked, members]);
+
+  const handleItemChange = useCallback((id: string) => {
+    setItemChecked((prev) =>
+      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
+    );
+  }, []);
 
   return (
     <StyledRoomCreatePage>
@@ -24,29 +73,40 @@ const RoomCreatePage = () => {
               label="방 제목"
               placeholder="방 제목을 입력해주세요"
               width="100%"
-              onChange={() => {}}
+              name="name"
+              onChange={handleRoomChange}
             />
             <DatePickerInput
               label="기간"
               width="100%"
               placeholder="기간을 입력해주세요"
+              onDateChange={handleRoomDateChange}
             />
             <StepperInput
               label="인원 수"
-              onChange={handlePeopleCountChange}
+              onChange={handleRoomNumberChange}
               width="100%"
-              name="people"
-              value={peopleCount}
+              name="maxParticipants"
+              value={roomData.maxParticipants}
             />
           </Column>
         </Content>
         <Column gap={71}>
-          <MemberList />
+          <MemberList
+            maxItem={roomData.maxParticipants}
+            headerChecked={headerChecked}
+            itemChecked={itemChecked}
+            headerChange={handleHeaderChange}
+            itemChange={handleItemChange}
+            members={members}
+            onMembersChange={setMembers}
+          />
           <Wrapper>
-            <Button onClick={() => {}}>방 개설</Button>
+            <Button onClick={handleCreateRoom}>방 개설</Button>
           </Wrapper>
         </Column>
       </RoomCreatePageContent>
+      <CreateLoadingModal isOpen={isLoading} />
     </StyledRoomCreatePage>
   );
 };

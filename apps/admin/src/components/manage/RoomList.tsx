@@ -2,25 +2,53 @@ import styled from 'styled-components';
 import ListHeader from './ListHeader';
 import RoomListItem from './RoomListItem';
 import { flex } from '@teka/utils';
+import { Status } from '@/types/room/client';
 
-const RoomList = () => {
+interface RoomListProps {
+  rooms: Array<{
+    chatRoomId: number;
+    name: string;
+    startDate: string;
+    endDate: string;
+    maxParticipants: number;
+    status: Status;
+  }>;
+  headerChecked: boolean;
+  itemChecked: string[];
+  headerChange: () => void;
+  itemChange: (id: string) => void;
+  disabledItems?: string[];
+}
+
+const RoomList = ({
+  rooms,
+  itemChecked,
+  headerChecked,
+  headerChange,
+  itemChange,
+  disabledItems,
+}: RoomListProps) => {
   return (
     <StyledRoomList>
-      <ListHeader />
-      <RoomListItem
-        title="상해&항저우"
-        period="2025.03.01~03.10"
-        night="(9박 10일)"
-        personnel={10}
-        status="opening"
-      />
-      <RoomListItem
-        title="일본 후쿠시마"
-        period="2025.03.05~03.10"
-        night="(4박 5일)"
-        personnel={10}
-        status="closed"
-      />
+      <ListHeader id="all" checked={headerChecked} onChange={headerChange} />
+      {rooms.map((room) => {
+        const id = room.chatRoomId.toString();
+        const isDisabled = disabledItems?.includes(id) ?? false;
+        return (
+          <RoomListItem
+            key={id}
+            id={id}
+            name={room.name}
+            startDate={room.startDate}
+            endDate={room.endDate}
+            maxParticipants={room.maxParticipants}
+            status={room.status}
+            checked={itemChecked.includes(id)}
+            onChange={() => itemChange(id)}
+            disabled={isDisabled}
+          />
+        );
+      })}
     </StyledRoomList>
   );
 };

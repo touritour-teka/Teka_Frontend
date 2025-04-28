@@ -2,28 +2,43 @@ import { color } from '@teka/design-system';
 import styled from 'styled-components';
 import CheckBox from '../CheckBox';
 import { flex } from '@teka/utils';
+import { ChangeEvent } from 'react';
 
-interface RoomListItem {
+interface RoomListItemProps {
+  id: string;
   phoneValue: string;
-  phoneChange: () => void;
+  phoneChange: (e: ChangeEvent<HTMLInputElement>) => void;
   phonePlaceholder: string;
   mailValue: string;
-  mailChange: () => void;
+  mailChange: (e: ChangeEvent<HTMLInputElement>) => void;
   mailPlaceholder: string;
+  checked: boolean;
+  onChange: () => void;
+  userChecked: boolean;
+  userChange: () => void;
+  observerChecked: boolean;
+  observerChange: () => void;
 }
 
 const RoomListItem = ({
+  id,
   phoneValue,
   phoneChange,
   phonePlaceholder,
   mailValue,
   mailChange,
   mailPlaceholder,
-}: RoomListItem) => {
+  checked,
+  onChange,
+  userChecked,
+  userChange,
+  observerChecked,
+  observerChange,
+}: RoomListItemProps) => {
   return (
-    <StyledRoomListItem>
+    <StyledRoomListItem id={id}>
       <Wrapper width="31px">
-        <CheckBox checked={false} onChange={() => {}} />
+        <CheckBox checked={checked} onChange={onChange} />
       </Wrapper>
       <Wrapper width="106px">
         <StyledInput
@@ -40,10 +55,10 @@ const RoomListItem = ({
         />
       </Wrapper>
       <Wrapper width="46px">
-        <CheckBox checked={false} onChange={() => {}} />
+        <CheckBox id="USER" checked={userChecked} onChange={userChange} />
       </Wrapper>
       <Wrapper>
-        <CheckBox checked={false} onChange={() => {}} />
+        <CheckBox id="OBSERVER" checked={observerChecked} onChange={observerChange} />
       </Wrapper>
     </StyledRoomListItem>
   );
