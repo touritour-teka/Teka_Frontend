@@ -1,7 +1,4 @@
-import {
-  useCreateRoomWithMembers,
-  usePostChatRoomMutation,
-} from '@/services/room/mutations';
+import { useCreateRoomWithMembers } from '@/services/room/mutations';
 import { Room } from '@/types/room/client';
 import { postRoomReq, postUserReq } from '@/types/room/remote';
 import { ChangeEventHandler, useState } from 'react';
