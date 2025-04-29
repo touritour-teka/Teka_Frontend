@@ -45,7 +45,7 @@ export const useMoveMemberAction = (checked: string[]) => {
       onSuccess: () => {
         postUserMutate(targetRoomId, {
           onSuccess: () => {
-            navigate(ROUTES.MANAGE);
+            navigate(ROUTES.MANAGE, { state: { moved: true } });
           },
         });
       },
