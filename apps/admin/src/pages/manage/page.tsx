@@ -1,46 +1,53 @@
-import React, { useState, useCallback, useMemo } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { flex } from '@teka/utils';
 import RoundedButton from '@/components/RoundedButton';
 import RoomList from '@/components/manage/RoomList';
-import { Status } from '@/types/room/client';
 import { Row } from '@teka/ui';
 import { IconMemberMove, IconShare, IconStatus, IconTrash } from '@teka/icon';
 import { useOverlay } from '@toss/use-overlay';
 import DeleteModal from '@/components/manage/DeleteModal';
-import { useNavigate } from 'react-router-dom';
-import { ROUTES } from '@/constants/constant';
 import SelectBottomSheet from '@/components/common/SelectBottomSheet/SelectBottomSheet';
 import { useChatListQuery } from '@/services/room/queries';
+import { useCheckedChange, useCTAButton } from './manage.hooks';
+import {
+  useDeleteChatRoomMutation,
+  usePatchRoomCloseMutation,
+  usePatchRoomOpenMutation,
+} from '@/services/room/mutations';
+import Message from '@/components/Message';
+import { useLocation } from 'react-router-dom';
 
 const ManagePage = () => {
-  const { data: rooms = [] } = useChatListQuery(null);
-  const [itemChecked, setItemChecked] = useState<string[]>([]);
   const overlay = useOverlay();
-  const navigate = useNavigate();
+  const location = useLocation();
+  const moved = location.state?.moved;
 
-  const handleMoveRoomCreate = () => {
-    navigate(ROUTES.CREATE);
+  const { data: rooms = [] } = useChatListQuery(null);
+
+  const selectedRoom = rooms.find((r) => r.chatRoomId === selectedId);
+  const selectedStatus = selectedRoom?.status ?? 'OPEN';
+
+  const { handleItemChange, handleHeaderChange, itemChecked, headerChecked } =
+    useCheckedChange(rooms);
+
+  const selectedId = Number(itemChecked[0]);
+
+  const { handleMoveRoomDetail, handleMoveRoomCreate } = useCTAButton(selectedId);
+  const { isSuccess: openSuccess } = usePatchRoomOpenMutation(selectedId);
+  const { isSuccess: closeSuccess } = usePatchRoomCloseMutation(selectedId);
+  const { isSuccess: deleteSuccess } = useDeleteChatRoomMutation();
+
+  const openChangeRoomStatus = () => {
+    overlay.open(({ isOpen, close }) => (
+      <SelectBottomSheet
+        isOpen={isOpen}
+        onClose={close}
+        selectedId={selectedId}
+        status={selectedStatus}
+      />
+    ));
   };
-
-  const headerChecked = useMemo(
-    () => rooms.length > 0 && itemChecked.length === rooms.length,
-    [rooms, itemChecked]
-  );
-
-  const handleItemChange = useCallback((id: string) => {
-    setItemChecked((prev) =>
-      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
-    );
-  }, []);
-
-  const handleHeaderChange = useCallback(() => {
-    if (headerChecked) {
-      setItemChecked([]);
-    } else {
-      setItemChecked(rooms.map((r) => r.chatRoomId.toString()));
-    }
-  }, [headerChecked, rooms]);
 
   const openDeleteChatRoomModal = () => {
     overlay.open(({ isOpen, close }) => (
@@ -54,24 +61,11 @@ const ManagePage = () => {
     ));
   };
 
-  const selectedId = Number(itemChecked[0]);
-  const selectedRoom = rooms.find((r) => r.chatRoomId === selectedId);
-  const selectedStatus = selectedRoom?.status ?? 'OPEN';
-
-  const openChangeRoomStatus = () => {
-    overlay.open(({ isOpen, close }) => (
-      <SelectBottomSheet
-        isOpen={isOpen}
-        onClose={close}
-        selectedId={selectedId}
-        status={selectedStatus}
-      />
-    ));
-  };
-
-  const handleMoveRoomDetail = () => {
-    navigate(`${ROUTES.ROOM}/${selectedId}`);
-  };
+  const successMessages = [
+    moved && '인원 이동이 완료되었습니다',
+    (openSuccess || closeSuccess) && '상태가 변경되었습니다',
+    deleteSuccess && '삭제가 완료되었습니다',
+  ].filter(Boolean);
 
   return (
     <StyledManagePage>
@@ -115,6 +109,11 @@ const ManagePage = () => {
           itemChange={handleItemChange}
         />
       </ManagePageBox>
+      {successMessages.map((message, idx) => (
+        <Message key={idx} width={190}>
+          {message}
+        </Message>
+      ))}
     </StyledManagePage>
   );
 };

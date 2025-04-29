@@ -5,40 +5,20 @@ import { ROUTES } from '@/constants/constant';
 import { useChatDetailQuery } from '@/services/room/queries';
 import { color } from '@teka/design-system';
 import { flex } from '@teka/utils';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import { useState } from 'react';
+import { useCheckedChange, useCTAButton } from './roomDetail.hooks';
 
 const RoomDetailPage = () => {
   const { id } = useParams<'id'>();
   const { data: room } = useChatDetailQuery(Number(id));
-  const navigate = useNavigate();
   const saved = localStorage.getItem('selectedMemberIds');
   const initialChecked: string[] = saved ? JSON.parse(saved) : [];
-
   const [checked, setChecked] = useState<string[]>(initialChecked);
 
-  const handleChange = (id: string) => {
-    setChecked((prev) =>
-      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
-    );
-  };
-  const handleMovePage = () => {
-    if (!room) return;
-    localStorage.setItem('chatRoomId', room.chatRoomId.toString());
-    const checkedIds = checked.map((id) => Number(id));
-    const selectedMembers = room.userList.filter((user) => checkedIds.includes(user.id));
-    localStorage.setItem('selectedMembers', JSON.stringify(selectedMembers));
-    localStorage.setItem('selectedMemberIds', JSON.stringify(checked));
-
-    navigate(ROUTES.CHANGE_ROOM);
-  };
-
-  const handleMoveBack = () => {
-    localStorage.removeItem('chatRoomId');
-    localStorage.removeItem('selectedMembers');
-    localStorage.removeItem('selectedMemberIds');
-  };
+  const { handleMoveBack, handleMovePage } = useCTAButton(checked, room);
+  const { handleChange } = useCheckedChange(setChecked);
 
   return (
     <StyledRoomDetailPage>
@@ -50,7 +30,7 @@ const RoomDetailPage = () => {
           )}
         </Content>
         <ButtonWrapper>
-          <Button onClick={handleMovePage}>{checked.length}명 이동</Button>
+          <Button onClick={handleMovePage}>{checked.length ?? 0}명 이동</Button>
         </ButtonWrapper>
       </RoomDetailPageContent>
     </StyledRoomDetailPage>

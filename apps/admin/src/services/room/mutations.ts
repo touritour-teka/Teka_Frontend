@@ -19,7 +19,6 @@ export const usePatchRoomOpenMutation = (chatRoomId: number) => {
 
   const { mutate: chatRoomOpenMutate, ...restMutation } = useMutation({
     mutationFn: () => patchChatRoomOpen(chatRoomId),
-    onSuccess: () => {},
     onError: handleError,
   });
 
@@ -31,7 +30,6 @@ export const usePatchRoomCloseMutation = (chatRoomId: number) => {
 
   const { mutate: chatRoomCloseMutate, ...restMutation } = useMutation({
     mutationFn: () => patchChatRoomClose(chatRoomId),
-    onSuccess: () => {},
     onError: handleError,
   });
 
