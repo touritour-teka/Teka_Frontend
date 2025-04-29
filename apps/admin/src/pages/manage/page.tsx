@@ -10,10 +10,19 @@ import DeleteModal from '@/components/manage/DeleteModal';
 import SelectBottomSheet from '@/components/common/SelectBottomSheet/SelectBottomSheet';
 import { useChatListQuery } from '@/services/room/queries';
 import { useCheckedChange, useCTAButton } from './manage.hooks';
+import {
+  useDeleteChatRoomMutation,
+  usePatchRoomCloseMutation,
+  usePatchRoomOpenMutation,
+} from '@/services/room/mutations';
+import Message from '@/components/Message';
+import { useLocation } from 'react-router-dom';
 
 const ManagePage = () => {
   const overlay = useOverlay();
-  
+  const location = useLocation();
+  const moved = location.state?.moved;
+
   const { data: rooms = [] } = useChatListQuery(null);
 
   const selectedRoom = rooms.find((r) => r.chatRoomId === selectedId);
@@ -25,6 +34,9 @@ const ManagePage = () => {
   const selectedId = Number(itemChecked[0]);
 
   const { handleMoveRoomDetail, handleMoveRoomCreate } = useCTAButton(selectedId);
+  const { isSuccess: openSuccess } = usePatchRoomOpenMutation(selectedId);
+  const { isSuccess: closeSuccess } = usePatchRoomCloseMutation(selectedId);
+  const { isSuccess: deleteSuccess } = useDeleteChatRoomMutation();
 
   const openChangeRoomStatus = () => {
     overlay.open(({ isOpen, close }) => (
@@ -48,6 +60,12 @@ const ManagePage = () => {
       />
     ));
   };
+
+  const successMessages = [
+    moved && '인원 이동이 완료되었습니다',
+    (openSuccess || closeSuccess) && '상태가 변경되었습니다',
+    deleteSuccess && '삭제가 완료되었습니다',
+  ].filter(Boolean);
 
   return (
     <StyledManagePage>
@@ -91,6 +109,11 @@ const ManagePage = () => {
           itemChange={handleItemChange}
         />
       </ManagePageBox>
+      {successMessages.map((message, idx) => (
+        <Message key={idx} width={190}>
+          {message}
+        </Message>
+      ))}
     </StyledManagePage>
   );
 };
