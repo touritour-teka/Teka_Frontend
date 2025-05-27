@@ -8,16 +8,17 @@ import LanguageModal from '@/components/common/LanguageModal';
 interface LanguageInputProps {
   width?: CSSProperties['width'];
   label?: string;
+  value: string;
+  onChange: (value: string) => void;
 }
 
-const LanguageInput = ({ width, label }: LanguageInputProps) => {
+const LanguageInput = ({ width, label, value, onChange }: LanguageInputProps) => {
   const [isModalOpen, setModalOpen] = useState(false);
-  const [selectedLanguage, setSelectedLanguage] = useState('한국어');
 
   const toggleModal = () => setModalOpen(!isModalOpen);
 
   const handleLanguageChange = (lang: string) => {
-    setSelectedLanguage(lang);
+    onChange(lang);
     setModalOpen(false);
   };
 
@@ -25,12 +26,7 @@ const LanguageInput = ({ width, label }: LanguageInputProps) => {
     <div style={{ width }}>
       {label && <Label>{label}</Label>}
       <StyledLanguageInput onClick={toggleModal}>
-        <Input
-          value={selectedLanguage}
-          placeholder="언어를 선택하세요"
-          readOnly
-          $isError={false}
-        />
+        <Input value={value} placeholder="언어를 선택하세요" readOnly $isError={false} />
         <IconWrapper>
           <IconArrowForward width={24} height={24} />
         </IconWrapper>
@@ -39,7 +35,7 @@ const LanguageInput = ({ width, label }: LanguageInputProps) => {
         <LanguageModal
           onSelect={handleLanguageChange}
           onClose={() => setModalOpen(false)}
-          selectedLanguage={selectedLanguage}
+          selectedLanguage={value}
         />
       )}
     </div>

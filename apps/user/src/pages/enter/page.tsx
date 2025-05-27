@@ -3,15 +3,19 @@ import { flex } from '@teka/utils';
 import Button from '@/components/enter/Button';
 import LanguageInput from '@/components/enter/LanguageInput';
 import { Column, Input } from '@teka/ui';
-import { useNavigate } from 'react-router-dom';
-import { ROUTES } from '@/constants/constant';
+import { useInput, useEnterAction } from './enter.hooks';
+import { Language } from '@/types/room/client';
+import { useState } from 'react';
 
 const EnterPage = () => {
-  const navigate = useNavigate();
+  const { enter, handleEnterChange } = useInput();
+  const chatRoomUuid = '12345-abcde';
+  const [language, setLanguage] = useState('한국어');
 
-  const handleMoveSignup = () => {
-    navigate(ROUTES.ENTER);
-  };
+  const { handleEnter } = useEnterAction(chatRoomUuid, {
+    ...enter,
+    language: language as Language,
+  });
 
   return (
     <StyledLoginPage>
@@ -19,12 +23,31 @@ const EnterPage = () => {
         <img src="/logo.svg" alt="logo" />
         <Column gap={56} width="100%" alignItems="stretch">
           <Column gap={24} width="100%">
-            <Input label="전화번호" placeholder="전화번호를 입력해주세요" width="100%" />
-            <Input label="닉네임" placeholder="닉네임을 입력해주세요" width="100%" />
-            <LanguageInput label="사용언어" width="100%" />
+            <Input
+              label="전화번호"
+              placeholder="전화번호를 입력해주세요"
+              name="phoneNumber"
+              onChange={handleEnterChange}
+              value={enter.phoneNumber}
+              width="100%"
+            />
+            <Input
+              label="닉네임"
+              placeholder="닉네임을 입력해주세요"
+              width="100%"
+              name="username"
+              onChange={handleEnterChange}
+              value={enter.username}
+            />
+            <LanguageInput
+              label="사용언어"
+              width="100%"
+              value={language}
+              onChange={setLanguage}
+            />
           </Column>
           <Column width="100%">
-            <Button onClick={handleMoveSignup}>채팅방 입장</Button>
+            <Button onClick={handleEnter}>채팅방 입장</Button>
           </Column>
         </Column>
       </LoginPageBox>
