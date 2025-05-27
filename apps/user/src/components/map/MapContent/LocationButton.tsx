@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { flex } from '@teka/utils';
-import { ButtonHTMLAttributes, ReactNode } from 'react';
+import { ButtonHTMLAttributes } from 'react';
 
 interface LocationButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: JSX.Element;
