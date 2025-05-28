@@ -3,44 +3,69 @@ import { flex } from '@teka/utils';
 import Button from '@/components/enter/Button';
 import LanguageInput from '@/components/enter/LanguageInput';
 import { Column, Input } from '@teka/ui';
-import { useNavigate } from 'react-router-dom';
-import { ROUTES } from '@/constants/constant';
+import { useInput, useEnterAction } from './enter.hooks';
+import { Language } from '@/types/room/client';
+import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 const EnterPage = () => {
-  const navigate = useNavigate();
+  const { chatroomUuid } = useParams(); 
 
-  const handleMoveSignup = () => {
-    navigate(ROUTES.ENTER);
-  };
+  const { enter, handleEnterChange } = useInput();
+  const [language, setLanguage] = useState('한국어');
+
+  const { handleEnter } = useEnterAction(chatroomUuid!, {
+    ...enter,
+    language: language as Language,
+  });
 
   return (
-    <StyledLoginPage>
-      <LoginPageBox>
+    <StyledEnterPage>
+      <EnterPageBox>
         <img src="/logo.svg" alt="logo" />
         <Column gap={56} width="100%" alignItems="stretch">
           <Column gap={24} width="100%">
-            <Input label="전화번호" placeholder="전화번호를 입력해주세요" width="100%" />
-            <Input label="닉네임" placeholder="닉네임을 입력해주세요" width="100%" />
-            <LanguageInput label="사용언어" width="100%" />
+            <Input
+              label="전화번호"
+              placeholder="전화번호를 입력해주세요"
+              name="phoneNumber"
+              onChange={handleEnterChange}
+              value={enter.phoneNumber}
+              width="100%"
+            />
+            <Input
+              label="닉네임"
+              placeholder="닉네임을 입력해주세요"
+              width="100%"
+              name="username"
+              onChange={handleEnterChange}
+              value={enter.username}
+            />
+            <LanguageInput
+              label="사용언어"
+              width="100%"
+              value={language}
+              onChange={setLanguage}
+            />
           </Column>
           <Column width="100%">
-            <Button onClick={handleMoveSignup}>채팅방 입장</Button>
+            <Button onClick={handleEnter}>채팅방 입장</Button>
           </Column>
         </Column>
-      </LoginPageBox>
-    </StyledLoginPage>
+      </EnterPageBox>
+    </StyledEnterPage>
   );
 };
 
 export default EnterPage;
 
-const StyledLoginPage = styled.div`
+const StyledEnterPage = styled.div`
   ${flex({ justifyContent: 'center', alignItems: 'center' })}
   width: 100%;
   height: 100vh;
 `;
 
-const LoginPageBox = styled.div`
+const EnterPageBox = styled.div`
   ${flex({ flexDirection: 'column', alignItems: 'center' })}
   width: 100%;
   max-width: 400px;

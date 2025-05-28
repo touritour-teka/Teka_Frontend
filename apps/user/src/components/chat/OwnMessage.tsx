@@ -49,7 +49,7 @@ const OwnMessage: React.FC<OwnMessageProps> = ({
     if (prevTimestamp === timestamp) {
       setIsFirstMessage(false);
     }
-  }, [prevTimestamp]);
+  }, [prevTimestamp, timestamp]);
 
   const handleClickPaste = () => {
     if (address) {
@@ -69,6 +69,7 @@ const OwnMessage: React.FC<OwnMessageProps> = ({
             <MapPreviewContainer onClick={handleGoToMap}>
               <div>
                 <iframe
+                  title='지도 미리보기'
                   src={iframeSrc}
                   width="250"
                   height="190"

@@ -4,3 +4,8 @@ export const ROUTES = {
   SETTING: '/setting',
   MAP: '/map',
 } as const;
+
+export const TOKEN = {
+  ACCESS: 'access-token',
+  REFRESH: 'refresh-token',
+} as const;

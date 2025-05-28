@@ -27,7 +27,7 @@ const OtherPersonMessage: React.FC<OtherPersonMessageProps> = ({
     if (prevTimestamp === timestamp) {
       setIsFirstMessage(false);
     }
-  }, [prevTimestamp]);
+  }, [prevTimestamp, timestamp]);
 
   const handleClickTranslateButton = () => {
     setIsTranslate(true);
