@@ -1,49 +1,20 @@
-import { color } from '@teka/design-system';
 import { IconCamera, IconFile, IconImage, IconLocationMark, IconSend } from '@teka/icon';
-import { flex } from '@teka/utils';
 import { Text } from '@teka/ui';
-import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
-import getGoogleMapsLink from '@/apis/maps/getGoogleMapsLink';
+import { flex } from '@teka/utils';
+import { color } from '@teka/design-system';
+import { useMessageInput } from './MessageInput.hooks';
 
-const MessageInput: React.FC = () => {
-  const fileInputRef = useRef<HTMLInputElement>(null);
-  const [showOptionsPanel, setShowOptionsPanel] = useState(false);
-
-  const handleFileOpen = () => {
-    setShowOptionsPanel(!showOptionsPanel);
-  };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-  };
-
-  const handleSendLocation = () => {
-    if (!navigator.geolocation) {
-      alert('위치 정보를 지원하지 않는 브라우저입니다.');
-      return;
-    }
-
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        const { latitude, longitude } = position.coords;
-        const mapsLink = getGoogleMapsLink(latitude, longitude);
-        console.log(mapsLink);
-      },
-      (error) => {
-        console.error(error);
-        alert('위치 정보를 가져올 수 없습니다.');
-      }
-    );
-  };
-
-  const handleTakePhoto = () => {
-    console.log('카메라 촬영');
-  };
-
-  const handleSelectPhoto = () => {
-    fileInputRef.current?.click();
-  };
+const MessageInput = () => {
+  const {
+    showOptionsPanel,
+    fileInputRef,
+    handleFileOpen,
+    handleFileChange,
+    handleSendLocation,
+    handleTakePhoto,
+    handleSelectPhoto,
+  } = useMessageInput();
 
   return (
     <>
