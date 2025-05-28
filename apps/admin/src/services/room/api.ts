@@ -49,9 +49,13 @@ export const deleteChatRoom = async (chatRoomId: number) => {
 };
 
 export const postChatRoom = async (roomData: postRoomReq) => {
-  const { data } = await teka.post('/chatrooms', roomData, authorization());
+  const response = await teka.post('/chatrooms', roomData, authorization());
+  const locationHeader = response.headers.location;
 
-  return data;
+  const match = locationHeader.match(/\/chatrooms\/(\d+)/);
+  const id = match ? Number(match[1]) : undefined;
+
+  return { id };
 };
 
 export const postUser = async (chatRoomId: number, userData: postUserReq) => {
