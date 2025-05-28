@@ -9,7 +9,7 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 const EnterPage = () => {
-  const { chatroomUuid } = useParams(); 
+  const { chatroomUuid } = useParams();
 
   const { enter, handleEnterChange } = useInput();
   const [language, setLanguage] = useState('한국어');
