@@ -4,8 +4,6 @@ import { useEffect, useRef } from 'react';
 import { useAtomValue } from 'jotai';
 import { enterAtom } from '@/stores/enter';
 
-const SOCKET_URL = 'https://your-server.com/conn';
-
 export const useChatSocket = (chatroomUuid: string) => {
   const user = useAtomValue(enterAtom);
   const clientRef = useRef<Client | null>(null);
@@ -14,7 +12,7 @@ export const useChatSocket = (chatroomUuid: string) => {
     if (!user || !user.phoneNumber) return;
 
     const client = new Client({
-      webSocketFactory: () => new SockJS(SOCKET_URL),
+      webSocketFactory: () => new SockJS(process.env.REACT_APP_BASE_URL + '/conn'),
       connectHeaders: {
         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
       },

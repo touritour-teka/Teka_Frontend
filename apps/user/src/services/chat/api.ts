@@ -5,6 +5,14 @@ export const getChat = async (chatroomUuid: string) => {
   return data;
 };
 
+export const postChatImage = async (image: File) => {
+  const formData = new FormData();
+  formData.append('file', image);
+
+  const { data } = await teka.post('/chat/image', formData);
+  return data;
+};
+
 export const postChatMessage = async (
   chatroomUuid: string,
   message: string,
