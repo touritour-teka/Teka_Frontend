@@ -92,7 +92,7 @@ export const useInitializeMap = ({ lat, lng }: { lat: number; lng: number }) => 
     } else {
       initializeMap(fallbackLocation);
     }
-  }, [lat, lng]);
+  }, [lat, lng, initializeMap]);
 
   useEffect(() => {
     if (overlayRef.current) {

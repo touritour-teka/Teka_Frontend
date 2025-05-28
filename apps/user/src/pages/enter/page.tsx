@@ -6,20 +6,22 @@ import { Column, Input } from '@teka/ui';
 import { useInput, useEnterAction } from './enter.hooks';
 import { Language } from '@/types/room/client';
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 const EnterPage = () => {
+  const { chatroomUuid } = useParams(); 
+
   const { enter, handleEnterChange } = useInput();
-  const chatRoomUuid = '12345-abcde';
   const [language, setLanguage] = useState('한국어');
 
-  const { handleEnter } = useEnterAction(chatRoomUuid, {
+  const { handleEnter } = useEnterAction(chatroomUuid!, {
     ...enter,
     language: language as Language,
   });
 
   return (
-    <StyledLoginPage>
-      <LoginPageBox>
+    <StyledEnterPage>
+      <EnterPageBox>
         <img src="/logo.svg" alt="logo" />
         <Column gap={56} width="100%" alignItems="stretch">
           <Column gap={24} width="100%">
@@ -50,20 +52,20 @@ const EnterPage = () => {
             <Button onClick={handleEnter}>채팅방 입장</Button>
           </Column>
         </Column>
-      </LoginPageBox>
-    </StyledLoginPage>
+      </EnterPageBox>
+    </StyledEnterPage>
   );
 };
 
 export default EnterPage;
 
-const StyledLoginPage = styled.div`
+const StyledEnterPage = styled.div`
   ${flex({ justifyContent: 'center', alignItems: 'center' })}
   width: 100%;
   height: 100vh;
 `;
 
-const LoginPageBox = styled.div`
+const EnterPageBox = styled.div`
   ${flex({ flexDirection: 'column', alignItems: 'center' })}
   width: 100%;
   max-width: 400px;
