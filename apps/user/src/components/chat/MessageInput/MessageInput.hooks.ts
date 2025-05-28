@@ -12,7 +12,6 @@ export const useMessageInput = () => {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      console.log('첨부 파일:', file);
     }
   };
 
@@ -26,17 +25,14 @@ export const useMessageInput = () => {
       (position) => {
         const { latitude, longitude } = position.coords;
         const mapsLink = getGoogleMapsLink(latitude, longitude);
-        console.log('📍 위치 링크:', mapsLink);
       },
-      (error) => {
-        console.error(error);
+      () => {
         alert('위치 정보를 가져올 수 없습니다.');
       }
     );
   };
 
   const handleTakePhoto = () => {
-    console.log('카메라 촬영 클릭');
   };
 
   const handleSelectPhoto = () => {

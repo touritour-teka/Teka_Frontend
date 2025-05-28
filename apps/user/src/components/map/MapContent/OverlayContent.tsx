@@ -13,7 +13,6 @@ const OverlayContent = ({ address }: OverlayContentProps) => {
     const googleMapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
       address
     )}`;
-    console.log(googleMapUrl);
   };
 
   return (
