@@ -58,9 +58,9 @@ export const useCreateRoomWithMembers = (
     postChatRoomMutate(roomData, {
       onSuccess: (createdRoom) => {
         const roomId = createdRoom.id;
-        setCreatedRoomId(roomId);
+        setCreatedRoomId(roomId ?? 0);
 
-        postUserMutate(roomId, {
+        postUserMutate(roomId ?? 0, {
           onSuccess: () => {
             navigate(ROUTES.MANAGE);
           },
