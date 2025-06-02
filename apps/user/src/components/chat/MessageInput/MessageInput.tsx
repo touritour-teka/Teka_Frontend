@@ -48,6 +48,8 @@ const MessageInput = () => {
           </div>
           <input
             type="file"
+            accept="image/*"
+            capture="environment"
             ref={fileInputRef}
             style={{ display: 'none' }}
             onChange={handleFileChange}
