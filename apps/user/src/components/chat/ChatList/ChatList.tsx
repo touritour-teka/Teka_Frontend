@@ -1,5 +1,4 @@
-import { useParams } from 'react-router-dom';
-import { useChatQuery } from '@/services/chat/queries';
+import { useEffect, useRef } from 'react';
 import { getMessage } from '@/types/chat/remote';
 import { formatToTime } from '@/utils/index';
 import OwnMessage from '../Message/OwnMessage';
@@ -21,6 +20,14 @@ const ChatList = () => {
     month: 'long',
     day: 'numeric',
   });
+
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollIntoView({ behavior: 'auto' });
+    }
+  }, [messages]);
 
   if (isLoading) {
     return (
@@ -60,6 +67,7 @@ const ChatList = () => {
             />
           )
         )}
+      <div ref={scrollRef} />
     </StyledChatList>
   );
 };
