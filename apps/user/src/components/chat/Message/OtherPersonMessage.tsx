@@ -21,10 +21,13 @@ const OtherPersonMessage: React.FC<OtherPersonMessageProps> = ({
   hideMeta,
 }) => {
   const [isTranslate, setIsTranslate] = useState(false);
-  const [isFirstMessage, setIsFirstMessage] = useState(true);
 
   const handleClickTranslateButton = () => {
     setIsTranslate(true);
+  };
+
+  const isImageUrl = (url: string) => {
+    return /\.(png|jpg|jpeg|gif|webp)$/i.test(url);
   };
 
   return (
@@ -33,7 +36,11 @@ const OtherPersonMessage: React.FC<OtherPersonMessageProps> = ({
         <Text fontType="regular14">{!hideMeta ? name : ''}</Text>
         <Row gap={6} alignItems="flex-end">
           <MessageContainer>
-            <StyledText>{content}</StyledText>
+            {isImageUrl(content) ? (
+              <StyledImage src={content} alt="image" />
+            ) : (
+              <StyledText>{content}</StyledText>
+            )}
             {isTranslate && <TranslatedLine />}
             {isTranslate ? (
               <StyledText color={color.blue800}>{translatedContent}</StyledText>
@@ -42,9 +49,9 @@ const OtherPersonMessage: React.FC<OtherPersonMessageProps> = ({
           <Column>
             {!isTranslate ? (
               <>
-                <IconWrapper onClick={handleClickTranslateButton}>
+                <div onClick={handleClickTranslateButton}>
                   <IconTranslate width={24} height={24} />
-                </IconWrapper>
+                </div>
                 {!hideMeta && (
                   <Text fontType="regular12chat" color={color.wireframe2}>
                     {timestamp}
@@ -89,4 +96,8 @@ const TranslatedLine = styled.div`
   border: 1px dashed ${color.gray100};
 `;
 
-const IconWrapper = styled.div``;
+const StyledImage = styled.img`
+  max-width: 250px;
+  border-radius: 12px;
+  display: block;
+`;

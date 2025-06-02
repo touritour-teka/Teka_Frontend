@@ -23,6 +23,7 @@ export const useMessageInput = () => {
               message: `${process.env.REACT_APP_BASE_URL}/${imagePath}`,
               type: 'IMAGE',
             });
+            setShowOptionsPanel(false);
           },
         }
       );

@@ -18,7 +18,12 @@ interface OwnMessageProps {
   hideMeta?: boolean;
 }
 
-const OwnMessage: React.FC<OwnMessageProps> = ({ name, content, timestamp, hideMeta }) => {
+const OwnMessage: React.FC<OwnMessageProps> = ({
+  name,
+  content,
+  timestamp,
+  hideMeta,
+}) => {
   const GOOGLE_MAPS_API_KEY = process.env.REACT_APP_API_KEY;
   const navigate = useNavigate();
 
@@ -45,12 +50,16 @@ const OwnMessage: React.FC<OwnMessageProps> = ({ name, content, timestamp, hideM
     }
   };
 
+  const isImageUrl = (url: string) => {
+    return /\.(png|jpg|jpeg|gif|webp)$/i.test(url);
+  };
+
   return (
     <StyledOwnMessage>
       <Text fontType="regular14">{!hideMeta ? name : ''}</Text>
       <Row gap={6} justifyContent="flex-end" alignItems="flex-end">
         <Timestamp>{!hideMeta ? timestamp : ''}</Timestamp>
-        <MessageBubble>
+        <MessageBubble isImageUrl={isImageUrl(content)}>
           {iframeSrc ? (
             <MapPreviewContainer onClick={handleGoToMap}>
               <div>
@@ -77,6 +86,8 @@ const OwnMessage: React.FC<OwnMessageProps> = ({ name, content, timestamp, hideM
                 </AddressContainer>
               )}
             </MapPreviewContainer>
+          ) : isImageUrl(content) ? (
+            <StyledImage src={content} alt="보낸 이미지" />
           ) : (
             <Text fontType="regular14chat" whiteSpace="pre-wrap">
               {content}
@@ -97,16 +108,16 @@ const StyledOwnMessage = styled.div`
   width: 100%;
 `;
 
-const MessageBubble = styled.div`
+const MessageBubble = styled.div<{ isImageUrl: boolean }>`
   ${flex({ justifyContent: 'flex-end' })};
   ${font.regular14chat}
   background-color: ${color.blue800};
   color: ${color.white2};
-  padding: 12px;
   border-radius: 16px 0px 16px 16px;
   word-break: break-word;
   overflow-wrap: break-word;
   white-space: pre-wrap;
+  padding: ${({ isImageUrl }) => (isImageUrl ? '0' : '8px 12px')};
 `;
 
 const Timestamp = styled.div`
@@ -130,4 +141,10 @@ const AddressContainer = styled.div`
 
 const UnderlinedText = styled.span`
   text-decoration: underline;
+`;
+
+const StyledImage = styled.img`
+  max-width: 250px;
+  height: auto;
+  border-radius: 12px;
 `;
