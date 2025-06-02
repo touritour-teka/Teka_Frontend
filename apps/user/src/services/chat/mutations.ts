@@ -1,14 +1,27 @@
 import { useMutation } from '@tanstack/react-query';
-import { postChatImage } from './api';
+import { postChatImage, postChatMessage } from './api';
 import useApiError from '@/hooks/useApiError';
 
-export const useUploadImageMutation = (image: File) => {
+export const useUploadImageMutation = () => {
   const { handleError } = useApiError();
 
-  const { mutate: chatRoomOpenMutate, ...restMutation } = useMutation({
-    mutationFn: () => postChatImage(image),
+  return useMutation({
+    mutationFn: (file: File) => postChatImage(file),
     onError: handleError,
   });
+};
 
-  return { chatRoomOpenMutate, ...restMutation };
+export const useSendMessageMutation = (chatroomUuid: string) => {
+  const { handleError } = useApiError();
+
+  return useMutation({
+    mutationFn: ({
+      message,
+      targetLanguage,
+    }: {
+      message: string;
+      targetLanguage: string;
+    }) => postChatMessage(chatroomUuid, message, targetLanguage),
+    onError: handleError,
+  });
 };

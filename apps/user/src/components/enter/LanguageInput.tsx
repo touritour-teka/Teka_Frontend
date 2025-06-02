@@ -4,12 +4,13 @@ import { color, font } from '@teka/design-system';
 import { IconArrowForward } from '@teka/icon';
 import { flex } from '@teka/utils';
 import LanguageModal from '@/components/common/LanguageModal';
+import { Language } from '@/types/room/client';
 
 interface LanguageInputProps {
   width?: CSSProperties['width'];
   label?: string;
-  value: string;
-  onChange: (value: string) => void;
+  value: Language;
+  onChange: (value: Language) => void;
 }
 
 const LanguageInput = ({ width, label, value, onChange }: LanguageInputProps) => {
@@ -17,8 +18,8 @@ const LanguageInput = ({ width, label, value, onChange }: LanguageInputProps) =>
 
   const toggleModal = () => setModalOpen(!isModalOpen);
 
-  const handleLanguageChange = (lang: string) => {
-    onChange(lang);
+  const handleLanguageChange = (value: Language) => {
+    onChange(value);
     setModalOpen(false);
   };
 

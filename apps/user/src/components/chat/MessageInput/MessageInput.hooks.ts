@@ -1,9 +1,12 @@
 import { useRef, useState } from 'react';
 import getGoogleMapsLink from '@/apis/maps/getGoogleMapsLink';
+import { useUploadImageMutation, useSendMessageMutation } from '@/services/chat/mutations';
 
 export const useMessageInput = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [showOptionsPanel, setShowOptionsPanel] = useState(false);
+  const { mutate: uploadImage } = useUploadImageMutation(); 
+  // const { } = useSendMessageMutation();
 
   const handleFileOpen = () => {
     setShowOptionsPanel((prev) => !prev);
@@ -12,6 +15,7 @@ export const useMessageInput = () => {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      uploadImage(file); 
     }
   };
 
@@ -25,6 +29,7 @@ export const useMessageInput = () => {
       (position) => {
         const { latitude, longitude } = position.coords;
         const mapsLink = getGoogleMapsLink(latitude, longitude);
+        console.log('Google Maps 링크:', mapsLink);
       },
       () => {
         alert('위치 정보를 가져올 수 없습니다.');
@@ -33,6 +38,7 @@ export const useMessageInput = () => {
   };
 
   const handleTakePhoto = () => {
+    fileInputRef.current?.click();
   };
 
   const handleSelectPhoto = () => {

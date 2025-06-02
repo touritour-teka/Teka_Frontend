@@ -1,7 +1,8 @@
+import authorization from '@/apis/authorization/authorization';
 import { teka } from '@/apis/instance/instance';
 
 export const getChat = async (chatroomUuid: string) => {
-  const { data } = await teka.get(`/chat/${chatroomUuid}`);
+  const { data } = await teka.get(`/chat/${chatroomUuid}`, authorization());
   return data;
 };
 

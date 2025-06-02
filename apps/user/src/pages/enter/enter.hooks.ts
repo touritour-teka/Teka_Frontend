@@ -1,9 +1,9 @@
-import { useEnterMutate } from '@/services/auth/mutations';
+import { useEnterMutation } from '@/services/auth/mutations';
 import { PostAuthReq } from '@/types/auth/remote';
 import { ChangeEventHandler, useState } from 'react';
 
 export const useEnterAction = (chatRommUuid: string, enterData: PostAuthReq) => {
-  const { enterMutate } = useEnterMutate(chatRommUuid, enterData);
+  const { enterMutate } = useEnterMutation(chatRommUuid, enterData);
 
   const handleEnter = () => {
     enterMutate();

@@ -1,3 +1,4 @@
+import { Language } from '@/types/room/client';
 import { color, font } from '@teka/design-system';
 import { Row } from '@teka/ui';
 import styled from 'styled-components';
@@ -7,23 +8,29 @@ const LanguageModal = ({
   onClose,
   selectedLanguage,
 }: {
-  onSelect: (lang: string) => void;
+  onSelect: (lang: Language) => void;
   onClose: () => void;
-  selectedLanguage: string;
+  selectedLanguage: Language;
 }) => {
+  const languageMap: { label: string; value: Language }[] = [
+    { label: '한국어', value: 'KOREAN' },
+    { label: 'English', value: 'ENGLISH' },
+    { label: '中文', value: 'CHINESE' },
+  ];
+
   return (
     <ModalBackdrop onClick={onClose}>
       <Modal onClick={(e) => e.stopPropagation()}>
         <RadioGroup>
-          {['한국어', 'English', '中文'].map((lang) => (
-            <Row justifyContent="space-between">
-              {lang}
+          {languageMap.map(({ label, value }) => (
+            <Row key={value} justifyContent="space-between">
+              {label}
               <RadioInput
                 type="radio"
                 name="language"
-                value={lang}
-                checked={selectedLanguage === lang}
-                onChange={(e) => onSelect(e.target.value)}
+                value={value}
+                checked={selectedLanguage === value}
+                onChange={() => onSelect(value)}
               />
             </Row>
           ))}

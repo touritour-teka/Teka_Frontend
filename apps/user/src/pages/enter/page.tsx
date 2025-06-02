@@ -12,7 +12,7 @@ const EnterPage = () => {
   const { chatroomUuid } = useParams();
 
   const { enter, handleEnterChange } = useInput();
-  const [language, setLanguage] = useState('한국어');
+  const [language, setLanguage] = useState('KOREAN' as Language);
 
   const { handleEnter } = useEnterAction(chatroomUuid!, {
     ...enter,
@@ -44,7 +44,7 @@ const EnterPage = () => {
             <LanguageInput
               label="사용언어"
               width="100%"
-              value={language}
+              value={language as Language}
               onChange={setLanguage}
             />
           </Column>
