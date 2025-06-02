@@ -4,6 +4,9 @@ import {
   useUploadImageMutation,
   useSendMessageMutation,
 } from '@/services/chat/mutations';
+import { useAtomValue } from 'jotai';
+import { useParams } from 'react-router-dom';
+import { enterAtom } from '@/stores/enter';
 
 export const useMessageInput = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -47,6 +50,19 @@ export const useMessageInput = () => {
     fileInputRef.current?.click();
   };
 
+  const [message, setMessage] = useState('');
+  const { language: UserLanguage } = useAtomValue(enterAtom);
+  const { chatroomUuid } = useParams();
+  const { mutate: sendMessage } = useSendMessageMutation(chatroomUuid!);
+
+  const handleSendMessage = () => {
+    if (!message.trim()) return;
+    sendMessage({
+      message,
+      targetLanguage: UserLanguage,
+    });
+    setMessage('');
+  };
   return {
     showOptionsPanel,
     fileInputRef,
@@ -55,5 +71,8 @@ export const useMessageInput = () => {
     handleSendLocation,
     handleTakePhoto,
     handleSelectPhoto,
+    message,
+    setMessage,
+    handleSendMessage,
   };
 };

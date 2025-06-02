@@ -4,11 +4,6 @@ import styled from 'styled-components';
 import { flex } from '@teka/utils';
 import { color } from '@teka/design-system';
 import { useMessageInput } from './MessageInput.hooks';
-import { useState } from 'react';
-import { useSendMessageMutation } from '@/services/chat/mutations';
-import { useParams } from 'react-router-dom';
-import { useAtomValue } from 'jotai';
-import { enterAtom } from '@/stores/enter';
 
 const MessageInput = () => {
   const {
@@ -19,22 +14,10 @@ const MessageInput = () => {
     handleSendLocation,
     handleTakePhoto,
     handleSelectPhoto,
+    handleSendMessage,
+    message,
+    setMessage,
   } = useMessageInput();
-
-  const [message, setMessage] = useState('');
-  const { language: UserLanguage } = useAtomValue(enterAtom);
-
-  const { chatroomUuid } = useParams();
-  const { mutate: sendMessage } = useSendMessageMutation(chatroomUuid!);
-
-  const handleSendMessage = () => {
-    if (!message.trim()) return;
-    sendMessage({
-      message,
-      targetLanguage: UserLanguage,
-    });
-    setMessage('');
-  };
 
   return (
     <>

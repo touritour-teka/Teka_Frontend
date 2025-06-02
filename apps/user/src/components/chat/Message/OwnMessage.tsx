@@ -16,19 +16,12 @@ interface OwnMessageProps {
   name: string;
   content: string;
   timestamp: string;
-  prevTimestamp?: string;
+  hideMeta?: boolean;
 }
 
-const OwnMessage: React.FC<OwnMessageProps> = ({
-  name,
-  content,
-  timestamp,
-  prevTimestamp,
-}) => {
+const OwnMessage: React.FC<OwnMessageProps> = ({ name, content, timestamp, hideMeta }) => {
   const GOOGLE_MAPS_API_KEY = process.env.REACT_APP_API_KEY;
   const navigate = useNavigate();
-
-  const [isFirstMessage, setIsFirstMessage] = useState(true);
 
   const hasGoogleMapsUrl = isGoogleMapsUrl(content);
   const query = hasGoogleMapsUrl ? extractGoogleMapsQuery(content) : null;
@@ -45,12 +38,6 @@ const OwnMessage: React.FC<OwnMessageProps> = ({
     }
   };
 
-  useEffect(() => {
-    if (prevTimestamp === timestamp) {
-      setIsFirstMessage(false);
-    }
-  }, [prevTimestamp, timestamp]);
-
   const handleClickPaste = () => {
     if (address) {
       navigator.clipboard.writeText(address).then(() => {
@@ -61,15 +48,15 @@ const OwnMessage: React.FC<OwnMessageProps> = ({
 
   return (
     <StyledOwnMessage>
-      <Text fontType="regular14">{isFirstMessage ? name : ''}</Text>
+      <Text fontType="regular14">{!hideMeta ? name : ''}</Text>
       <Row gap={6} justifyContent="flex-end" alignItems="flex-end">
-        <Timestamp>{timestamp}</Timestamp>
+        <Timestamp>{!hideMeta ? timestamp : ''}</Timestamp>
         <MessageBubble>
           {iframeSrc ? (
             <MapPreviewContainer onClick={handleGoToMap}>
               <div>
                 <iframe
-                  title='지도 미리보기'
+                  title="지도 미리보기"
                   src={iframeSrc}
                   width="250"
                   height="190"

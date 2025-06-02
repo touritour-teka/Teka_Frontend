@@ -47,26 +47,31 @@ const ChatList = () => {
   return (
     <StyledChatList>
       <DateDivider date={formattedDate} />
-      {[...messages]
-        .reverse()
-        .map((msg: getMessage) =>
-          msg.sender.username === currentUsername ? (
-            <OwnMessage
-              key={msg.id}
-              name={msg.sender.username}
-              content={msg.message}
-              timestamp={formatToTime(msg.createdAt)}
-            />
-          ) : (
-            <OtherPersonMessage
-              key={msg.id}
-              name={msg.sender.username}
-              content={msg.message}
-              translatedContent={msg.translatedMessage}
-              timestamp={formatToTime(msg.createdAt)}
-            />
-          )
-        )}
+      {[...messages].reverse().map((msg: getMessage, index, arr) => {
+        const prev = arr[index - 1];
+        const isSameUser = prev?.sender.username === msg.sender.username;
+        const isSameTime = formatToTime(prev?.createdAt) === formatToTime(msg.createdAt);
+        const hideMeta = isSameUser && isSameTime;
+
+        return msg.sender.username === currentUsername ? (
+          <OwnMessage
+            key={msg.id}
+            name={msg.sender.username}
+            content={msg.message}
+            timestamp={formatToTime(msg.createdAt)}
+            hideMeta={hideMeta}
+          />
+        ) : (
+          <OtherPersonMessage
+            key={msg.id}
+            name={msg.sender.username}
+            content={msg.message}
+            translatedContent={msg.translatedMessage}
+            timestamp={formatToTime(msg.createdAt)}
+            hideMeta={hideMeta}
+          />
+        );
+      })}
       <div ref={scrollRef} />
     </StyledChatList>
   );

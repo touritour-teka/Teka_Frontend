@@ -10,7 +10,7 @@ interface OtherPersonMessageProps {
   content: string;
   timestamp: string;
   translatedContent: string;
-  prevTimestamp?: string;
+  hideMeta?: boolean;
 }
 
 const OtherPersonMessage: React.FC<OtherPersonMessageProps> = ({
@@ -18,16 +18,10 @@ const OtherPersonMessage: React.FC<OtherPersonMessageProps> = ({
   content,
   timestamp,
   translatedContent,
-  prevTimestamp,
+  hideMeta,
 }) => {
   const [isTranslate, setIsTranslate] = useState(false);
   const [isFirstMessage, setIsFirstMessage] = useState(true);
-
-  useEffect(() => {
-    if (prevTimestamp === timestamp) {
-      setIsFirstMessage(false);
-    }
-  }, [prevTimestamp, timestamp]);
 
   const handleClickTranslateButton = () => {
     setIsTranslate(true);
@@ -36,7 +30,7 @@ const OtherPersonMessage: React.FC<OtherPersonMessageProps> = ({
   return (
     <StyledOtherMessageContainer>
       <Column gap={6}>
-        <Text fontType="regular14">{isFirstMessage ? name : ''}</Text>
+        <Text fontType="regular14">{!hideMeta ? name : ''}</Text>
         <Row gap={6} alignItems="flex-end">
           <MessageContainer>
             <StyledText>{content}</StyledText>
@@ -51,14 +45,20 @@ const OtherPersonMessage: React.FC<OtherPersonMessageProps> = ({
                 <IconWrapper onClick={handleClickTranslateButton}>
                   <IconTranslate width={24} height={24} />
                 </IconWrapper>
-                <Text fontType="regular12chat" color={color.wireframe2}>
-                  {timestamp}
-                </Text>
+                {!hideMeta && (
+                  <Text fontType="regular12chat" color={color.wireframe2}>
+                    {timestamp}
+                  </Text>
+                )}
               </>
             ) : (
-              <Text fontType="regular12chat" color={color.wireframe2}>
-                {timestamp}
-              </Text>
+              <>
+                {!hideMeta && (
+                  <Text fontType="regular12chat" color={color.wireframe2}>
+                    {timestamp}
+                  </Text>
+                )}
+              </>
             )}
           </Column>
         </Row>
