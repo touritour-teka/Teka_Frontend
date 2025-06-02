@@ -1,9 +1,7 @@
 import { useRef, useState } from 'react';
 import getGoogleMapsLink from '@/apis/maps/getGoogleMapsLink';
 import { usePostImageMutation, usePostMessageMutation } from '@/services/chat/mutations';
-import { useAtomValue } from 'jotai';
 import { useParams } from 'react-router-dom';
-import { enterAtom } from '@/stores/enter';
 
 export const useMessageInput = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -17,7 +15,17 @@ export const useMessageInput = () => {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      postImageMutate(file);
+      postImageMutate(
+        { file },
+        {
+          onSuccess: (imagePath) => {
+            postMessageMutate({
+              message: `${process.env.REACT_APP_BASE_URL}/${imagePath}`,
+              type: 'IMAGE',
+            });
+          },
+        }
+      );
     }
   };
 
@@ -48,7 +56,6 @@ export const useMessageInput = () => {
   };
 
   const [message, setMessage] = useState('');
-  const { language: UserLanguage } = useAtomValue(enterAtom);
   const { chatroomUuid } = useParams();
   const { postMessageMutate } = usePostMessageMutation(chatroomUuid!);
 
@@ -56,7 +63,7 @@ export const useMessageInput = () => {
     if (!message.trim()) return;
     postMessageMutate({
       message,
-      targetLanguage: UserLanguage,
+      type: 'TEXT',
     });
     setMessage('');
   };

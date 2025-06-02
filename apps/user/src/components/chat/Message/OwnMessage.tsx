@@ -7,7 +7,6 @@ import {
   extractGoogleMapsQuery,
   extractLatLngFromMapsUrl,
 } from '@/utils/index';
-import { useEffect, useState } from 'react';
 import { useAddressFromLatLng } from '@/hooks/maps/useAddressFromLatLng';
 import getMapEmbedUrl from '@/apis/maps/getMapEmbedUrl';
 import { useNavigate } from 'react-router-dom';

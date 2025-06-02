@@ -1,23 +1,31 @@
 import authorization from '@/apis/authorization/authorization';
-import { teka } from '@/apis/instance/instance';
+import { teka, tekaWithFile } from '@/apis/instance/instance';
+import { ChatType } from '@/types/chat/client';
 
 export const getChat = async (chatroomUuid: string) => {
   const { data } = await teka.get(`/chat/${chatroomUuid}`, authorization());
   return data;
 };
 
-export const postChatImage = async (image: File) => {
+export const postChatImage = async (file: File) => {
   const formData = new FormData();
-  formData.append('file', image);
+  formData.append('image', file);
 
-  const { data } = await teka.post('/chat/image', formData);
-  return data;
+  const response = await tekaWithFile.post('/chat/image', formData, authorization());
+  const location = response.headers['location'];
+
+  return location;
 };
 
 export const postChatMessage = async (
   chatroomUuid: string,
   message: string,
-  targetLanguage: string
+  type: ChatType
 ) => {
-  await teka.post(`/chat/${chatroomUuid}`, { message, targetLanguage }, authorization());
+  const { data } = await teka.post(
+    `/chat/${chatroomUuid}`,
+    { message, type },
+    authorization()
+  );
+  return data;
 };

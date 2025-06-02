@@ -1,17 +1,17 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { postChatImage, postChatMessage } from './api';
 import useApiError from '@/hooks/useApiError';
-import { Language } from '@/types/room/client';
+import { ChatType } from '@/types/chat/client';
 
 export const usePostImageMutation = () => {
   const { handleError } = useApiError();
 
-  const {mutate: postImageMutate, ...restMutation} = useMutation({
-    mutationFn: (file: File) => postChatImage(file),
+  const { mutate: postImageMutate, ...restMutation } = useMutation({
+    mutationFn: ({ file }: { file: File }) => postChatImage(file),
     onError: handleError,
   });
 
-  return { postImageMutate, ...restMutation}
+  return { postImageMutate, ...restMutation };
 };
 
 export const usePostMessageMutation = (chatroomUuid: string) => {
@@ -19,13 +19,8 @@ export const usePostMessageMutation = (chatroomUuid: string) => {
   const { handleError } = useApiError();
 
   const { mutate: postMessageMutate, ...restMutation } = useMutation({
-    mutationFn: ({
-      message,
-      targetLanguage,
-    }: {
-      message: string;
-      targetLanguage: Language;
-    }) => postChatMessage(chatroomUuid, message, targetLanguage),
+    mutationFn: ({ message, type }: { message: string; type: ChatType }) =>
+      postChatMessage(chatroomUuid, message, type),
 
     onSuccess: () => {
       queryClient.invalidateQueries({
