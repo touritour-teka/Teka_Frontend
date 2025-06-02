@@ -19,5 +19,5 @@ export const postChatMessage = async (
   message: string,
   targetLanguage: string
 ) => {
-  await teka.post(`/chat/${chatroomUuid}`, { message, targetLanguage });
+  await teka.post(`/chat/${chatroomUuid}`, { message, targetLanguage }, authorization());
 };

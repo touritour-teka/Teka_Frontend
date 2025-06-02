@@ -1,12 +1,14 @@
 import { useRef, useState } from 'react';
 import getGoogleMapsLink from '@/apis/maps/getGoogleMapsLink';
-import { useUploadImageMutation, useSendMessageMutation } from '@/services/chat/mutations';
+import {
+  useUploadImageMutation,
+  useSendMessageMutation,
+} from '@/services/chat/mutations';
 
 export const useMessageInput = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [showOptionsPanel, setShowOptionsPanel] = useState(false);
-  const { mutate: uploadImage } = useUploadImageMutation(); 
-  // const { } = useSendMessageMutation();
+  const { mutate: uploadImage } = useUploadImageMutation();
 
   const handleFileOpen = () => {
     setShowOptionsPanel((prev) => !prev);
@@ -15,7 +17,7 @@ export const useMessageInput = () => {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      uploadImage(file); 
+      uploadImage(file);
     }
   };
 

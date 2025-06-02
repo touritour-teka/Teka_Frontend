@@ -40,24 +40,26 @@ const ChatList = () => {
   return (
     <StyledChatList>
       <DateDivider date={formattedDate} />
-      {messages.map((msg: getMessage) =>
-        msg.sender.username === currentUsername ? (
-          <OwnMessage
-            key={msg.id}
-            name={msg.sender.username}
-            content={msg.message}
-            timestamp={formatToTime(msg.createdAt)}
-          />
-        ) : (
-          <OtherPersonMessage
-            key={msg.id}
-            name={msg.sender.username}
-            content={msg.message}
-            translatedContent={msg.translatedMessage}
-            timestamp={formatToTime(msg.createdAt)}
-          />
-        )
-      )}
+      {[...messages]
+        .reverse()
+        .map((msg: getMessage) =>
+          msg.sender.username === currentUsername ? (
+            <OwnMessage
+              key={msg.id}
+              name={msg.sender.username}
+              content={msg.message}
+              timestamp={formatToTime(msg.createdAt)}
+            />
+          ) : (
+            <OtherPersonMessage
+              key={msg.id}
+              name={msg.sender.username}
+              content={msg.message}
+              translatedContent={msg.translatedMessage}
+              timestamp={formatToTime(msg.createdAt)}
+            />
+          )
+        )}
     </StyledChatList>
   );
 };

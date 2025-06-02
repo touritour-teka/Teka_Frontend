@@ -4,6 +4,11 @@ import styled from 'styled-components';
 import { flex } from '@teka/utils';
 import { color } from '@teka/design-system';
 import { useMessageInput } from './MessageInput.hooks';
+import { useState } from 'react';
+import { useSendMessageMutation } from '@/services/chat/mutations';
+import { useParams } from 'react-router-dom';
+import { useAtomValue } from 'jotai';
+import { enterAtom } from '@/stores/enter';
 
 const MessageInput = () => {
   const {
@@ -15,6 +20,21 @@ const MessageInput = () => {
     handleTakePhoto,
     handleSelectPhoto,
   } = useMessageInput();
+
+  const [message, setMessage] = useState('');
+  const { language: UserLanguage } = useAtomValue(enterAtom);
+
+  const { chatroomUuid } = useParams();
+  const { mutate: sendMessage } = useSendMessageMutation(chatroomUuid!);
+
+  const handleSendMessage = () => {
+    if (!message.trim()) return;
+    sendMessage({
+      message,
+      targetLanguage: UserLanguage,
+    });
+    setMessage('');
+  };
 
   return (
     <>
@@ -35,7 +55,11 @@ const MessageInput = () => {
           <IconLocationMark width={36} height={36} />
         </div>
         <InputContainer>
-          <TextInput placeholder="메시지 입력..." />
+          <TextInput
+            placeholder="메시지 입력..."
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+          />
           <div onClick={handleFileOpen}>
             <IconFile width={28} height={28} />
           </div>
@@ -46,7 +70,7 @@ const MessageInput = () => {
             onChange={handleFileChange}
           />
         </InputContainer>
-        <IconSend width={36} height={36} />
+        <IconSend width={36} height={36} onClick={handleSendMessage} />
       </StyledMessageInput>
     </>
   );

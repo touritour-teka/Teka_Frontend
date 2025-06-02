@@ -7,6 +7,8 @@ import { useInput, useEnterAction } from './enter.hooks';
 import { Language } from '@/types/room/client';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useSetAtom } from 'jotai';
+import { enterAtom } from '@/stores/enter';
 
 const EnterPage = () => {
   const { chatroomUuid } = useParams();
@@ -17,6 +19,14 @@ const EnterPage = () => {
   const { handleEnter } = useEnterAction(chatroomUuid!, {
     ...enter,
     language: language as Language,
+  });
+
+  const setEnter = useSetAtom(enterAtom);
+
+  setEnter({
+    phoneNumber: enter.phoneNumber,
+    username: enter.username,
+    language,
   });
 
   return (
