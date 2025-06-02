@@ -1,9 +1,6 @@
 import { useRef, useState } from 'react';
 import getGoogleMapsLink from '@/apis/maps/getGoogleMapsLink';
-import {
-  useUploadImageMutation,
-  useSendMessageMutation,
-} from '@/services/chat/mutations';
+import { usePostImageMutation, usePostMessageMutation } from '@/services/chat/mutations';
 import { useAtomValue } from 'jotai';
 import { useParams } from 'react-router-dom';
 import { enterAtom } from '@/stores/enter';
@@ -11,7 +8,7 @@ import { enterAtom } from '@/stores/enter';
 export const useMessageInput = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [showOptionsPanel, setShowOptionsPanel] = useState(false);
-  const { mutate: uploadImage } = useUploadImageMutation();
+  const { postImageMutate } = usePostImageMutation();
 
   const handleFileOpen = () => {
     setShowOptionsPanel((prev) => !prev);
@@ -20,7 +17,7 @@ export const useMessageInput = () => {
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      uploadImage(file);
+      postImageMutate(file);
     }
   };
 
@@ -53,16 +50,17 @@ export const useMessageInput = () => {
   const [message, setMessage] = useState('');
   const { language: UserLanguage } = useAtomValue(enterAtom);
   const { chatroomUuid } = useParams();
-  const { mutate: sendMessage } = useSendMessageMutation(chatroomUuid!);
+  const { postMessageMutate } = usePostMessageMutation(chatroomUuid!);
 
   const handleSendMessage = () => {
     if (!message.trim()) return;
-    sendMessage({
+    postMessageMutate({
       message,
       targetLanguage: UserLanguage,
     });
     setMessage('');
   };
+
   return {
     showOptionsPanel,
     fileInputRef,
