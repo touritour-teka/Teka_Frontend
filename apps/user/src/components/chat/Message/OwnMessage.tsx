@@ -105,7 +105,6 @@ const MessageBubble = styled.div`
   color: ${color.white2};
   padding: 12px;
   border-radius: 16px 0px 16px 16px;
-  width: 80%;
   word-break: break-word;
   overflow-wrap: break-word;
   white-space: pre-wrap;
