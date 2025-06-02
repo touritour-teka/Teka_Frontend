@@ -40,7 +40,10 @@ export const useMessageInput = () => {
       (position) => {
         const { latitude, longitude } = position.coords;
         const mapsLink = getGoogleMapsLink(latitude, longitude);
-        console.log('Google Maps 링크:', mapsLink);
+        postMessageMutate({
+          message: mapsLink,
+          type: 'TEXT',
+        });
       },
       () => {
         alert('위치 정보를 가져올 수 없습니다.');

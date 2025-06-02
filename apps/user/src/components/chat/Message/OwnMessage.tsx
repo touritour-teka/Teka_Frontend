@@ -32,7 +32,7 @@ const OwnMessage: React.FC<OwnMessageProps> = ({
 
   const iframeSrc =
     query && GOOGLE_MAPS_API_KEY ? getMapEmbedUrl(query, GOOGLE_MAPS_API_KEY) : '';
-
+  
   const coords = extractLatLngFromMapsUrl(content);
   const address = useAddressFromLatLng(coords?.lat, coords?.lng, GOOGLE_MAPS_API_KEY);
 

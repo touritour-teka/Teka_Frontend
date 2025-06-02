@@ -17,16 +17,9 @@ export const useChatSocket = (chatroomUuid: string) => {
         Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
       },
       onConnect: () => {
-        console.log('WebSocket 연결');
-
-        client.subscribe(`/chat/${chatroomUuid}/${user.language}`, (message) => {
-          const msg = JSON.parse(message.body);
-          console.log('메시지:', msg);
-        });
+        client.subscribe(`/chat/${chatroomUuid}/${user.language}`, (message) => {});
       },
-      onDisconnect: () => {
-        console.log('해제');
-      },
+      onDisconnect: () => {},
     });
 
     client.activate();
