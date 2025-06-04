@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { loadGoogleMapScript } from '@/apis/maps/loadGoogleMapScript';
 
 interface Coordinates {
@@ -15,48 +15,54 @@ export const useInitializeMap = ({ lat, lng }: { lat: number; lng: number }) => 
   const [isOverlayOpen, setIsOverlayOpen] = useState(true);
   const [markerPosition, setMarkerPosition] = useState<Coordinates>({ lat, lng });
 
-  const updateAddress = (coords: Coordinates) => {
-    const geocoder = new window.google.maps.Geocoder();
-    geocoder.geocode({ location: coords }, (results, status) => {
-      if (status === 'OK' && results && results[0]) {
-        const newAddress = results[0].formatted_address;
-        setAddress(newAddress);
-      }
-    });
-  };
+  const updateAddress = useCallback(
+    (coords: Coordinates) => {
+      const geocoder = new window.google.maps.Geocoder();
+      geocoder.geocode({ location: coords }, (results, status) => {
+        if (status === 'OK' && results && results[0]) {
+          const newAddress = results[0].formatted_address;
+          setAddress(newAddress);
+        }
+      });
+    },
+    [setAddress]
+  );
 
-  const initializeMap = (center: Coordinates) => {
-    if (!mapRef.current || !window.google) return;
+  const initializeMap = useCallback(
+    (center: Coordinates) => {
+      if (!mapRef.current || !window.google) return;
 
-    const mapInstance = new window.google.maps.Map(mapRef.current, {
-      center,
-      zoom: 15,
-    });
+      const mapInstance = new window.google.maps.Map(mapRef.current, {
+        center,
+        zoom: 15,
+      });
 
-    const marker = new window.google.maps.Marker({
-      position: center,
-      map: mapInstance,
-      draggable: true,
-    });
+      const marker = new window.google.maps.Marker({
+        position: center,
+        map: mapInstance,
+        draggable: true,
+      });
 
-    marker.addListener('click', () => {
-      setIsOverlayOpen(true);
-    });
+      marker.addListener('click', () => {
+        setIsOverlayOpen(true);
+      });
 
-    marker.addListener('dragend', (event: google.maps.MapMouseEvent) => {
-      const newCoords = {
-        lat: event.latLng?.lat() ?? center.lat,
-        lng: event.latLng?.lng() ?? center.lng,
-      };
-      marker.setPosition(newCoords);
-      setMarkerPosition(newCoords);
-      updateAddress(newCoords);
-    });
+      marker.addListener('dragend', (event: google.maps.MapMouseEvent) => {
+        const newCoords = {
+          lat: event.latLng?.lat() ?? center.lat,
+          lng: event.latLng?.lng() ?? center.lng,
+        };
+        marker.setPosition(newCoords);
+        setMarkerPosition(newCoords);
+        updateAddress(newCoords);
+      });
 
-    markerRef.current = marker;
-    setMap(mapInstance);
-    updateAddress(center);
-  };
+      markerRef.current = marker;
+      setMap(mapInstance);
+      updateAddress(center);
+    },
+    [updateAddress, setIsOverlayOpen]
+  );
 
   const handleLocationButtonClick = () => {
     if (!map || !markerRef.current) return;
@@ -102,7 +108,7 @@ export const useInitializeMap = ({ lat, lng }: { lat: number; lng: number }) => 
     };
 
     waitForMapRef();
-  }, [lat, lng]);
+  }, [lat, lng, initializeMap]);
 
   return {
     mapRef,

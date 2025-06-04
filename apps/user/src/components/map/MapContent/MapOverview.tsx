@@ -44,7 +44,7 @@ const MapOverlayView = ({ map, position, children }: MapOverlayViewProps) => {
     return () => {
       overlay.setMap(null);
     };
-  }, [map, position.lat, position.lng]);
+  }, [map, position]);
 
   if (!ready || !containerRef.current) return null;
   return createPortal(children, containerRef.current);

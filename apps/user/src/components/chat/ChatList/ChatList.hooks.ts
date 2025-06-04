@@ -1,4 +1,3 @@
-import { useParams } from 'react-router-dom';
 import { useChatQuery } from '@/services/chat/queries';
 import { getMessage } from '@/types/chat/remote';
 import { useAtomValue } from 'jotai';

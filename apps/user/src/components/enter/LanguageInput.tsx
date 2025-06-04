@@ -5,7 +5,6 @@ import { IconArrowForward } from '@teka/icon';
 import { flex } from '@teka/utils';
 import LanguageModal from '@/components/common/LanguageModal';
 import { Language } from '@/types/room/client';
-import { getLanguageLabel } from '@/constants/LanguageMap';
 
 interface LanguageInputProps {
   width?: CSSProperties['width'];

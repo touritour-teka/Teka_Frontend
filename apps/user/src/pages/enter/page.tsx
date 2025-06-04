@@ -20,7 +20,7 @@ const EnterPage = () => {
     if (chatroomUuid) {
       setChatroomUuid(chatroomUuid);
     }
-  }, [chatroomUuid]);
+  }, [chatroomUuid, setChatroomUuid]);
 
   const { enter, handleEnterChange } = useInput();
   const [language, setLanguage] = useState('KOREAN' as Language);
