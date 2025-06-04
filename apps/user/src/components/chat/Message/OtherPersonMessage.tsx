@@ -126,7 +126,6 @@ export default OtherPersonMessage;
 
 const StyledOtherMessageContainer = styled.div`
   ${flex({ flexDirection: 'column', alignItems: 'flex-start' })};
-  margin-bottom: 8px;
 `;
 
 const MessageContainer = styled.div<{ iframeSrc: string }>`

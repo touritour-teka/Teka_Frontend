@@ -103,7 +103,6 @@ export default OwnMessage;
 
 const StyledOwnMessage = styled.div`
   ${flex({ flexDirection: 'column', alignItems: 'flex-end' })};
-  margin-bottom: 8px;
   gap: 8px;
   width: 100%;
 `;

@@ -53,23 +53,25 @@ const ChatList = () => {
         const isSameTime = formatToTime(prev?.createdAt) === formatToTime(msg.createdAt);
         const hideMeta = isSameUser && isSameTime;
 
-        return msg.sender.username === currentUsername ? (
-          <OwnMessage
-            key={msg.id}
-            name={msg.sender.username}
-            content={msg.message}
-            timestamp={formatToTime(msg.createdAt)}
-            hideMeta={hideMeta}
-          />
-        ) : (
-          <OtherPersonMessage
-            key={msg.id}
-            name={msg.sender.username}
-            content={msg.message}
-            translatedContent={msg.translatedMessage}
-            timestamp={formatToTime(msg.createdAt)}
-            hideMeta={hideMeta}
-          />
+        return (
+          <MessageWrapper key={msg.id} $hideMeta={hideMeta}>
+            {msg.sender.username === currentUsername ? (
+              <OwnMessage
+                name={msg.sender.username}
+                content={msg.message}
+                timestamp={formatToTime(msg.createdAt)}
+                hideMeta={hideMeta}
+              />
+            ) : (
+              <OtherPersonMessage
+                name={msg.sender.username}
+                content={msg.message}
+                translatedContent={msg.translatedMessage}
+                timestamp={formatToTime(msg.createdAt)}
+                hideMeta={hideMeta}
+              />
+            )}
+          </MessageWrapper>
         );
       })}
       <div ref={scrollRef} />
@@ -86,4 +88,8 @@ const StyledChatList = styled.div`
   overflow-y: auto;
   padding: 16px;
   background: ${color.gray50};
+`;
+
+const MessageWrapper = styled.div<{ $hideMeta: boolean }>`
+  margin-top: ${({ $hideMeta }) => ($hideMeta ? '4px' : '16px')};
 `;
