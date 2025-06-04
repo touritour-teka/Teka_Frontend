@@ -1,15 +1,16 @@
-import React, { CSSProperties, useState } from 'react';
+import  { CSSProperties, useState } from 'react';
 import styled from 'styled-components';
 import { color, font } from '@teka/design-system';
 import { IconArrowForward } from '@teka/icon';
 import { flex } from '@teka/utils';
 import LanguageModal from '@/components/common/LanguageModal';
 import { Language } from '@/types/room/client';
+import { getLanguageLabel } from '@/constants/LanguageMap';
 
 interface LanguageInputProps {
   width?: CSSProperties['width'];
   label?: string;
-  value: Language;
+  value: string;
   onChange: (value: Language) => void;
 }
 

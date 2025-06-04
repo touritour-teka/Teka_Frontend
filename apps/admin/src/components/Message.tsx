@@ -14,6 +14,7 @@ const Message = ({ children, width }: MessageProps) => {
 
   useEffect(() => {
     const timer = setTimeout(() => setVisible(false), 3000);
+    console.log('Message component mounted');
     return () => clearTimeout(timer);
   }, []);
 

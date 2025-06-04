@@ -10,6 +10,7 @@ import { useParams } from 'react-router-dom';
 import { useSetAtom } from 'jotai';
 import { enterAtom } from '@/stores/enter';
 import { chatroomUuidAtom } from '@/stores/chat';
+import { getLanguageLabel } from '@/constants/LanguageMap';
 
 const EnterPage = () => {
   const { chatroomUuid } = useParams();
@@ -62,7 +63,7 @@ const EnterPage = () => {
             <LanguageInput
               label="사용언어"
               width="100%"
-              value={language as Language}
+              value={getLanguageLabel(language)}
               onChange={setLanguage}
             />
           </Column>

@@ -1,3 +1,4 @@
+import { getLanguageLabel } from '@/constants/LanguageMap';
 import { Language } from '@/types/room/client';
 import { color, font } from '@teka/design-system';
 import { Row } from '@teka/ui';
@@ -10,7 +11,7 @@ const LanguageModal = ({
 }: {
   onSelect: (lang: Language) => void;
   onClose: () => void;
-  selectedLanguage: Language;
+  selectedLanguage: string;
 }) => {
   const languageMap: { label: string; value: Language }[] = [
     { label: '한국어', value: 'KOREAN' },
@@ -29,7 +30,7 @@ const LanguageModal = ({
                 type="radio"
                 name="language"
                 value={value}
-                checked={selectedLanguage === value}
+                checked={selectedLanguage === getLanguageLabel(value)}
                 onChange={() => onSelect(value)}
               />
             </Row>
