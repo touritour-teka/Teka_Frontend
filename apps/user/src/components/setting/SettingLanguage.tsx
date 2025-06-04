@@ -4,16 +4,23 @@ import { Column, Text } from '@teka/ui';
 import styled from 'styled-components';
 import { useState } from 'react';
 import LanguageModal from '../common/LanguageModal';
+import { usePatchLanguageMutation } from '@/services/setting/mutations';
+import { enterAtom } from '@/stores/enter';
+import { useAtomValue, useSetAtom } from 'jotai';
+import { getLanguageLabel } from '@/constants/LanguageMap';
 import { Language } from '@/types/room/client';
 
 const SettingLanguage = () => {
   const [isModalOpen, setModalOpen] = useState(false);
-  const [selectedLanguage, setSelectedLanguage] = useState('한국어');
+  const { language: selectedLanguage } = useAtomValue(enterAtom);
+  const setEnterAtom = useSetAtom(enterAtom);
+  const { patchLanguageMutate } = usePatchLanguageMutation();
 
   const toggleModal = () => setModalOpen(!isModalOpen);
 
   const handleLanguageChange = (lang: string) => {
-    setSelectedLanguage(lang);
+    patchLanguageMutate(lang as Language);
+    setEnterAtom((prev) => ({ ...prev, language: lang as Language }));
     setModalOpen(false);
   };
 
@@ -34,7 +41,7 @@ const SettingLanguage = () => {
         <LanguageModal
           onSelect={handleLanguageChange}
           onClose={() => setModalOpen(false)}
-          selectedLanguage={selectedLanguage as Language}
+          selectedLanguage={getLanguageLabel(selectedLanguage)}
         />
       )}
     </StyledSettingLanguage>
