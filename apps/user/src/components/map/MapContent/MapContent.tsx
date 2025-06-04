@@ -53,8 +53,8 @@ const MapContent = ({ lat, lng }: MapContentProps) => {
           <MapOverlayView map={map} position={markerPosition}>
             <OverlayContent
               address={address}
-              lat={lat}
-              lng={lng}
+              lat={markerPosition.lat}
+              lng={markerPosition.lng}
               onSendComplete={() => setIsOverlayOpen(false)}
             />
           </MapOverlayView>

@@ -19,7 +19,7 @@ const OverlayContent = ({ address, onSendComplete, lat, lng }: OverlayContentPro
   const chatroomUuid = useAtomValue(chatroomUuidAtom);
   const { postMessageMutate } = usePostMessageMutation(chatroomUuid!);
   const navigate = useNavigate();
-  const mapUrl = `${window.location.origin}/map?lat=${lat}&lng=${lng}`;
+  const mapUrl = `https://www.google.com/maps?q=${lat},${lng}`;
 
   const handleSendLocation = () => {
     postMessageMutate(
