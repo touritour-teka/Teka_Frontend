@@ -1,7 +1,8 @@
 import { useRef, useState } from 'react';
 import getGoogleMapsLink from '@/apis/maps/getGoogleMapsLink';
 import { usePostImageMutation, usePostMessageMutation } from '@/services/chat/mutations';
-import { useParams } from 'react-router-dom';
+import { useAtomValue } from 'jotai';
+import { chatroomUuidAtom } from '@/stores/chat';
 
 export const useMessageInput = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -60,7 +61,7 @@ export const useMessageInput = () => {
   };
 
   const [message, setMessage] = useState('');
-  const { chatroomUuid } = useParams();
+  const chatroomUuid = useAtomValue(chatroomUuidAtom);
   const { postMessageMutate } = usePostMessageMutation(chatroomUuid!);
 
   const handleSendMessage = () => {

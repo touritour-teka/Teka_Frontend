@@ -3,16 +3,20 @@ import { color } from '@teka/design-system';
 import styled from 'styled-components';
 import { flex } from '@teka/utils';
 import { Column, Text } from '@teka/ui';
+import { usePostMessageMutation } from '@/services/chat/mutations';
+import { useAtomValue } from 'jotai';
+import { chatroomUuidAtom } from '@/stores/chat';
 
 interface OverlayContentProps {
   address: string;
 }
 
 const OverlayContent = ({ address }: OverlayContentProps) => {
+  const chatroomUuid = useAtomValue(chatroomUuidAtom);
+  const { postMessageMutate } = usePostMessageMutation(chatroomUuid!);
+
   const handleSendLocation = () => {
-    const googleMapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-      address
-    )}`;
+    postMessageMutate({ message: address, type: 'TEXT' });
   };
 
   return (

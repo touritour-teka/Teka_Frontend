@@ -4,13 +4,14 @@ import Header from '@/components/common/Header';
 import ChatList from '@/components/chat/ChatList/ChatList';
 import MessageInput from '@/components/chat/MessageInput/MessageInput';
 import { color } from '@teka/design-system';
-import { useParams } from 'react-router-dom';
 import { useChatSocket } from '@/services/chat/useChatSocket';
+import { useAtomValue } from 'jotai';
+import { chatroomUuidAtom } from '@/stores/chat';
 
 const ChatPage = () => {
-  const { chatroomUuid } = useParams();
+  const chatroomUuid = useAtomValue(chatroomUuidAtom);
   useChatSocket(chatroomUuid!);
-  
+
   return (
     <StyledChatPage>
       <Header title="강원 외 8명" hasSetting={true} />

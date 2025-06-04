@@ -4,6 +4,7 @@ import { Column, Text } from '@teka/ui';
 import styled from 'styled-components';
 import { useState } from 'react';
 import LanguageModal from '../common/LanguageModal';
+import { Language } from '@/types/room/client';
 
 const SettingLanguage = () => {
   const [isModalOpen, setModalOpen] = useState(false);
@@ -33,7 +34,7 @@ const SettingLanguage = () => {
         <LanguageModal
           onSelect={handleLanguageChange}
           onClose={() => setModalOpen(false)}
-          selectedLanguage={selectedLanguage}
+          selectedLanguage={selectedLanguage as Language}
         />
       )}
     </StyledSettingLanguage>

@@ -5,13 +5,21 @@ import LanguageInput from '@/components/enter/LanguageInput';
 import { Column, Input } from '@teka/ui';
 import { useInput, useEnterAction } from './enter.hooks';
 import { Language } from '@/types/room/client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSetAtom } from 'jotai';
 import { enterAtom } from '@/stores/enter';
+import { chatroomUuidAtom } from '@/stores/chat';
 
 const EnterPage = () => {
   const { chatroomUuid } = useParams();
+  const setChatroomUuid = useSetAtom(chatroomUuidAtom);
+
+  useEffect(() => {
+    if (chatroomUuid) {
+      setChatroomUuid(chatroomUuid);
+    }
+  }, [chatroomUuid]);
 
   const { enter, handleEnterChange } = useInput();
   const [language, setLanguage] = useState('KOREAN' as Language);

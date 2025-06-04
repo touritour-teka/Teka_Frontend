@@ -39,15 +39,15 @@ export const useInitializeMap = ({ lat, lng }: { lat: number; lng: number }) => 
       draggable: true,
     });
 
-    const infoWindow = new window.google.maps.InfoWindow({
-      content: '위치를 불러오는 중...',
-    });
-
+    const infoWindow = new window.google.maps.InfoWindow();
     const container = document.createElement('div');
-    infoWindow.setContent(container);
-    createRoot(container).render(<OverlayContent address={address} />);
 
-    updateAddress(center);
+    createRoot(container).render(<OverlayContent address={address} />);
+    infoWindow.setContent(container);
+
+    marker.addListener('click', () => {
+      infoWindow.open(mapInstance, marker);
+    });
 
     marker.addListener('dragend', (event: google.maps.MapMouseEvent) => {
       const newCoords = {
@@ -58,13 +58,12 @@ export const useInitializeMap = ({ lat, lng }: { lat: number; lng: number }) => 
       updateAddress(newCoords);
     });
 
-    marker.addListener('click', () => {
-      infoWindow.open(mapInstance, marker);
-    });
-
     markerRef.current = marker;
     overlayRef.current = infoWindow;
     setMap(mapInstance);
+
+    infoWindow.open(mapInstance, marker);
+    updateAddress(center);
   };
 
   const handleLocationButtonClick = () => {
@@ -87,12 +86,20 @@ export const useInitializeMap = ({ lat, lng }: { lat: number; lng: number }) => 
   useEffect(() => {
     const fallbackLocation = { lat, lng };
 
-    if (!window.google) {
-      loadGoogleMapScript(() => initializeMap(fallbackLocation));
-    } else {
-      initializeMap(fallbackLocation);
-    }
-  }, [lat, lng, initializeMap]);
+    const waitForMapRef = () => {
+      if (mapRef.current) {
+        if (!window.google) {
+          loadGoogleMapScript(() => initializeMap(fallbackLocation));
+        } else {
+          initializeMap(fallbackLocation);
+        }
+      } else {
+        setTimeout(waitForMapRef, 100);
+      }
+    };
+
+    waitForMapRef();
+  }, [lat, lng]);
 
   useEffect(() => {
     if (overlayRef.current) {
@@ -102,15 +109,6 @@ export const useInitializeMap = ({ lat, lng }: { lat: number; lng: number }) => 
       overlayRef.current.open(map, markerRef.current);
     }
   }, [address, map]);
-
-  useEffect(() => {
-    if (map && markerRef.current && overlayRef.current) {
-      const container = document.createElement('div');
-      createRoot(container).render(<OverlayContent address={address} />);
-      overlayRef.current.setContent(container);
-      overlayRef.current.open(map, markerRef.current);
-    }
-  }, [map, address]);
 
   return { mapRef, handleLocationButtonClick };
 };
