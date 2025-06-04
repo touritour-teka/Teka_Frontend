@@ -11,16 +11,19 @@ import { useNavigate } from 'react-router-dom';
 interface OverlayContentProps {
   address: string;
   onSendComplete: () => void;
+  lat: number;
+  lng: number;
 }
 
-const OverlayContent = ({ address, onSendComplete }: OverlayContentProps) => {
+const OverlayContent = ({ address, onSendComplete, lat, lng }: OverlayContentProps) => {
   const chatroomUuid = useAtomValue(chatroomUuidAtom);
   const { postMessageMutate } = usePostMessageMutation(chatroomUuid!);
   const navigate = useNavigate();
+  const mapUrl = `${window.location.origin}/map?lat=${lat}&lng=${lng}`;
 
   const handleSendLocation = () => {
     postMessageMutate(
-      { message: address, type: 'TEXT' },
+      { message: mapUrl, type: 'TEXT' },
       {
         onSuccess: () => {
           onSendComplete?.();
