@@ -13,7 +13,6 @@ const fetchAddressFromLatLng = async (
     }
     return null;
   } catch (e) {
-    console.error('Geocoding API Error:', e);
     return null;
   }
 };

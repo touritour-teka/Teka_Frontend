@@ -8,6 +8,11 @@ export const teka = axios.create({
   },
 });
 
+export const tekaWithFile = axios.create({
+  baseURL: process.env.REACT_APP_BASE_URL,
+  timeout: 15000,
+});
+
 teka.interceptors.request.use(
   (config) => {
     return config;

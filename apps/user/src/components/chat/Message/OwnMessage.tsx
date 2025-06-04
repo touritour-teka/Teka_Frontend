@@ -7,7 +7,6 @@ import {
   extractGoogleMapsQuery,
   extractLatLngFromMapsUrl,
 } from '@/utils/index';
-import { useEffect, useState } from 'react';
 import { useAddressFromLatLng } from '@/hooks/maps/useAddressFromLatLng';
 import getMapEmbedUrl from '@/apis/maps/getMapEmbedUrl';
 import { useNavigate } from 'react-router-dom';
@@ -16,26 +15,24 @@ interface OwnMessageProps {
   name: string;
   content: string;
   timestamp: string;
-  prevTimestamp?: string;
+  hideMeta?: boolean;
 }
 
 const OwnMessage: React.FC<OwnMessageProps> = ({
   name,
   content,
   timestamp,
-  prevTimestamp,
+  hideMeta,
 }) => {
   const GOOGLE_MAPS_API_KEY = process.env.REACT_APP_API_KEY;
   const navigate = useNavigate();
-
-  const [isFirstMessage, setIsFirstMessage] = useState(true);
 
   const hasGoogleMapsUrl = isGoogleMapsUrl(content);
   const query = hasGoogleMapsUrl ? extractGoogleMapsQuery(content) : null;
 
   const iframeSrc =
     query && GOOGLE_MAPS_API_KEY ? getMapEmbedUrl(query, GOOGLE_MAPS_API_KEY) : '';
-
+  
   const coords = extractLatLngFromMapsUrl(content);
   const address = useAddressFromLatLng(coords?.lat, coords?.lng, GOOGLE_MAPS_API_KEY);
 
@@ -45,12 +42,6 @@ const OwnMessage: React.FC<OwnMessageProps> = ({
     }
   };
 
-  useEffect(() => {
-    if (prevTimestamp === timestamp) {
-      setIsFirstMessage(false);
-    }
-  }, [prevTimestamp, timestamp]);
-
   const handleClickPaste = () => {
     if (address) {
       navigator.clipboard.writeText(address).then(() => {
@@ -59,17 +50,21 @@ const OwnMessage: React.FC<OwnMessageProps> = ({
     }
   };
 
+  const isImageUrl = (url: string) => {
+    return /\.(png|jpg|jpeg|gif|webp)$/i.test(url);
+  };
+
   return (
     <StyledOwnMessage>
-      <Text fontType="regular14">{isFirstMessage ? name : ''}</Text>
+      <Text fontType="regular14">{!hideMeta ? name : ''}</Text>
       <Row gap={6} justifyContent="flex-end" alignItems="flex-end">
-        <Timestamp>{timestamp}</Timestamp>
-        <MessageBubble>
+        <Timestamp>{!hideMeta ? timestamp : ''}</Timestamp>
+        <MessageBubble isImageUrl={isImageUrl(content)}>
           {iframeSrc ? (
             <MapPreviewContainer onClick={handleGoToMap}>
               <div>
                 <iframe
-                  title='지도 미리보기'
+                  title="지도 미리보기"
                   src={iframeSrc}
                   width="250"
                   height="190"
@@ -91,6 +86,8 @@ const OwnMessage: React.FC<OwnMessageProps> = ({
                 </AddressContainer>
               )}
             </MapPreviewContainer>
+          ) : isImageUrl(content) ? (
+            <StyledImage src={content} alt="보낸 이미지" />
           ) : (
             <Text fontType="regular14chat" whiteSpace="pre-wrap">
               {content}
@@ -106,22 +103,20 @@ export default OwnMessage;
 
 const StyledOwnMessage = styled.div`
   ${flex({ flexDirection: 'column', alignItems: 'flex-end' })};
-  margin-bottom: 8px;
   gap: 8px;
   width: 100%;
 `;
 
-const MessageBubble = styled.div`
+const MessageBubble = styled.div<{ isImageUrl: boolean }>`
   ${flex({ justifyContent: 'flex-end' })};
   ${font.regular14chat}
   background-color: ${color.blue800};
   color: ${color.white2};
-  padding: 12px;
   border-radius: 16px 0px 16px 16px;
-  width: 80%;
   word-break: break-word;
   overflow-wrap: break-word;
   white-space: pre-wrap;
+  padding: ${({ isImageUrl }) => (isImageUrl ? '0' : '8px 12px')};
 `;
 
 const Timestamp = styled.div`
@@ -145,4 +140,10 @@ const AddressContainer = styled.div`
 
 const UnderlinedText = styled.span`
   text-decoration: underline;
+`;
+
+const StyledImage = styled.img`
+  max-width: 250px;
+  height: auto;
+  border-radius: 12px;
 `;

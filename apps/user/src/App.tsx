@@ -9,7 +9,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/:chatroomUuid" element={<EnterPage />} />
-        <Route path="/chat" element={<ChatPage />} />
+        <Route path="/chat/:chatroomUuid" element={<ChatPage />} />
         <Route path="/setting" element={<SettingPage />} />
         <Route path="/map" element={<MapPage />} />
       </Routes>

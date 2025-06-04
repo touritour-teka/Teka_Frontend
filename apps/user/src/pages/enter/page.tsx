@@ -5,18 +5,37 @@ import LanguageInput from '@/components/enter/LanguageInput';
 import { Column, Input } from '@teka/ui';
 import { useInput, useEnterAction } from './enter.hooks';
 import { Language } from '@/types/room/client';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useSetAtom } from 'jotai';
+import { enterAtom } from '@/stores/enter';
+import { chatroomUuidAtom } from '@/stores/chat';
+import { getLanguageLabel } from '@/constants/LanguageMap';
 
 const EnterPage = () => {
-  const { chatroomUuid } = useParams(); 
+  const { chatroomUuid } = useParams();
+  const setChatroomUuid = useSetAtom(chatroomUuidAtom);
+
+  useEffect(() => {
+    if (chatroomUuid) {
+      setChatroomUuid(chatroomUuid);
+    }
+  }, [chatroomUuid, setChatroomUuid]);
 
   const { enter, handleEnterChange } = useInput();
-  const [language, setLanguage] = useState('한국어');
+  const [language, setLanguage] = useState('KOREAN' as Language);
 
   const { handleEnter } = useEnterAction(chatroomUuid!, {
     ...enter,
     language: language as Language,
+  });
+
+  const setEnter = useSetAtom(enterAtom);
+
+  setEnter({
+    phoneNumber: enter.phoneNumber,
+    username: enter.username,
+    language,
   });
 
   return (
@@ -44,7 +63,7 @@ const EnterPage = () => {
             <LanguageInput
               label="사용언어"
               width="100%"
-              value={language}
+              value={getLanguageLabel(language)}
               onChange={setLanguage}
             />
           </Column>

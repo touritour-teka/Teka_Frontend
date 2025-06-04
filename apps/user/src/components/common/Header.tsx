@@ -16,9 +16,15 @@ const Header = ({ title, hasSetting }: HeaderProps) => {
     navigate('/setting');
   };
 
+  const handleClickBack = () => {
+    navigate(-1);
+  };
+
   return (
     <StyledHeader>
-      <IconArrowBackward width={24} height={24} />
+      <div onClick={handleClickBack}>
+        <IconArrowBackward width={24} height={24} />
+      </div>
       <Text fontType="semibold18">{title}</Text>
       {hasSetting ? (
         <div onClick={handleClickSetting}>

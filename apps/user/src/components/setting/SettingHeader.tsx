@@ -5,9 +5,15 @@ import styled from 'styled-components';
 import { color } from '@teka/design-system';
 
 const SettingHeader = () => {
+  const handleClickBack = () => {
+    window.history.back();
+  };
+
   return (
     <StyledSettingHeader>
-      <IconBackward width={28} height={28} />
+      <div onClick={handleClickBack}>
+        <IconBackward width={28} height={28} />
+      </div>
       <Text fontType="medi18">방 설정</Text>
       <Wrapper />
     </StyledSettingHeader>

@@ -6,7 +6,7 @@ import { AxiosResponse } from 'axios';
 import { Storage } from '@/apis/storage/storage';
 import { ROUTES, TOKEN } from '@/constants/constant';
 
-export const useEnterMutate = (
+export const useEnterMutation = (
   chatRommUuid: string,
   { phoneNumber, username, language }: PostAuthReq
 ) => {
@@ -18,7 +18,7 @@ export const useEnterMutate = (
       const { accessToken, refreshToken } = res.data;
       Storage.setItem(TOKEN.ACCESS, accessToken);
       Storage.setItem(TOKEN.REFRESH, refreshToken);
-      navigate(ROUTES.MAP);
+      navigate(`${ROUTES.CHAT}/${chatRommUuid}`);
     },
     onError: () => {
       alert('전화번호가 틀렸습니다.');
