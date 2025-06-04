@@ -1,3 +1,6 @@
-import { atom } from "jotai";
+import { atomWithStorage } from 'jotai/utils';
 
-export const chatroomUuidAtom = atom<string | null>(null);
+export const chatroomUuidAtom = atomWithStorage<string | null>(
+  'chatroomUuid',
+  null 
+);

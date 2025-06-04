@@ -5,6 +5,8 @@ import styled from 'styled-components';
 import MapContainer from './MapContainer';
 import LocationButton from './LocationButton';
 import { useInitializeMap } from '@/hooks/maps/useInitializeMap';
+import OverlayContent from './OverlayContent';
+import MapOverlayView from './MapOverview';
 
 const GlobalMapStyles = createGlobalStyle`
   .gm-style-iw-chr {
@@ -29,7 +31,15 @@ interface MapContentProps {
 }
 
 const MapContent = ({ lat, lng }: MapContentProps) => {
-  const { mapRef, handleLocationButtonClick } = useInitializeMap({ lat, lng });
+  const {
+    mapRef,
+    handleLocationButtonClick,
+    isOverlayOpen,
+    address,
+    setIsOverlayOpen,
+    map,
+    markerPosition,
+  } = useInitializeMap({ lat, lng });
 
   return (
     <>
@@ -39,6 +49,14 @@ const MapContent = ({ lat, lng }: MapContentProps) => {
         <LocationButton onClick={handleLocationButtonClick}>
           <IconLocation width={47} height={37} color={color.gray900} />
         </LocationButton>
+        {isOverlayOpen && (
+          <MapOverlayView map={map} position={markerPosition}>
+            <OverlayContent
+              address={address}
+              onSendComplete={() => setIsOverlayOpen(false)}
+            />
+          </MapOverlayView>
+        )}
       </StyledMapContent>
     </>
   );
@@ -51,3 +69,4 @@ const StyledMapContent = styled.div`
   width: 100%;
   height: 100%;
 `;
+
