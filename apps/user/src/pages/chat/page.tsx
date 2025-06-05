@@ -7,14 +7,16 @@ import { color } from '@teka/design-system';
 import { useChatSocket } from '@/services/chat/useChatSocket';
 import { useAtomValue } from 'jotai';
 import { chatroomUuidAtom } from '@/stores/chat';
+import { useChatRoomsQuery } from '@/services/chat/queries';
 
 const ChatPage = () => {
   const chatroomUuid = useAtomValue(chatroomUuidAtom);
   useChatSocket(chatroomUuid!);
+  const { data: room } = useChatRoomsQuery();
 
   return (
     <StyledChatPage>
-      <Header title="강원 외 8명" hasSetting={true} />
+      <Header title={room?.data.name} hasSetting={true} />
       <ChatList />
       <MessageInput />
     </StyledChatPage>
