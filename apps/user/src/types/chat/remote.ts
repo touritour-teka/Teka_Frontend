@@ -1,6 +1,6 @@
 export interface getMessage {
   id: number;
-  sender: {
+  user: {
     id: number;
     username: string;
   };

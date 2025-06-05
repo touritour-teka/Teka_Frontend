@@ -49,22 +49,22 @@ const ChatList = () => {
       <DateDivider date={formattedDate} />
       {[...messages].reverse().map((msg: getMessage, index, arr) => {
         const prev = arr[index - 1];
-        const isSameUser = prev?.sender.username === msg.sender.username;
+        const isSameUser = prev?.user.username === msg.user.username;
         const isSameTime = formatToTime(prev?.createdAt) === formatToTime(msg.createdAt);
         const hideMeta = isSameUser && isSameTime;
 
         return (
           <MessageWrapper key={msg.id} $hideMeta={hideMeta}>
-            {msg.sender.username === currentUsername ? (
+            {msg.user.username === currentUsername ? (
               <OwnMessage
-                name={msg.sender.username}
+                name={msg.user.username}
                 content={msg.message}
                 timestamp={formatToTime(msg.createdAt)}
                 hideMeta={hideMeta}
               />
             ) : (
               <OtherPersonMessage
-                name={msg.sender.username}
+                name={msg.user.username}
                 content={msg.message}
                 translatedContent={msg.translatedMessage}
                 timestamp={formatToTime(msg.createdAt)}

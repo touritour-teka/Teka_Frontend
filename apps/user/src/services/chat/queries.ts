@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { getChat } from './api';
+import { getChat, getChatRooms } from './api';
 
 export const useChatQuery = (chatroomUuid: string) => {
   return useQuery({
@@ -8,3 +8,10 @@ export const useChatQuery = (chatroomUuid: string) => {
     enabled: !!chatroomUuid, 
   });
 };
+
+export const useChatRoomsQuery = () => {
+  return useQuery({
+    queryKey: ['chatRooms'],
+    queryFn: () => getChatRooms(),
+  });
+}
