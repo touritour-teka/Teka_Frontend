@@ -7,6 +7,7 @@ import {
   patchUserType,
   postChatRoom,
   postUser,
+  postMail,
 } from './api';
 import useApiError from '@/hooks/useApiError';
 import { patchUserTypeReq, postRoomReq, postUserReq } from '@/types/room/remote';
@@ -43,16 +44,12 @@ export const useCreateRoomWithMembers = (
   const navigate = useNavigate();
   const [createdRoomId, setCreatedRoomId] = useState<number>(0);
 
-  const {
-    postChatRoomMutate,
-    isPending: roomLoading,
-  } = usePostChatRoomMutation();
-
+  const { postChatRoomMutate, isPending: roomLoading } = usePostChatRoomMutation();
   const {
     postUserMutate,
     isPending: usersLoading,
     isError: usersError,
-  } = usePostUserMutation(userData);
+  } = usePostUserMutation();
 
   const createRoomWithMembers = () => {
     postChatRoomMutate(roomData, {
@@ -60,12 +57,19 @@ export const useCreateRoomWithMembers = (
         const roomId = createdRoom.id;
         setCreatedRoomId(roomId ?? 0);
 
-        postUserMutate(roomId ?? 0, {
-          onSuccess: () => {
-            navigate(ROUTES.MANAGE);
-          },
-        });
+        postUserMutate(
+          { chatRoomId: roomId ?? 0, userData },
+          {
+            onSuccess: () => {
+              navigate(ROUTES.MANAGE);
+            },
+            onError: () => {
+              deleteChatRoom(roomId ?? 0);
+            },
+          }
+        );
       },
+      onError: () => {},
     });
   };
 
@@ -82,7 +86,9 @@ export const useDeleteChatRoomMutation = () => {
 
   const { mutate: deleteChatRoomMutate, ...restMutation } = useMutation({
     mutationFn: (chatRoomId: number) => deleteChatRoom(chatRoomId),
-    onSuccess: () => {},
+    onSuccess: () => {
+      window.location.reload();
+    },
     onError: handleError,
   });
 
@@ -100,9 +106,20 @@ export const usePostChatRoomMutation = () => {
   return { postChatRoomMutate, ...restMutation };
 };
 
-export const usePostUserMutation = (userData: postUserReq) => {
+export const usePostUserMutation = () => {
+  const navigate = useNavigate();
+
   const { mutate: postUserMutate, ...restMutation } = useMutation({
-    mutationFn: (chatRoomId: number) => postUser(chatRoomId, userData),
+    mutationFn: ({
+      chatRoomId,
+      userData,
+    }: {
+      chatRoomId: number;
+      userData: postUserReq;
+    }) => postUser(chatRoomId, userData),
+    onSuccess: () => {
+      navigate(ROUTES.MANAGE);
+    },
   });
 
   return { postUserMutate, ...restMutation };
@@ -132,4 +149,18 @@ export const usePatchUserTypeMutation = (
   });
 
   return { patchUserTypeMutate, ...restMutation };
+};
+
+export const usePostMailMutation = (chatRoomId: number) => {
+  const { handleError } = useApiError();
+
+  const { mutate: postMailMutate, ...restMutation } = useMutation({
+    mutationFn: (userId: number[]) => postMail(chatRoomId, userId),
+    onSuccess: () => {
+      alert('채팅방 링크가 전송되었습니다.');
+    },
+    onError: handleError,
+  });
+
+  return { postMailMutate, ...restMutation };
 };

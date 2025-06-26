@@ -69,8 +69,9 @@ export const postUser = async (chatRoomId: number, userData: postUserReq) => {
 };
 
 export const deleteUser = async (chatRoomId: number, userId: number[]) => {
+  const userArray = userId.map((id) => ({ userId: id }));
   const { data } = await teka.delete(`/chatrooms/${chatRoomId}/users`, {
-    data: { userId },
+    data: userArray,
     ...authorization(),
   });
 
@@ -81,6 +82,16 @@ export const patchUserType = async (chatRoomId: number, userData: patchUserTypeR
   const { data } = await teka.patch(
     `/chatrooms/${chatRoomId}/users`,
     userData,
+    authorization()
+  );
+
+  return data;
+};
+
+export const postMail = async (chatRoomId: number, userId: number[]) => {
+  const { data } = await teka.post(
+    `/chatrooms/${chatRoomId}/mails`,
+    userId,
     authorization()
   );
 
