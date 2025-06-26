@@ -23,9 +23,7 @@ const RoomCreatePage = () => {
     type,
   }));
 
-  const userDataPayload: postUserReq = {
-    data: membersToAdd,
-  };
+  const userDataPayload: postUserReq = membersToAdd;
 
   const overlay = useOverlay();
 
