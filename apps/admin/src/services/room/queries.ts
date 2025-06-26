@@ -9,13 +9,18 @@ export const useChatListQuery = (status: Status) => {
     queryFn: () => getChatRoom(status),
   });
 
-  return { data: data?.dataList, ...restQuery };
+  return { data: data?.data, ...restQuery };
 };
 
-export const useChatDetailQuery = (chatRoomId: number) => {
+export const useChatDetailQuery = (chatRoomId: number | undefined, options = {}) => {
   const { data, ...restQuery } = useQuery({
     queryKey: [KEY.CHAT_DETAIL, chatRoomId],
-    queryFn: () => getChatRoomDetail(chatRoomId),
+    queryFn: () => {
+      if (chatRoomId === undefined) return undefined;
+      return getChatRoomDetail(chatRoomId);
+    },
+    enabled: chatRoomId !== undefined,
+    ...options,
   });
 
   return { data: data, ...restQuery };
