@@ -8,12 +8,13 @@ import { IconMemberMove, IconShare, IconStatus, IconTrash } from '@teka/icon';
 import { useOverlay } from '@toss/use-overlay';
 import DeleteModal from '@/components/manage/DeleteModal';
 import SelectBottomSheet from '@/components/common/SelectBottomSheet/SelectBottomSheet';
-import { useChatListQuery } from '@/services/room/queries';
+import { useChatDetailQuery, useChatListQuery } from '@/services/room/queries';
 import { useCheckedChange, useCTAButton } from './manage.hooks';
 import {
   useDeleteChatRoomMutation,
   usePatchRoomCloseMutation,
   usePatchRoomOpenMutation,
+  usePostMailMutation,
 } from '@/services/room/mutations';
 import Message from '@/components/Message';
 import { useLocation } from 'react-router-dom';
@@ -25,13 +26,18 @@ const ManagePage = () => {
 
   const { data: rooms = [] } = useChatListQuery(null);
 
-  const selectedRoom = rooms.find((r) => r.chatRoomId === selectedId);
-  const selectedStatus = selectedRoom?.status ?? 'OPEN';
-
   const { handleItemChange, handleHeaderChange, itemChecked, headerChecked } =
     useCheckedChange(rooms);
 
   const selectedId = Number(itemChecked[0]);
+  const isValidId = typeof selectedId === 'number' && !Number.isNaN(selectedId);
+  const selectedRoom = rooms.find((r) => r.chatRoomId === selectedId);
+  const selectedStatus = selectedRoom?.status ?? 'OPEN';
+
+  const room = useChatDetailQuery(isValidId ? selectedId : undefined)?.data;
+
+  const userIds = room?.data.userList?.map((user: { id: number }) => user.id) ?? [];
+  const { postMailMutate } = usePostMailMutation(selectedId);
 
   const { handleMoveRoomDetail, handleMoveRoomCreate } = useCTAButton(selectedId);
   const { isSuccess: openSuccess } = usePatchRoomOpenMutation(selectedId);
@@ -61,6 +67,14 @@ const ManagePage = () => {
     ));
   };
 
+  const handleChatRoomShare = () => {
+    if (userIds.length === 0) {
+      alert('보낼 유저가 없습니다!');
+      return;
+    }
+    postMailMutate(userIds);
+  };
+
   const successMessages = [
     moved && '인원 이동이 완료되었습니다',
     (openSuccess || closeSuccess) && '상태가 변경되었습니다',
@@ -81,9 +95,7 @@ const ManagePage = () => {
                 width={24}
                 height={24}
                 style={{ marginRight: '8px', marginBottom: '8px', marginTop: '8px' }}
-                onClick={() => {
-                  console.log('shre');
-                }}
+                onClick={handleChatRoomShare}
               />
               <IconButton onClick={openChangeRoomStatus}>
                 <IconStatus width={24} height={24} />
