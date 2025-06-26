@@ -31,9 +31,11 @@ const SelectBottomSheet = ({
     if (selectedStatus === 'OPEN') {
       chatRoomOpenMutate();
       onClose();
+      window.location.reload();
     } else {
       chatRoomCloseMutate();
       onClose();
+      window.location.reload();
     }
   };
 
