@@ -1,7 +1,9 @@
 import { ChangeType, RoomDetail, RoomList, User } from './client';
 
 export interface RoomListRes {
-  dataList: RoomList[];
+  code: string;
+  message: string;
+  data: RoomList[];
 }
 
 export interface getRoomDetailRes {
@@ -15,9 +17,7 @@ export interface postRoomReq {
   maxParticipants: number;
 }
 
-export interface postUserReq {
-  data: User[];
-}
+export type postUserReq = User[];
 
 export interface patchUserTypeReq {
   data: ChangeType[];

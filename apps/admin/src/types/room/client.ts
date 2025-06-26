@@ -21,13 +21,15 @@ export interface Room {
 }
 
 export interface RoomDetail {
-  chatRoomId: number;
-  name: string;
-  startDate: string;
-  endDate: string;
-  maxParticipants: number;
-  status: Status;
-  userList: UserList[];
+  data: {
+    chatRoomId: number;
+    name: string;
+    startDate: string;
+    endDate: string;
+    maxParticipants: number;
+    status: Status;
+    userList: UserList[];
+  };
 }
 
 export interface UserList {
