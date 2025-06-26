@@ -37,17 +37,22 @@ export const useMoveMemberAction = (checked: string[]) => {
     deleteIds
   );
 
-  const { postUserMutate, isPending: addLoading } =
-    usePostUserMutation(usersToAddPayload);
+  const { postUserMutate, isPending: addLoading } = usePostUserMutation();
 
   const handleMove = () => {
     deleteUserMutate(undefined, {
       onSuccess: () => {
-        postUserMutate(targetRoomId, {
-          onSuccess: () => {
-            navigate(ROUTES.MANAGE, { state: { moved: true } });
+        postUserMutate(
+          {
+            chatRoomId: targetRoomId,
+            userData: usersToAddPayload.data,
           },
-        });
+          {
+            onSuccess: () => {
+              navigate(ROUTES.MANAGE, { state: { moved: true } });
+            },
+          }
+        );
       },
     });
   };
