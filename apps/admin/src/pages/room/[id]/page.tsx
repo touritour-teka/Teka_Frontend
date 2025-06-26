@@ -20,6 +20,12 @@ const RoomDetailPage = () => {
   const { handleMoveBack, handleMovePage } = useCTAButton(checked, room);
   const { handleChange } = useCheckedChange(setChecked);
 
+  const isDisabled =
+    !room ||
+    !room.data.userList ||
+    room.data.userList.length === 0 ||
+    checked.length === 0;
+
   return (
     <StyledRoomDetailPage>
       <RoomDetailPageContent>
@@ -30,7 +36,9 @@ const RoomDetailPage = () => {
           )}
         </Content>
         <ButtonWrapper>
-          <Button onClick={handleMovePage}>{checked.length ?? 0}명 이동</Button>
+          <Button onClick={handleMovePage} variant={isDisabled ? 'disabled' : 'primary'}>
+            {checked.length}명 이동
+          </Button>
         </ButtonWrapper>
       </RoomDetailPageContent>
     </StyledRoomDetailPage>
