@@ -13,9 +13,9 @@ export const useCTAButton = (checked: string[], room?: RoomDetail) => {
 
   const handleMovePage = () => {
     if (!room) return;
-    localStorage.setItem('chatRoomId', room.chatRoomId.toString());
+    localStorage.setItem('chatRoomId', room.data.chatRoomId.toString());
     const checkedIds = checked.map((id) => Number(id));
-    const selectedMembers = room.userList.filter((user) => checkedIds.includes(user.id));
+    const selectedMembers = room.data.userList.filter((user) => checkedIds.includes(user.id));
     localStorage.setItem('selectedMembers', JSON.stringify(selectedMembers));
     localStorage.setItem('selectedMemberIds', JSON.stringify(checked));
 

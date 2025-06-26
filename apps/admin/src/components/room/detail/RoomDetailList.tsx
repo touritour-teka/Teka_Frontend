@@ -10,9 +10,11 @@ interface RoomDetailListProps {
 }
 
 const RoomDetailList = ({ room, checked, onChange }: RoomDetailListProps) => {
+  if (!room.data.userList) return null;
+
   return (
     <StyledRoomDetailList>
-      {room.userList.map((prop) => (
+      {room.data.userList.map((prop) => (
         <RoomDetailListItem
           id={prop.id}
           checked={checked.includes(prop.id.toString())}
