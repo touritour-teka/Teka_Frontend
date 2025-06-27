@@ -88,10 +88,12 @@ export const patchUserType = async (chatRoomId: number, userData: patchUserTypeR
   return data;
 };
 
-export const postMail = async (chatRoomId: number, userId: number[]) => {
+export const postMail = async (chatRoomId: number, userIds: number[]) => {
+  const payload = userIds.map((id) => ({ userId: id }));
+
   const { data } = await teka.post(
     `/chatrooms/${chatRoomId}/mails`,
-    userId,
+    payload, 
     authorization()
   );
 
