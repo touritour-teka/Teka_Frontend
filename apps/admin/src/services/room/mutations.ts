@@ -155,7 +155,7 @@ export const usePostMailMutation = (chatRoomId: number) => {
   const { handleError } = useApiError();
 
   const { mutate: postMailMutate, ...restMutation } = useMutation({
-    mutationFn: (userId: number[]) => postMail(chatRoomId, userId),
+    mutationFn: (userIds: number[]) => postMail(chatRoomId, userIds), 
     onSuccess: () => {
       alert('채팅방 링크가 전송되었습니다.');
     },

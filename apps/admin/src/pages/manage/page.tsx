@@ -68,11 +68,25 @@ const ManagePage = () => {
   };
 
   const handleChatRoomShare = () => {
-    if (userIds.length === 0) {
-      alert('보낼 유저가 없습니다!');
+    if (itemChecked.length === 0) {
+      alert('선택된 채팅방이 없습니다!');
       return;
     }
-    postMailMutate(userIds);
+
+    itemChecked.forEach((roomIdStr) => {
+      const roomId = Number(roomIdStr);
+      if (Number.isNaN(roomId)) return;
+
+      const roomDetail = rooms.find((r) => r.chatRoomId === roomId);
+      const userIds = room?.data.userList?.map((u) => u.id) ?? [];
+
+      if (userIds.length === 0) {
+        console.warn(`${roomId}번 방에 보낼 유저가 없습니다.`);
+        return;
+      }
+      
+      postMailMutate(userIds);
+    });
   };
 
   const successMessages = [
