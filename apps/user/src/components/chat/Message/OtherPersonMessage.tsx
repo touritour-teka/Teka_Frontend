@@ -87,14 +87,14 @@ const OtherPersonMessage: React.FC<OtherPersonMessageProps> = ({
                   </AddressContainer>
                 )}
               </MapPreviewContainer>
-            ) : isImageUrl(content) ? (
-              <StyledImage src={content} alt="image" />
+            ) : isImageUrl(translatedContent) ? (
+              <StyledImage src={translatedContent} alt="image" />
             ) : (
-              <StyledText>{content}</StyledText>
+              <StyledText>{translatedContent}</StyledText>
             )}
             {isTranslate && <TranslatedLine />}
             {isTranslate && (
-              <StyledText color={color.blue800}>{translatedContent}</StyledText>
+              <StyledText color={color.blue800}>{content}</StyledText>
             )}
           </MessageContainer>
           <Column>
