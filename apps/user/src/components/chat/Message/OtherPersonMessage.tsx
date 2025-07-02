@@ -75,7 +75,6 @@ const OtherPersonMessage: React.FC<OtherPersonMessageProps> = ({
                     referrerPolicy="no-referrer-when-downgrade"
                   />
                 </div>
-                <Text fontType="semibold14chat">📍저는 현재 여기에 있어요!</Text>
                 {address && (
                   <AddressContainer onClick={handleClickPaste}>
                     <Text fontType="regular14chat_underlined" whiteSpace="pre-wrap">
@@ -91,14 +90,14 @@ const OtherPersonMessage: React.FC<OtherPersonMessageProps> = ({
               <StyledImage src={content} alt="image" />
             ) : translatedContent ? (
               <StyledText>{translatedContent}</StyledText>
-            ): <StyledText>{content}</StyledText>}
-            {isTranslate && <TranslatedLine />}
-            {isTranslate && (
-              <StyledText color={color.blue800}>{content}</StyledText>
+            ) : (
+              <StyledText>{content}</StyledText>
             )}
+            {isTranslate && <TranslatedLine />}
+            {isTranslate && <StyledText color={color.blue800}>{content}</StyledText>}
           </MessageContainer>
           <Column>
-            {(!isTranslate && !isImageUrl(content)) && (
+            {!isTranslate && !isImageUrl(content) && (
               <>
                 <div onClick={handleClickTranslateButton}>
                   <IconTranslate width={24} height={24} />

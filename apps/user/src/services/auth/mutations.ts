@@ -22,10 +22,7 @@ export const useEnterMutation = (
       Storage.setItem(TOKEN.REFRESH, refreshToken);
       navigate(`${ROUTES.CHAT}/${chatRommUuid}`);
     },
-    onError: () => {
-      handleError;
-      localStorage.clear();
-    },
+    onError: handleError,
   });
 
   return { enterMutate, ...restMutation };

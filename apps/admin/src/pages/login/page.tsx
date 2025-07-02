@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { flex } from '@teka/utils';
 import Button from '@/components/Button';
-import { Column, Input } from '@teka/ui';
+import { Column, Input, PreviewInput } from '@teka/ui';
 import OutlineButton from '@/components/OutlineButton';
 import { useCTAButton, useInput, useLoginAction } from './login.hooks';
 
@@ -23,7 +23,7 @@ const LoginPage = () => {
               name="username"
               onChange={handleLoginChange}
             />
-            <Input
+            <PreviewInput
               label="비밀번호"
               placeholder="비밀번호를 입력해주세요"
               width="100%"

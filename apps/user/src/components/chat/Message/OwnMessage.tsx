@@ -74,7 +74,6 @@ const OwnMessage: React.FC<OwnMessageProps> = ({
                   referrerPolicy="no-referrer-when-downgrade"
                 />
               </div>
-              <Text fontType="semibold14chat">📍저는 현재 여기에 있어요!</Text>
               {address && (
                 <AddressContainer onClick={handleClickPaste}>
                   <Text fontType="regular14chat_underlined" whiteSpace="pre-wrap">

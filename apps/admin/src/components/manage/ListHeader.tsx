@@ -21,14 +21,14 @@ const ListHeader = ({ checked, onChange, id }: ListHeaderProps) => {
           방제목
         </Text>
       </Wrapper>
-      <Wrapper marginRight="101px">
+      <Wrapper marginRight="90px">
         <Text fontType="medi12" color={color.gray500}>
           기간
         </Text>
       </Wrapper>
-      <Wrapper marginRight="42px">
+      <Wrapper marginRight="34px">
         <Text fontType="medi12" color={color.gray500}>
-          인원
+          최대 인원
         </Text>
       </Wrapper>
       <Wrapper marginRight="19px">
