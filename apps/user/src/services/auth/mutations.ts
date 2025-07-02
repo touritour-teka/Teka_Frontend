@@ -5,12 +5,14 @@ import { postAuth } from './api';
 import { AxiosResponse } from 'axios';
 import { Storage } from '@/apis/storage/storage';
 import { ROUTES, TOKEN } from '@/constants/constant';
+import useApiError from '@/hooks/useApiError';
 
 export const useEnterMutation = (
   chatRommUuid: string,
   { phoneNumber, username, language }: PostAuthReq
 ) => {
   const navigate = useNavigate();
+  const { handleError } = useApiError();
 
   const { mutate: enterMutate, ...restMutation } = useMutation({
     mutationFn: () => postAuth(chatRommUuid, { phoneNumber, username, language }),
@@ -21,7 +23,7 @@ export const useEnterMutation = (
       navigate(`${ROUTES.CHAT}/${chatRommUuid}`);
     },
     onError: () => {
-      alert('전화번호가 틀렸습니다.');
+      handleError;
       localStorage.clear();
     },
   });
