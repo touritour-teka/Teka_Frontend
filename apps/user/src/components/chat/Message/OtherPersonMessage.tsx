@@ -87,7 +87,7 @@ const OtherPersonMessage: React.FC<OtherPersonMessageProps> = ({
                   </AddressContainer>
                 )}
               </MapPreviewContainer>
-            ) : isImageUrl(translatedContent) ? (
+            ) : isImageUrl(content) ? (
               <StyledImage src={content} alt="image" />
             ) : (
               <StyledText>{translatedContent}</StyledText>
